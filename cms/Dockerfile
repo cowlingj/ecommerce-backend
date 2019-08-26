@@ -1,9 +1,3 @@
-FROM node:lts
-
-COPY / /usr/lib/app
-WORKDIR /usr/lib/app
-RUN npm install
-RUN npm run build
-
-EXPOSE 80
-ENTRYPOINT [ "npm", "run", "start" ]
+FROM agentejo/cockpit:latest
+COPY config.yaml /var/www/html/config/config.yaml
+COPY logo.svg /var/www/html/assets/app/media/logo.svg

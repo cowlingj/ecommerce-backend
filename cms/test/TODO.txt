@@ -1,0 +1,4 @@
+mock mongo
+start cms
+send request for strings
+verify request comes back okay

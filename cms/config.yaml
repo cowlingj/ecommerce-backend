@@ -1,0 +1,13 @@
+debug: true
+app.name: "Uni-Cycle"
+languages:
+  default: "Default"
+  en: "English"
+database:
+   server: mongodb://mongodb:27017
+   options:
+       db: cms
+       username: cms
+       password: cms
+
+# TODO: will I need to use php to get env vars? 
