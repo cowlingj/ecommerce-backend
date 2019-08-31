@@ -1,3 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 1 1" >
-  <circle fill="#00ff00" cy="0" cx="0" r="1"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 2 2" >
+  <circle fill="#00ff00" cy="50%" cx="50%" r="50%"/>
 </svg>
