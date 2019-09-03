@@ -23,10 +23,6 @@ helm install --name integration-test ./deploy || exit 1
 # let initialisation finish
 kubectl wait --timeout 60s --for=condition=Ready --all pods || exit 1
 
-echo 'READY'
-
-sleep 300
-
 # run tests
 kubectl run integration-test \
   --attach \
