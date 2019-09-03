@@ -1,0 +1,8 @@
+type Query {
+  strings: [StringResource]
+}
+
+type StringResource {
+  name: String
+  value: String
+}
