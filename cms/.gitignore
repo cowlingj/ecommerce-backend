@@ -7,3 +7,6 @@
 **/.env
 
 **/.DS_Store
+
+/integration-test/deploy/charts/*.tgz
+/integration-test/deploy/charts/*.tar.gz
