@@ -7,9 +7,9 @@
     "async": "2.1.4",
     "dotenv": "4.0.0",
     "graphql-import": "^0.7.1",
-    "keystone": "4.0.0-beta.5",
-    "lodash": "^4.13.1",
-    "pug": "2.0.0-beta11",
+    "keystone": "^4.2.1",
+    "lodash": "^4.17.12",
+    "pug": "^2.0.4",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
