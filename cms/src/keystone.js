@@ -1,6 +1,7 @@
 // Simulate config options from your production environment by
 // customising the .env file in your project's root folder.
 require('dotenv').config();
+const path = require('path')
 
 // Require keystone
 var keystone = require('keystone');
@@ -20,10 +21,11 @@ keystone.init({
 	'session': false,
 	'auth': true,
 	'user model': 'User',
-});
+	//'module root': __dirname
+})
 
 // Load your project's Models
-keystone.import('models');
+keystone.import('models')
 
 // Setup common locals for your templates. The following are required for the
 // bundled templates and layouts. Any runtime locals (that should be set uniquely
@@ -41,8 +43,9 @@ keystone.set('routes', require('./routes'));
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	'Users & Permissions': [ 'User', 'Role' ],
-});
+	'Users, Apps & Permissions': [ 'User', 'Role', 'AuthCode' ],
+	'Resources': [ 'String', 'Upload' ],
+})
 
 // Start Keystone to connect to your database and initialise the web server
 

@@ -20,7 +20,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "node keystone.js",
-    "dev": "nodemon --delay 3s keystone.js"
+    "start": "node src/keystone.js",
+    "dev": "nodemon src/keystone.js"
   }
 }

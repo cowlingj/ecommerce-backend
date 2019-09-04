@@ -9,5 +9,3 @@ mongo -- "$MONGO_INITDB_DATABASE" <<EOF
   })
 
 EOF
-
-echo "BLAH BLAH BLAH!!! ----- ----- ----------"
