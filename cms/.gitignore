@@ -1,12 +1,58 @@
+# Logs
 **/logs
 **/*.log
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
 
-**/coverage
-**/node_modules
+# Runtime data
+**/pids
+**/*.pid
+**/*.seed
+**/*.pid.lock
 
-**/.env
+# Coverage
+/lib-cov
+/coverage
+/.nyc_output
 
-**/.DS_Store
+# Intermediates
+/.grunt
+/.nuxt
+/.next
+/.serverless
 
-/integration-test/deploy/charts/*.tgz
-/integration-test/deploy/charts/*.tar.gz
+# Build artifacts
+/dist
+/build
+**/*.tgz
+**/*.tar.gz
+
+# Dependency directories
+/node_modules/
+/jspm_packages/
+/bower_components/
+
+# TypeScript v1 declaration files
+typings/
+
+# Cache
+/.npm
+/.eslintcache
+/.cache
+
+# Optional REPL history
+.node_repl_history
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+/.env
+
+# IDE / Editor
+**/*.swp
+/.idea
+
+# Mac OSX
+.DS_Store
