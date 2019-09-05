@@ -14,6 +14,7 @@
     "snyk": "^1.224.0"
   },
   "devDependencies": {
+    "@snyk/nodejs-runtime-agent": "^1.46.0",
     "eslint": "3.15.0",
     "eslint-config-keystone": "3.0.0",
     "eslint-plugin-react": "^5.1.1",
@@ -22,7 +23,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node src/keystone.js",
-    "dev": "nodemon src/keystone.js",
+    "dev": "NODE_ENV=development nodemon <<< \"require('@snyk/nodejs-runtime-agent')({projectId: '0462e42b-c92f-4b48-bac8-81eb3ff7f43e'}); require('src/keystone.js')\"",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
