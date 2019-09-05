@@ -22,11 +22,5 @@
     "lint": "eslint .",
     "start": "node src/keystone.js",
     "dev": "nodemon src/keystone.js"
-  },
-  "resolutions": {
-    "keystone/marked": "0.7.0",
-    "keystone/expression-match/lodash": "4.17.12",
-    "keystone/embedly/lodash": "4.17.12",
-    "keystone/asyncdi/lodash": "4.17.12"
   }
 }
