@@ -1,0 +1,4 @@
+db: mongodb://cms:cms@mongodb:27017/cms
+env: production
+cookieSecret: tmp
+port: 80

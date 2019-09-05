@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+      group: backend
+  template:
+    metadata:
+      labels:
+        app: mongodb
+        group: backend
+    spec:
+      containers:
+        - name: main
+          image: {{ printf "%s%s" "mongodb.backend.local:" .Chart.AppVersion }}
+          readinessProbe:
+            tcpSocket:
+              port: 27017
+          ports:
+            - protocol: TCP
+              containerPort: 27017
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: root
+            - name: MONGO_INITDB_DATABASE
+              value: default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+    group: backend
+spec:
+  type: {{ if eq .Values.env "development" -}}
+          {{ "NodePort" }}
+        {{- else -}}
+          {{ "ClusterIP" }}
+        {{- end }}
+  selector:
+    app: mongodb
+    group: backend
+  ports:
+    - port: 27017
+      targetPort: 27017
+
+  

@@ -1,4 +1,0 @@
-version: test
-db: mongodb://cms:cms@mongodb:27017/cms
-env: development
-cookieSecret: tmp

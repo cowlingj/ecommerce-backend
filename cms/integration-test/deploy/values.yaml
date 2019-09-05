@@ -1,5 +1,0 @@
-frontend:
-  cms:
-    version: test
-  store:
-    version: test

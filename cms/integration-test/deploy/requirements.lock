@@ -1,6 +1,0 @@
-dependencies:
-- name: frontend
-  repository: file://../../deploy
-  version: 0.0.1
-digest: sha256:114828e1bb2ad0e90ab122409c403d4a018866ca3ed935d6d54e79b0904aa114
-generated: "2019-09-01T15:39:20.366634483+01:00"

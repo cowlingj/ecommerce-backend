@@ -1,4 +1,0 @@
-dependencies:
-  - name: cms
-    repository: file://../../deploy
-    version: 0.0.1
