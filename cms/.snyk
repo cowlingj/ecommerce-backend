@@ -1,10 +1,61 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 version: v1.13.5
-ignore: {}
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-LODASH-450202:
+    - keystone > asyncdi > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > grappling-hook > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > embedly > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > expression-match > lodash:
+        reason: None given
+        expires: 'Never'
+  SNYK-JS-LODASH-73638:
+    - keystone > asyncdi > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > grappling-hook > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > embedly > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > expression-match > lodash:
+        reason: None given
+        expires: 'Never'
+  SNYK-JS-LODASH-73639:
+    - keystone > asyncdi > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > grappling-hook > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > embedly > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > expression-match > lodash:
+        reason: None given
+        expires: 'Never'
+  'npm:lodash:20180130':
+    - keystone > embedly > lodash:
+        reason: None given
+        expires: 'Never'
+    - keystone > expression-match > lodash:
+        reason: None given
+        expires: 'Never'
+  SNYK-JS-MARKED-451341:
+    - keystone > marked:
+        reason: None given
+        expires: 'Never'
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:lodash:20180130':
     - keystone > asyncdi > lodash:
-        patched: '2019-09-05T11:47:33.075Z'
+        patched: 'Never'
     - keystone > grappling-hook > lodash:
-        patched: '2019-09-05T11:47:33.075Z'
+        patched: 'Never'

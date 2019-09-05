@@ -10,8 +10,8 @@
     "keystone": "^4.2.1",
     "lodash": "^4.17.12",
     "pug": "^2.0.4",
-    "uuid": "^3.3.3",
-    "snyk": "^1.224.0"
+    "snyk": "^1.224.0",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@snyk/nodejs-runtime-agent": "^1.46.0",
@@ -25,7 +25,8 @@
     "start": "node src/keystone.js",
     "dev": "NODE_ENV=development nodemon <<< \"require('@snyk/nodejs-runtime-agent')({projectId: '0462e42b-c92f-4b48-bac8-81eb3ff7f43e'}); require('src/keystone.js')\"",
     "snyk-protect": "snyk protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "test": "snyk test"
   },
   "snyk": true
 }
