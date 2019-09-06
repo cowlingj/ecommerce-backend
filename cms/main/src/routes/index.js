@@ -3,7 +3,6 @@ var middleware = require('./middleware')
 var keystone = require('keystone').middleware
 
 exports = module.exports = function (app) {
-	// TODO: middleware.requireUser / require Token
 	graphql.default(app)
 
 	app.get('/', (_req, res) => { res.redirect('/keystone') })

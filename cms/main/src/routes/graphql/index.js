@@ -17,13 +17,6 @@ const server = new ApolloServer({
 
 module.exports = {
   default: (app) => {
-    app.use('/graphql', (req, res, next) => {
-      if (process.env.NODE_ENV !== 'development') {
-        res.sendStatus(401) // call auth middleware
-      } else {
-        next()
-      }
-    })
     server.applyMiddleware({ app, path: '/graphql' })
   }
 }

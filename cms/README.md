@@ -10,7 +10,7 @@ The project is structured as follows:
 ```
 /cms
 |- /chart # location of helm chart
-|- /smoke-test # smoke tests for cms
+|- /integration-test # integration tests for cms
 |- /main # app
 ```
 
@@ -90,5 +90,5 @@ Other configuration options can be found on the [keystonejs](https://keystonejs.
 
 ### Tests
 
-Smoke tests check the expose graphql api (all of the admin UI is handled by keystone).
-These tests can be run with the `test.sh` script (in the `/smoke-test` directory), or manually by deploying the helm chart under then deploying the test runner in the foreground with `kubectl`.
+Integration tests check the expose graphql api (all of the admin UI is handled by keystone).
+These tests can be run with the `test.sh` script (in the `/integration-test` directory), or manually by deploying the helm chart under then deploying the test runner in the foreground with `kubectl`.
