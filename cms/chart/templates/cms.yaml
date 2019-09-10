@@ -5,6 +5,7 @@ metadata:
   labels:
     app: cms
     group: frontend
+    version: {{ .Chart.AppVersion }}
 spec:
   replicas: 1
   selector:
@@ -50,5 +51,6 @@ spec:
     app: cms
     group: frontend
   ports:
-    - port: {{ .Values.port }}
+    - name: http-cms
+      port: {{ .Values.port }}
       targetPort: {{ .Values.port }}

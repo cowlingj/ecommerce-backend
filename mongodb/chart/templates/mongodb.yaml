@@ -2,6 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongodb
+  labels:
+    app: mongodb
+    group: backend
+    version: {{ .Chart.AppVersion }}
 spec:
   replicas: 1
   selector:
@@ -48,7 +52,8 @@ spec:
     app: mongodb
     group: backend
   ports:
-    - port: 27017
+    - name: tcp-mongodb
+      port: 27017
       targetPort: 27017
 
   
