@@ -1,0 +1,7 @@
+{{- define "helpers.service.type" }}
+  {{- if and . (eq . "development") -}}
+    {{ "NodePort" }}
+  {{- else -}}
+    {{ "ClusterIP" }}
+  {{- end -}}
+{{- end }}
