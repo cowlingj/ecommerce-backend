@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: main
-          image: {{ printf "%s%s" "cms.frontend.local:" .Chart.AppVersion | quote }}
+          image: {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/cms.backend" .Chart.AppVersion | quote }}
           ports:
             - containerPort: 80
           readinessProbe:
@@ -46,7 +46,7 @@ metadata:
     app: cms
     group: frontend
 spec:
-  type: {{ template "general.service.type" . }}
+  type: {{ template "helpers.service.type" . }}
   selector:
     app: cms
     group: frontend

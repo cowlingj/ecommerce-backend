@@ -2,6 +2,10 @@
 
 A mongodb cluster
 
+## Images
+
+main: docker.pkg.github.com/cowlingj/ecommerce-backend/mongodb.data:0.0.1
+
 ## Getting Started
 
 Mongodb uses the [official dockerhub image](https://hub.docker.com/_/mongo)

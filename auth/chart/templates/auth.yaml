@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  labels:
+    app: auth
+    group: admin
+    version: {{ .Chart.AppVersion }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+      group: admin
+      version: {{ .Chart.AppVersion }}
+  template:
+    metadata:
+      labels:
+        app: auth
+        group: admin
+        version: {{ .Chart.AppVersion }}
+    spec:
+      containers:
+        - name: main
+          image:   {{ printf "%s%s" "fusionauth/fusionauth-search:" .Chart.AppVersion }}
+          readinessProbe:
+            tcpSocket:
+              port: 4444
+          ports:
+            - name: http-auth-public
+              protocol: TCP
+              containerPort: 4444
+            - name: http-auth-admin
+              protocol: TCP
+              containerPort: 4445
+          env: [] # TODO
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth
+  labels:
+    app: auth
+    group: admin
+    version: {{ .Chart.AppVersion }}
+spec:
+  type: {{ template "helpers.service.type" .Values.env }}
+  selector:
+    app: auth
+    group: admin
+    version: {{ .Chart.AppVersion }}
+  ports:
+    - name: http-auth-public
+      port: 4444
+      targetPort: http-auth-public
+      protocol: TCP
+    - name: http-auth-admin
+      port: 4445
+      targetPort: http-auth-admin
+      protocol: TCP
+
+  

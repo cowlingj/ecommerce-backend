@@ -1,0 +1,48 @@
+{{- required "value env is required" .Values.env -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+    group: data
+    version: {{ .Chart.AppVersion }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+      group: data
+  template:
+    metadata:
+      labels:
+        app: postgres
+        group: data
+    spec:
+      containers:
+        - image: {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/postgres.data" .Chart.AppVersion }}
+          env:
+            - name: POSTGRES_USER
+              value: root
+            - name: POSTGRES_PASSWORD
+              value: root
+          ports:
+            - name: tcp-postgres
+              containerPort: 5432
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+---
+appVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+    group: backend
+spec:
+  type: {{ template "helpers.service.type" .Values.env }}
+  ports:
+    - targetPort: tcp-postgres
+      port: 5432
