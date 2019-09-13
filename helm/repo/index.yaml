@@ -1,0 +1,52 @@
+apiVersion: v1
+entries:
+  auth:
+  - appVersion: 1.7.4
+    created: "2019-09-13T01:02:41.239942994+01:00"
+    description: fusion auth instance
+    digest: 87db18b9812a42f596861e3ef317a2a7b02f511daacf0124cfe49cc050ce31e7
+    name: auth
+    urls:
+    - http://127.0.0.1:8879/auth-0.0.1.tgz
+    version: 0.0.1
+  cms:
+  - apiVersion: v1
+    appVersion: 0.0.1
+    created: "2019-09-13T01:02:41.240415125+01:00"
+    digest: a476b8d658250ef5c11c33cb8354a51b1d64703ecdc689e4076bca0e0a9e1964
+    name: cms
+    urls:
+    - http://127.0.0.1:8879/cms-0.0.1.tgz
+    version: 0.0.1
+  helpers:
+  - apiVersion: v1
+    appVersion: 0.0.0
+    created: "2019-09-13T01:02:41.240595238+01:00"
+    description: utility template functions
+    digest: e48d833c41fbce6fc762cdea508cdb91c58f813c85966d6aae84503d86d174bc
+    name: helpers
+    urls:
+    - http://127.0.0.1:8879/helpers-0.0.1.tgz
+    version: 0.0.1
+  mongodb:
+  - apiVersion: v1
+    appVersion: 0.0.1
+    created: "2019-09-13T01:02:41.240891606+01:00"
+    description: Mongodb database
+    digest: bb46321753a21ab48a291613a28e0728c868e9dd30e3843a9e81394f709eda5e
+    maintainers:
+    - name: Jonathan Cowling
+    name: mongodb
+    urls:
+    - http://127.0.0.1:8879/mongodb-0.0.1.tgz
+    version: 0.0.1
+  postgres:
+  - apiVersion: v1
+    appVersion: 0.0.1
+    created: "2019-09-13T01:02:41.241154617+01:00"
+    digest: 01325f7eb6242ec66d907b1410beb4e42e32a61a2a8e352e2c7b9597ff9b4372
+    name: postgres
+    urls:
+    - http://127.0.0.1:8879/postgres-0.0.1.tgz
+    version: 0.0.1
+generated: "2019-09-13T01:02:41.239283142+01:00"

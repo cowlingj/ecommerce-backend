@@ -1,7 +1,0 @@
-dependencies:
-  - name: mongodb
-    repository: null
-    version: 0.0.1
-  - name: helpers
-    repository: null
-    version: 0.0.1

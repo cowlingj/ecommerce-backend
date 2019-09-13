@@ -1,4 +1,4 @@
 dependencies:
   - name: helpers
     version: 0.0.1
-    repository: null
+    repository: http://127.0.0.1:8879/charts

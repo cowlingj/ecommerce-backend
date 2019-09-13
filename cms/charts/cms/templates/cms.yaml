@@ -46,7 +46,7 @@ metadata:
     app: cms
     group: frontend
 spec:
-  type: {{ template "helpers.service.type" . }}
+  type: {{ template "helpers.service.type" .Values.env }}
   selector:
     app: cms
     group: frontend

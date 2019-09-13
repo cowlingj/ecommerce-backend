@@ -1,0 +1,9 @@
+dependencies:
+- name: mongodb
+  repository: http://127.0.0.1:8879/charts
+  version: 0.0.1
+- name: helpers
+  repository: http://127.0.0.1:8879/charts
+  version: 0.0.1
+digest: sha256:c6cdbabadc6f9af8102de589480b8bbb46265976fbce3992f1ec51b079125ab1
+generated: "2019-09-12T22:33:01.213424055+01:00"

@@ -1,0 +1,9 @@
+dependencies:
+- name: helpers
+  repository: http://127.0.0.1:8879/charts
+  version: 0.0.1
+- name: postgres
+  repository: http://127.0.0.1:8879/charts
+  version: 0.0.1
+digest: sha256:dc8c6dba25d9d10ddcb7e923cdec36d15f4fafd71fe057a7e72bd5376647949c
+generated: "2019-09-12T22:32:37.544623297+01:00"

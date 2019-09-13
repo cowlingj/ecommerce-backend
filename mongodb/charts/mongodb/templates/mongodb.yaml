@@ -1,4 +1,3 @@
-{{- required "value env is required" .Values.env -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

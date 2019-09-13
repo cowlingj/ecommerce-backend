@@ -1,7 +1,0 @@
-dependencies:
-  - name: helpers
-    repository: null
-    version: 0.0.1
-  - name: postgres
-    repository: null
-    version: 0.0.1
