@@ -46,7 +46,7 @@ spec:
               protocol: TCP
           env:
             - name: DATABASE_URL
-              value: jdbc:postgresql://postgres:5432/fusionauth
+              value: jdbc:postgresql://postgres:5432/auth
             - name: DATABASE_ROOT_USER
               value: root
             - name: DATABASE_ROOT_PASSWORD
