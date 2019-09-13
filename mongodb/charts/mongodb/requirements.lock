@@ -1,6 +1,6 @@
 dependencies:
 - name: helpers
-  repository: http://127.0.0.1:8879/charts
+  repository: http://localhost:8879
   version: 0.0.1
-digest: sha256:3f95b57bb6c684a078bb50dda27108b6a745e1dda7da0ddd17577e6ab70c0a16
-generated: "2019-09-12T22:29:50.110927092+01:00"
+digest: sha256:67e05968dec494a553bd0b54c1da93e199d0f4649d937cf88e38e70dc8ece677
+generated: "2019-09-13T17:25:27.580285189+01:00"

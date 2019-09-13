@@ -1,9 +1,9 @@
 dependencies:
 - name: mongodb
-  repository: http://127.0.0.1:8879/charts
+  repository: http://localhost:8879
   version: 0.0.1
 - name: helpers
-  repository: http://127.0.0.1:8879/charts
+  repository: http://localhost:8879
   version: 0.0.1
-digest: sha256:c6cdbabadc6f9af8102de589480b8bbb46265976fbce3992f1ec51b079125ab1
-generated: "2019-09-12T22:33:01.213424055+01:00"
+digest: sha256:f4b8822f37ac6ad2147efc348700131515f65e754a3c7a2cd3a023ff67f4bb89
+generated: "2019-09-13T17:25:39.969438302+01:00"

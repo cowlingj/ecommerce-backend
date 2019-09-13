@@ -1,0 +1,4 @@
+env: production
+fusionauth:
+  app:
+    version: latest

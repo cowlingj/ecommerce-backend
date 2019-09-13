@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: main
-          image: {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/cms.backend" .Chart.AppVersion | quote }}
+          image: {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/cms.admin" .Chart.AppVersion | quote }}
           ports:
             - containerPort: 80
           readinessProbe:

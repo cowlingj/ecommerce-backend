@@ -1,10 +1,11 @@
 apiVersion: v1
 entries:
   auth:
-  - appVersion: 1.7.4
-    created: "2019-09-13T01:02:41.239942994+01:00"
+  - apiVersion: v1
+    appVersion: 1.7.4
+    created: "2019-09-13T17:26:24.913086663+01:00"
     description: fusion auth instance
-    digest: 87db18b9812a42f596861e3ef317a2a7b02f511daacf0124cfe49cc050ce31e7
+    digest: 8a4d5b8e4e5182616c40c6332d08227fa5d43173a473d9ccfa068ad8db09806c
     name: auth
     urls:
     - http://127.0.0.1:8879/auth-0.0.1.tgz
@@ -12,8 +13,8 @@ entries:
   cms:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: "2019-09-13T01:02:41.240415125+01:00"
-    digest: a476b8d658250ef5c11c33cb8354a51b1d64703ecdc689e4076bca0e0a9e1964
+    created: "2019-09-13T17:26:24.913903202+01:00"
+    digest: 4713c77c631a049720cf3c2e3778f80f1d5e6ee9cfd9c85998313a430d727c3f
     name: cms
     urls:
     - http://127.0.0.1:8879/cms-0.0.1.tgz
@@ -21,7 +22,7 @@ entries:
   helpers:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: "2019-09-13T01:02:41.240595238+01:00"
+    created: "2019-09-13T17:26:24.914121309+01:00"
     description: utility template functions
     digest: e48d833c41fbce6fc762cdea508cdb91c58f813c85966d6aae84503d86d174bc
     name: helpers
@@ -31,9 +32,9 @@ entries:
   mongodb:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: "2019-09-13T01:02:41.240891606+01:00"
+    created: "2019-09-13T17:26:24.914678813+01:00"
     description: Mongodb database
-    digest: bb46321753a21ab48a291613a28e0728c868e9dd30e3843a9e81394f709eda5e
+    digest: f9f2c52b72ccda0a5d11fc326ca0e7bc6754e5df8d31a60813dd6e97aac952d0
     maintainers:
     - name: Jonathan Cowling
     name: mongodb
@@ -43,10 +44,10 @@ entries:
   postgres:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: "2019-09-13T01:02:41.241154617+01:00"
-    digest: 01325f7eb6242ec66d907b1410beb4e42e32a61a2a8e352e2c7b9597ff9b4372
+    created: "2019-09-13T17:26:24.915262289+01:00"
+    digest: 5f87828bcc1d13e7b4db03b9577c6b76f54a97a19e6197fe100d17c68e6c0fdb
     name: postgres
     urls:
     - http://127.0.0.1:8879/postgres-0.0.1.tgz
     version: 0.0.1
-generated: "2019-09-13T01:02:41.239283142+01:00"
+generated: "2019-09-13T17:26:24.912148155+01:00"
