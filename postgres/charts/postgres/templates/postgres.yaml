@@ -20,6 +20,8 @@ spec:
     spec:
       containers:
         - name: main
+          # TODO: use normal postgres image, aditional changes will be done via external deployments
+          # TODO: same for mongodb (init for cms)
           image: {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/postgres.data" .Chart.AppVersion }}
           env:
             - name: POSTGRES_USER

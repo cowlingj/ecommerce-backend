@@ -20,24 +20,16 @@ spec:
         group: admin
         version: {{ .Chart.AppVersion | quote }}
     spec:
+      initContainers:
+        - name: tcp-connect-postgres
+          image: itsthenetwork/alpine-ncat:2
+          command: [ "ncat", "-z", "postgres", "5432" ]
+        - name: tcp-connect-search
+          image: itsthenetwork/alpine-ncat:2
+          command: [ "ncat", "-z", "elasticsearch-0.elasticsearch", "9200" ]
       containers:
-        - name: search
-          image:   {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/fusionauth.admin" .Chart.AppVersion }}
-          readinessProbe:
-            tcpSocket:
-              port: 9020
-          ports:
-            - containerPort: 9020
-              protocol: TCP
-            - containerPort: 9021
-              protocol: TCP
-          env:
-            - name: ES_JAVA_OPTS
-              value: -Xms256m -Xmx256m
-            - name: FUSIONAUTH_MEMORY
-              value: 256M
         - name: main
-          image:   {{ printf "%s:%s" "fusionauth/fusionauth-app" .Values.fusionauth.app.version }}
+          image: {{ printf "%s:%s" "fusionauth/fusionauth-app" .Values.fusionauth.app.version }}
           readinessProbe:
             tcpSocket:
               port: 9011
@@ -59,6 +51,8 @@ spec:
               value: -Xms256m -Xmx256m
             - name: FUSIONAUTH_MEMORY
               value: 256M
+            - name: FUSIONAUTH_SEARCH_SERVERS
+              value: {{ .Values.fusionauth.search.servers }}
 ---
 apiVersion: v1
 kind: Service

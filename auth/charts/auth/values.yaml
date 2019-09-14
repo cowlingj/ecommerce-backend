@@ -2,3 +2,5 @@ env: production
 fusionauth:
   app:
     version: latest
+  search:
+    servers: http://elasticsearch-0.elasticsearch:9200

@@ -5,3 +5,6 @@ dependencies:
   - name: postgres
     repository: http://localhost:8879
     version: 0.0.1
+  - name: elasticsearch
+    repository: http://localhost:8879
+    version: 0.0.1

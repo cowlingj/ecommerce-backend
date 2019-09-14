@@ -5,5 +5,8 @@ dependencies:
 - name: postgres
   repository: http://localhost:8879
   version: 0.0.1
-digest: sha256:1ef3bbc1b94741aa66dab798b5df072161f9edbe688803bf756d6b5f4628e75d
-generated: "2019-09-13T17:25:52.394700174+01:00"
+- name: elasticsearch
+  repository: http://localhost:8879
+  version: 0.0.1
+digest: sha256:4ff6b3c2328057503ea368bab518b1b9956ae7d95ccb73bbbf697a8fb14e549e
+generated: "2019-09-14T11:15:39.562247036+01:00"
