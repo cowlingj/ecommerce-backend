@@ -20,8 +20,10 @@ jobs:
           DOCKER_PASSWORD: "${{ secrets.GITHUB_ACCESS_TOKEN }}"
       - uses: actions/checkout@master
       - uses: actions/docker/cli@master
-        args: [ "build", "-t", "cms", "${{ GITHUB_WORKSPACE }}/cms/main" ]
+        with:
+          args: [ "build", "-t", "cms", "${{ GITHUB_WORKSPACE }}/cms/main" ]
       - uses: actions/docker/tag@master
       - uses: actions/docker/cli@master
-        args: [ "image", "ls" ]
+        with:
+          args: [ "image", "ls" ]
       # push to gpr?
