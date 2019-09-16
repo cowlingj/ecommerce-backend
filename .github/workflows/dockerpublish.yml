@@ -23,6 +23,8 @@ jobs:
         with:
           args: "build -t cms ${GITHUB_WORKSPACE}/cms/main"
       - uses: actions/docker/tag@master
+        with:
+          args: "cms"
       - uses: actions/docker/cli@master
         with:
           args: "image ls"
