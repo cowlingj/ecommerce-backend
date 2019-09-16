@@ -7,9 +7,10 @@ jobs:
   package:
     name: main
     runs-on: ubuntu-latest
-#     container:
-#       volumes:
-#         - "/home"
+    container:
+      image: alpine:latest
+      volumes:
+        - "/home"
     strategy:
       matrix:
         project:
