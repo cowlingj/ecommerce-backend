@@ -34,15 +34,13 @@ jobs:
         with:
           entrypoint: "sh"
           args: "-c echo ${PATH}; /bin/tag --env-file ${HOME}/tags ${{ matrix.project.name }} docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}"
-      - name: test
-        run: "source ${HOME}/tags; env"
-        shell: "bash"
       - name: "docker push"
         uses: actions/docker/cli@master
         with:
           entrypoint: "sh"
           args: >
             source ${HOME}/tags;
+            env;
             docker push
             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
