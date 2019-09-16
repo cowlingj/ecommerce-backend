@@ -1,17 +1,19 @@
-name: Docker Package
+name: Package
 
 on:
-#   pull_request:
-#     branches:
-#       - master
   push:
     branches:
       - master
 
 jobs:
   package:
-    name: package
+    name: main
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project:
+          - name: cms
+            directory: "${GITHUB_WORKSPACE}/cms/main"
     steps:
       - uses: actions/docker/login@master
         env:
@@ -21,10 +23,10 @@ jobs:
       - uses: actions/checkout@master
       - uses: actions/docker/cli@master
         with:
-          args: "build -t cms ${GITHUB_WORKSPACE}/cms/main"
+          args: "build -t ${{ matrix.project.name }} ${{ matrix.project.directory }}"
       - uses: actions/docker/tag@master
         with:
-          args: "cms docker.pkg.github.com/${GITHUB_REPOSITORY}/cms"
+          args: "${{ matrix.project.name }} docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}"
       - uses: actions/docker/cli@master
         with:
           args: "image ls"
