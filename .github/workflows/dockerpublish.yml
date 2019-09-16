@@ -1,0 +1,25 @@
+name: Docker Package
+
+on:
+#   pull_request:
+#     branches:
+#       - master
+  push:
+    branches:
+      - master
+
+jobs:
+  package:
+    name: package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        # cd into dir? build?
+      - uses: actions/docker/login@master
+        secrets: [
+          - "DOCKER_USERNAME"
+          - "DOCKER_PASSWORD"
+        env:
+          DOCKER_REGISTRY_URL: "docker.pkg.github.com"
+      - uses: actions/docker/tag@master
+      # push to gpr?
