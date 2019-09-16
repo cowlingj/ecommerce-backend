@@ -19,6 +19,6 @@ jobs:
         env:
           DOCKER_REGISTRY_URL: "docker.pkg.github.com"
           DOCKER_USERNAME: ${{ secrets.GITHUB_DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
       - uses: actions/docker/tag@master
       # push to gpr?
