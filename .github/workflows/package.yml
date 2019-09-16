@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       volumes:
-        - "/home/:/home/"
+        - "/home"
     strategy:
       matrix:
         project:
