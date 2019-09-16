@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: auth-init
+  labels:
+    component: init
+    app: auth
+    group: admin
+spec:
+  template:
+    metadata:
+      labels:
+        component: init
+        app: auth
+        group: admin
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: tcp-connect-auth
+          image: itsthenetwork/alpine-ncat:2
+          command: [ "ncat", "-z", "auth", "9011" ]
+      containers:
+      - name: main
+        image: "docker.pkg.github.com/cowlingj/ecommerce-backend/init.auth.admin:0.0.1"
+        env:
+          - name: PGUSER
+            valueFrom:
+              configMapKeyRef:
+                name: auth-config 
+                key: dbUsername
+          - name: PGDATABASE
+            valueFrom:
+              configMapKeyRef:
+                name: auth-config 
+                key: dbName
+          - name: PGHOST
+            value: "postgres"
+          - name: PGPORT
+            value: "5432"
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: dbPassword
+          - name: AUTH_KEY
+            valueFrom:
+              secretKeyRef:
+                name: auth-secrets
+                key: authKey
+          - name: AUTH_KEY_2
+            value: "$(AUTH_KEY)"

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: auth-secrets
+type: Opaque
+stringData:
+  dbPassword: auth
+  authKey: key 
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-config
+data:
+  dbUsername: auth
+  dbName: auth

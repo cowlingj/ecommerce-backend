@@ -22,12 +22,18 @@ spec:
         - name: main
           # TODO: use normal postgres image, aditional changes will be done via external deployments
           # TODO: same for mongodb (init for cms)
-          image: {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/postgres.data" .Chart.AppVersion }}
+          image: "postgres:11.5-alpine"
           env:
             - name: POSTGRES_USER
-              value: root
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: rootUsername
             - name: POSTGRES_PASSWORD
-              value: root
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: rootPassword
           ports:
             - containerPort: 5432
               protocol: TCP

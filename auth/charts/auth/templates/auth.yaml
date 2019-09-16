@@ -44,9 +44,15 @@ spec:
             - name: DATABASE_ROOT_PASSWORD
               value: root
             - name: DATABASE_USER
-              value: fusionauth
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-config
+                  key: dbUsername
             - name: DATABASE_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secrets
+                  key: dbPassword
             - name: ES_JAVA_OPTS
               value: -Xms256m -Xmx256m
             - name: FUSIONAUTH_MEMORY
