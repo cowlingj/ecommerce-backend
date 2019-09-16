@@ -7,6 +7,9 @@ jobs:
   package:
     name: main
     runs-on: ubuntu-latest
+    container:
+      volumes:
+        - "/home/:/home/"
     strategy:
       matrix:
         project:
@@ -29,15 +32,11 @@ jobs:
         uses: actions/docker/tag@master
         with:
           entrypoint: "sh"
-          args: "-c echo ${PATH}; /bin/tag --env-file ${HOME}/tags ${{ matrix.project.name }} docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}"
-      
-      - name: "set env"
-        run: "source ${HOME}/tags"
-        shell: "bash"
-      - name: "list env (testing env persistence)"
-        run: "env"
-        shell: "bash"
-      
+          args: >
+            -c
+            echo ${PATH};
+            /bin/tag --env-file ${HOME}/tags ${{ matrix.project.name }}
+            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}
       - name: "docker push"
         uses: actions/docker/cli@master
         with:
