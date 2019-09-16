@@ -13,12 +13,17 @@ jobs:
     name: package
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-        # cd into dir? build?
       - uses: actions/docker/login@master
         env:
           DOCKER_REGISTRY_URL: "docker.pkg.github.com"
-          DOCKER_USERNAME: ${{ secrets.GITHUB_DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.GITHUB_ACCESS_TOKEN }}
+          DOCKER_USERNAME: "${{ secrets.GITHUB_DOCKER_USERNAME }}"
+          DOCKER_PASSWORD: "${{ secrets.GITHUB_ACCESS_TOKEN }}"
+      - uses: actions/checkout@master
+      - uses: actions/docker/cli@master
+        working-directory: "${{ GITHUB_WORKSPACE }}/cms/main"
+        args: [ "build", "-t", "cms", "." ]
       - uses: actions/docker/tag@master
+      - uses: actions/docker/cli@master
+        working-directory: "${{ GITHUB_WORKSPACE }}/cms/main"
+        args: [ "image", "ls" ]
       # push to gpr?
