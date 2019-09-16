@@ -1,10 +1,8 @@
 name: Package
-
 on:
   push:
     branches:
       - master
-
 jobs:
   package:
     name: main
@@ -15,19 +13,34 @@ jobs:
           - name: cms
             directory: "${GITHUB_WORKSPACE}/cms/main"
     steps:
-      - uses: actions/docker/login@master
+      - name: "docker login"
+        uses: actions/docker/login@master
         env:
           DOCKER_REGISTRY_URL: "docker.pkg.github.com"
           DOCKER_USERNAME: "${{ secrets.GITHUB_DOCKER_USERNAME }}"
           DOCKER_PASSWORD: "${{ secrets.GITHUB_ACCESS_TOKEN }}"
-      - uses: actions/checkout@master
-      - uses: actions/docker/cli@master
+      - name: "git checkout"
+        uses: actions/checkout@master
+      - name: "docker build ${{ matrix.project.name }}"
+        uses: actions/docker/cli@master
         with:
           args: "build -t ${{ matrix.project.name }} ${{ matrix.project.directory }}"
-      - uses: actions/docker/tag@master
+      - name: "docker tag"
+        uses: actions/docker/tag@master
         with:
-          args: "${{ matrix.project.name }} docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}"
-      - uses: actions/docker/cli@master
+          args: "--env-file ${HOME}/tags ${{ matrix.project.name }} docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}"
+      - name: "set env"
+        run: "source ${HOME}/tags"
+        shell: "bash"
+      - name: "list env (testing env persistence)"
+        run: "env"
+        shell: "bash"
+      - name: "docker push"
+        uses: actions/docker/cli@master
         with:
-          args: "image ls"
-      # push to gpr?
+          args: >
+            push
+            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
+            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
+            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
+            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
