@@ -16,10 +16,9 @@ jobs:
       - uses: actions/checkout@master
         # cd into dir? build?
       - uses: actions/docker/login@master
-        secrets: [
-          - "DOCKER_USERNAME"
-          - "DOCKER_PASSWORD"
         env:
           DOCKER_REGISTRY_URL: "docker.pkg.github.com"
+          DOCKER_USERNAME: ${{ secrets.GITHUB_DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/docker/tag@master
       # push to gpr?
