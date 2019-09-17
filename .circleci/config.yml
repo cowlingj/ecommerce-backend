@@ -44,10 +44,10 @@ commands:
       - run:
           name: Docker tag
           command: |
-            docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:$IMAGE_VERSION"
-            docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:latest"
+            docker tag tmp "$DOCKER_REGISTRY/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$<< parameters.image >>:$IMAGE_VERSION"
+            docker tag tmp "$DOCKER_REGISTRY/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/<< parameters.image >>:latest"
       - run:
           name: Docker push
           command: |
-            docker push "$DOCKER_REGISTRY/<< parameters.image >>:$IMAGE_VERSION"
-            docker push "$DOCKER_REGISTRY/<< parameters.image >>:latest"
+            docker push "$DOCKER_REGISTRY/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/<< parameters.image >>:$IMAGE_VERSION"
+            docker push "$DOCKER_REGISTRY/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/<< parameters.image >>:latest"
