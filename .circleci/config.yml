@@ -10,7 +10,7 @@ workflows:
                 - master
 jobs:
   build:
-    shell: /bin/sh -leo pipefail
+    shell: /bin/sh -le
     environment:
       - BASH_ENV: /etc/profile
     docker:
