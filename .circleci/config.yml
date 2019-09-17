@@ -17,7 +17,7 @@ jobs:
       - checkout
       - docker_package:
           path: cms/main/
-          image: cms.admin
+#           image: cms.admin
 commands:
   docker_package:
     parameters:
