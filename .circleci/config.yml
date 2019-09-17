@@ -9,13 +9,16 @@ jobs:
       - checkout
       - run:
           name: Docker login
-          command: echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin "docker.pkg.github.com"
+          command: echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin "$DOCKER_REGISTRY"
       - run:
           name: Docker build
           command: docker build -t cms cms/main/
       - run:
-          name: Docker tag
-          command: docker tag
+          name: Docker tag [VERSION]
+          command: docker tag cms "$DOCKER_REGISTRY/cms.admin:\$(docker inspect --format '{{ index .Config.Labels "version" }}')"
+      - run:
+          name: Docker tag [LATEST]
+          command: docker tag cms "$DOCKER_REGISTRY/cms.admin:latest"
       - run:
           name: Docker image list
           command: docker image ls
