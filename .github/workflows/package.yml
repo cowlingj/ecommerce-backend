@@ -1,50 +1,50 @@
-name: Package
-on:
-  push:
-    branches:
-      - master
-jobs:
-  package:
-    name: main
-    runs-on: ubuntu-latest
-    container:
-      image: alpine:latest
-      volumes:
-        - "/home"
-    strategy:
-      matrix:
-        project:
-          - name: cms
-            directory: "${GITHUB_WORKSPACE}/cms/main"
-    steps:
-      - name: "docker login"
-        uses: actions/docker/login@master
-        env:
-          DOCKER_REGISTRY_URL: "docker.pkg.github.com"
-          DOCKER_USERNAME: "${{ secrets.GITHUB_DOCKER_USERNAME }}"
-          DOCKER_PASSWORD: "${{ secrets.GITHUB_ACCESS_TOKEN }}"
-      - name: "git checkout"
-        uses: actions/checkout@master
-      - name: "docker build"
-        uses: actions/docker/cli@master
-        with:
-          args: "build -t ${{ matrix.project.name }} ${{ matrix.project.directory }}"
-      - name: "docker tag"
-        uses: actions/docker/tag@master
-        with:
-          entrypoint: "sh"
-          args: "-c echo ${PATH}; /bin/tag --env-file ${HOME}/tags ${{ matrix.project.name }} docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}"
-      - name: "docker push"
-        uses: actions/docker/cli@master
-        with:
-          entrypoint: "sh"
-          args: >
-            -c
-            env;
-            source ${HOME}/tags;
-            env;
-            docker push
-            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
-            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
-            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
-            docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
+# name: Package
+# on:
+#   push:
+#     branches:
+#       - master
+# jobs:
+#   package:
+#     name: main
+#     runs-on: ubuntu-latest
+#     container:
+#       image: alpine:latest
+#       volumes:
+#         - "/home"
+#     strategy:
+#       matrix:
+#         project:
+#           - name: cms
+#             directory: "${GITHUB_WORKSPACE}/cms/main"
+#     steps:
+#       - name: "docker login"
+#         uses: actions/docker/login@master
+#         env:
+#           DOCKER_REGISTRY_URL: "docker.pkg.github.com"
+#           DOCKER_USERNAME: "${{ secrets.GITHUB_DOCKER_USERNAME }}"
+#           DOCKER_PASSWORD: "${{ secrets.GITHUB_ACCESS_TOKEN }}"
+#       - name: "git checkout"
+#         uses: actions/checkout@master
+#       - name: "docker build"
+#         uses: actions/docker/cli@master
+#         with:
+#           args: "build -t ${{ matrix.project.name }} ${{ matrix.project.directory }}"
+#       - name: "docker tag"
+#         uses: actions/docker/tag@master
+#         with:
+#           entrypoint: "sh"
+#           args: "-c echo ${PATH}; /bin/tag --env-file ${HOME}/tags ${{ matrix.project.name }} docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}"
+#       - name: "docker push"
+#         uses: actions/docker/cli@master
+#         with:
+#           entrypoint: "sh"
+#           args: >
+#             -c
+#             env;
+#             source ${HOME}/tags;
+#             env;
+#             docker push
+#             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
+#             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
+#             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
+#             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
