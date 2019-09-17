@@ -5,9 +5,9 @@ jobs:
       branches:
         only:
           - master
-     docker:
+    docker:
       - image: docker:19.03.2
-     steps:
+    steps:
       - setup_remote_docker
       - checkout
       - docker_package:
