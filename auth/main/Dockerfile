@@ -1,4 +1,5 @@
 FROM fusionauth/fusionauth-search:1.7.4
+LABEL version="0.0.1"
 
 USER root
 
