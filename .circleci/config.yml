@@ -15,7 +15,7 @@ jobs:
           command: docker build -t cms cms/main/
       - run:
           name: Docker tag [VERSION]
-          command: docker tag cms "$DOCKER_REGISTRY/cms.admin:\$(docker inspect --format '{{ index .Config.Labels "version" }}')"
+          command: docker tag cms "$DOCKER_REGISTRY/cms.admin:$(docker inspect --format '{{ index .Config.Labels "version" }}')"
       - run:
           name: Docker tag [LATEST]
           command: docker tag cms "$DOCKER_REGISTRY/cms.admin:latest"
