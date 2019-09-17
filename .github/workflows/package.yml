@@ -40,7 +40,7 @@ jobs:
           entrypoint: "sh"
           args: >
             -c
-            echo ${HOME};
+            env;
             source ${HOME}/tags;
             env;
             docker push
