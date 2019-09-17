@@ -16,8 +16,8 @@ jobs:
       - setup_remote_docker
       - checkout
       - docker_package:
-          path: cms/main/
-#           image: cms.admin
+          image: "cms.admin"
+          path: "cms/main/"
 commands:
   docker_package:
     parameters:
