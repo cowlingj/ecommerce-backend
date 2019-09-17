@@ -34,7 +34,7 @@ commands:
           command: docker build -t tmp << parameters.path >>
       - run:
           name: Docker tag [VERSION]
-          command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:$(docker inspect cms --format '{{ index .Config.Labels "version" }}')"
+          command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:$(docker inspect tmp --format '{{ index .Config.Labels "version" }}')"
       - run:
           name: Docker tag [LATEST]
           command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:latest"
