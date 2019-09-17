@@ -1,55 +1,38 @@
-version: 2
+version: 2.1
 jobs:
   build:
-    docker:
+    filters:
+      branches:
+        only:
+          - master
+     docker:
       - image: docker:19.03.2
-    # machine: true
-    steps:
+     steps:
       - setup_remote_docker
       - checkout
+      - docker_package:
+          path: cms/main/
+          image: cms.admin
+commands:
+  docker_package:
+    parameters:
+      image:
+        type: string
+      path:
+        type: string
+    steps:
       - run:
           name: Docker login
           command: echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin "$DOCKER_REGISTRY"
       - run:
           name: Docker build
-          command: docker build -t cms cms/main/
+          command: docker build -t tmp << parameters.path >>
       - run:
           name: Docker tag [VERSION]
-          command: docker tag cms "$DOCKER_REGISTRY/cms.admin:$(docker inspect cms --format '{{ index .Config.Labels "version" }}')"
+          command: docker tag tmp "$DOCKER_REGISTRY/<< parametes.image >>:$(docker inspect cms --format '{{ index .Config.Labels "version" }}')"
       - run:
           name: Docker tag [LATEST]
-          command: docker tag cms "$DOCKER_REGISTRY/cms.admin:latest"
+          command: docker tag cms "$DOCKER_REGISTRY/<< parametes.image >>:latest"
       - run:
           name: Docker image list
           command: docker image ls
-#  - name: "docker login"
-#         uses: actions/docker/login@master
-#         env:
-#           DOCKER_REGISTRY_URL: "docker.pkg.github.com"
-#           DOCKER_USERNAME: "${{ secrets.GITHUB_DOCKER_USERNAME }}"
-#           DOCKER_PASSWORD: "${{ secrets.GITHUB_ACCESS_TOKEN }}"
-#       - name: "git checkout"
-#         uses: actions/checkout@master
-#       - name: "docker build"
-#         uses: actions/docker/cli@master
-#         with:
-#           args: "build -t ${{ matrix.project.name }} ${{ matrix.project.directory }}"
-#       - name: "docker tag"
-#         uses: actions/docker/tag@master
-#         with:
-#           entrypoint: "sh"
-#           args: "-c echo ${PATH}; /bin/tag --env-file ${HOME}/tags ${{ matrix.project.name }} docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}"
-#       - name: "docker push"
-#         uses: actions/docker/cli@master
-#         with:
-#           entrypoint: "sh"
-#           args: >
-#             -c
-#             env;
-#             source ${HOME}/tags;
-#             env;
-#             docker push
-#             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
-#             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
-#             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
-#             docker.pkg.github.com/${GITHUB_REPOSITORY}/${{ matrix.project.name }}:latest
