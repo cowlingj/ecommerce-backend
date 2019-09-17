@@ -13,6 +13,7 @@ jobs:
     shell: /bin/sh -leo pipefail
     environment:
       - BASH_ENV: /etc/profile
+      - REGISTRY_HTTP_RELATIVEURLS: "true"
     docker:
       - image: docker:19.03.2
     steps:
