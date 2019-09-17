@@ -13,7 +13,6 @@ jobs:
     shell: /bin/sh -le
     environment:
       - BASH_ENV: "/etc/profile"
-      - CLOUDSDK_PYTHON_SITEPACKAGES: "1"
     docker:
       - image: google/cloud-sdk
     steps:
@@ -36,7 +35,8 @@ commands:
       - run:
           name: Setup GCP
           command: |
-            echo "${GCP_SERVICE_KEY}" | gcloud auth activate-service-account "${GCP_SERVICE_ACCOUNT}" --key-file=-
+            echo "${GCP_SERVICE_KEY}" > key.json
+            gcloud auth activate-service-account "${GCP_SERVICE_ACCOUNT}" --key-file=key.json
             gcloud --quiet config set project ${GCP_PROJECT_ID}
         # gcloud --quiet config set compute/zone ${GCP_COMPUTE_ZONE}
         # gcloud auth configure-docker
