@@ -13,9 +13,8 @@ jobs:
     shell: /bin/sh -leo pipefail
     environment:
       - BASH_ENV: /etc/profile
-      - REGISTRY_HTTP_RELATIVEURLS: "true"
     docker:
-      - image: docker:19.03.2
+      - image: google/cloud-sdk
     steps:
       - setup_remote_docker
       - checkout
@@ -34,8 +33,12 @@ commands:
         type: string
     steps:
       - run:
-          name: Docker login
-          command: echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin "$DOCKER_REGISTRY"
+          name: Setup GCP
+          command: |
+            echo "${GCP_SERVICE_KEY}" | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GCP_PROJECT_ID}
+        # gcloud --quiet config set compute/zone ${GCP_COMPUTE_ZONE}
+        # gcloud auth configure-docker
       - run:
           name: Docker build
           command: docker build -t tmp << parameters.path >>
@@ -45,10 +48,10 @@ commands:
       - run:
           name: Docker tag
           command: |
-            docker tag tmp "$DOCKER_REGISTRY/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/<< parameters.image >>:$IMAGE_VERSION"
-            docker tag tmp "$DOCKER_REGISTRY/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/<< parameters.image >>:latest"
+            docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:${IMAGE_VERSION}"
+            docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
       - run:
           name: Docker push
           command: |
-            docker push "$DOCKER_REGISTRY/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/<< parameters.image >>:$IMAGE_VERSION"
-            docker push "$DOCKER_REGISTRY/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/<< parameters.image >>:latest"
+            docker push "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:${IMAGE_VERSION}"
+            docker push "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
