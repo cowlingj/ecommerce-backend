@@ -1,13 +1,13 @@
 version: 2.1
-# workflows:
-#   version: 2
-#   build:
-#     jobs:
-#       - build:
-#           filters:
-#             branches:
-#               only:
-#                 - master
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
 jobs:
   build:
     docker:
@@ -16,12 +16,12 @@ jobs:
       - setup_remote_docker
       - checkout
       - docker_package:
-          image_name: "cms.admin"
+          image: "cms.admin"
           path: "cms/main/"
 commands:
   docker_package:
     parameters:
-      image_name:
+      image:
         type: string
       path:
         type: string
@@ -34,10 +34,10 @@ commands:
           command: docker build -t tmp << parameters.path >>
       - run:
           name: Docker tag [VERSION]
-          command: docker tag tmp "$DOCKER_REGISTRY/<< parametes.image >>:$(docker inspect cms --format '{{ index .Config.Labels "version" }}')"
+          command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:$(docker inspect cms --format '{{ index .Config.Labels "version" }}')"
       - run:
           name: Docker tag [LATEST]
-          command: docker tag cms "$DOCKER_REGISTRY/<< parametes.image >>:latest"
+          command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:latest"
       - run:
           name: Docker image list
           command: docker image ls
