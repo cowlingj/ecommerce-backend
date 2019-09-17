@@ -12,7 +12,8 @@ jobs:
   build:
     shell: /bin/sh -le
     environment:
-      - BASH_ENV: /etc/profile
+      - BASH_ENV: "/etc/profile"
+      - CLOUDSDK_PYTHON_SITEPACKAGES: "1"
     docker:
       - image: google/cloud-sdk
     steps:
