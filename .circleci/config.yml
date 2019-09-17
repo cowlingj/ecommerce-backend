@@ -10,6 +10,9 @@ workflows:
                 - master
 jobs:
   build:
+    shell: /bin/sh -leo pipefail
+    environment:
+      - BASH_ENV: /etc/profile
     docker:
       - image: docker:19.03.2
     steps:
@@ -18,12 +21,15 @@ jobs:
       - docker_package:
           image: "cms.admin"
           path: "cms/main/"
+          env: "/etc/profile"
 commands:
   docker_package:
     parameters:
       image:
         type: string
       path:
+        type: string
+      env:
         type: string
     steps:
       - run:
@@ -33,11 +39,14 @@ commands:
           name: Docker build
           command: docker build -t tmp << parameters.path >>
       - run:
-          name: Docker tag [VERSION]
-          command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:$(docker inspect tmp --format '{{ index .Config.Labels "version" }}')"
+          name: Set image version
+          command: echo "export IMAGE_VERSION=$(docker inspect tmp --format '{{ index .Config.Labels "version" }}')" >> << parameters.env >>
       - run:
-          name: Docker tag [LATEST]
-          command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:latest"
+          name: Docker tag [VERSION]
+          command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:$IMAGE_VERSION"
+#       - run:
+#           name: Docker tag [LATEST]
+#           command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:latest"
       - run:
           name: Docker image list
-          command: docker image ls
+          command: echo docker push "$DOCKER_REGISTRY/<< parameters.image >>:$IMAGE_VERSION"
