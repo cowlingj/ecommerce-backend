@@ -42,11 +42,12 @@ commands:
           name: Set image version
           command: echo "export IMAGE_VERSION=$(docker inspect tmp --format '{{ index .Config.Labels "version" }}')" >> << parameters.env >>
       - run:
-          name: Docker tag [VERSION]
-          command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:$IMAGE_VERSION"
-#       - run:
-#           name: Docker tag [LATEST]
-#           command: docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:latest"
+          name: Docker tag
+          command: |
+            docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:$IMAGE_VERSION"
+            docker tag tmp "$DOCKER_REGISTRY/<< parameters.image >>:latest"
       - run:
-          name: Docker image list
-          command: echo docker push "$DOCKER_REGISTRY/<< parameters.image >>:$IMAGE_VERSION"
+          name: Docker push
+          command: |
+            docker push "$DOCKER_REGISTRY/<< parameters.image >>:$IMAGE_VERSION"
+            docker push "$DOCKER_REGISTRY/<< parameters.image >>:latest"
