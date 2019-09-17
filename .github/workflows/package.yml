@@ -39,6 +39,7 @@ jobs:
         with:
           entrypoint: "sh"
           args: >
+            -c
             source ${HOME}/tags;
             env;
             docker push
