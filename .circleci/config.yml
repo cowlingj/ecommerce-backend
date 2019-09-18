@@ -92,7 +92,7 @@ commands:
           command: |
             echo "${GCP_SERVICE_KEY}" | gcloud auth activate-service-account "${GCP_SERVICE_ACCOUNT}" --key-file=-
             gcloud --quiet config set project ${GCP_PROJECT_ID}
-            gcloud --quiet config set zone ${GCP_ZONE}
+            gcloud --quiet config set compute/zone ${GCP_ZONE}
             gcloud auth configure-docker
       - run:
           name: Docker build
