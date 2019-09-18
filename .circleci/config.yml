@@ -36,7 +36,6 @@ commands:
           name: Setup GCP
           command: |
             echo "${GCP_SERVICE_KEY}" > key.json
-            head -c 192 key.json
             gcloud auth activate-service-account "${GCP_SERVICE_ACCOUNT}" --key-file=key.json
             gcloud --quiet config set project ${GCP_PROJECT_ID}
         # gcloud --quiet config set compute/zone ${GCP_COMPUTE_ZONE}
