@@ -1,10 +1,10 @@
 dependencies:
   - name: helpers
-    repository: http://localhost:8879
+    repository: https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/
     version: 0.0.1
   - name: postgres
-    repository: http://localhost:8879
+    repository: https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/
     version: 0.0.1
   - name: elasticsearch
-    repository: http://localhost:8879
+    repository: https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/
     version: 0.0.1
