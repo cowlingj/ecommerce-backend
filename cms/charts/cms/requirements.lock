@@ -1,9 +1,9 @@
 dependencies:
 - name: mongodb
-  repository: http://localhost:8879
+  repository: https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/
   version: 0.0.1
 - name: helpers
-  repository: http://localhost:8879
+  repository: https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/
   version: 0.0.1
-digest: sha256:f4b8822f37ac6ad2147efc348700131515f65e754a3c7a2cd3a023ff67f4bb89
-generated: "2019-09-13T17:25:39.969438302+01:00"
+digest: sha256:4148d03529506a355e1bbf784b130571abeabc692b357f1a2e9a1fdff55c7acf
+generated: "2019-09-18T14:04:53.544879131+01:00"
