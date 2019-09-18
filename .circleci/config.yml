@@ -23,14 +23,13 @@ workflows:
             branches:
               only:
                 - master
-# TODO: use remote images
-#       - build-auth-init:
-#           filters:
-#             branches:
-#               only:
-#                 - master
-#           requires:
-#             - build-postgres-client
+      - build-auth-init:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build-postgres-client
       - build-mongodb-main:
           filters:
             branches:
