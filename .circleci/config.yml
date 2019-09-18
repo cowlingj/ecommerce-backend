@@ -11,8 +11,6 @@ workflows:
 jobs:
   build:
     shell: /bin/sh -le
-    environment:
-      - BASH_ENV: "/etc/profile"
     docker:
       - image: google/cloud-sdk
     steps:
@@ -21,7 +19,22 @@ jobs:
       - docker_package:
           image: "cms.admin"
           path: "cms/main/"
-          env: "/etc/profile"
+      - docker_package:
+          image: "integration-test.cms.admin"
+          path: "cms/integration-test/main"
+      - docker_package:
+          image: "auth.admin"
+          path: "auth/main/"
+      - docker_package:
+          image: "client.postgres.data"
+          path: "postgres/client/"
+# TODO: make init based of gcp image
+#       - docker_package:
+#           image: "init.auth.admin"
+#           path: "auth/init/"
+      - docker_package:
+          image: "mongodb.data"
+          path: "mongodb/main/"
 commands:
   docker_package:
     parameters:
@@ -29,31 +42,26 @@ commands:
         type: string
       path:
         type: string
-      env:
-        type: string
     steps:
       - run:
           name: Setup GCP
           command: |
-            echo "${GCP_SERVICE_KEY}" > key.json
-            gcloud auth activate-service-account "${GCP_SERVICE_ACCOUNT}" --key-file=key.json
+            echo "${GCP_SERVICE_KEY}" | gcloud auth activate-service-account "${GCP_SERVICE_ACCOUNT}" --key-file=-
             gcloud --quiet config set project ${GCP_PROJECT_ID}
             gcloud auth configure-docker
-        # gcloud --quiet config set compute/zone ${GCP_COMPUTE_ZONE}
-        # gcloud auth configure-docker
       - run:
           name: Docker build
           command: docker build -t tmp << parameters.path >>
       - run:
           name: Set image version
-          command: echo "export IMAGE_VERSION=$(docker inspect tmp --format '{{ index .Config.Labels "version" }}')" >> << parameters.env >>
+          command: docker inspect tmp --format '{{ index .Config.Labels "version" }}' > /tmp/image_version
       - run:
           name: Docker tag
           command: |
-            docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:${IMAGE_VERSION}"
+            docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
             docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
       - run:
           name: Docker push
           command: |
-            docker push "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:${IMAGE_VERSION}"
+            docker push "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
             docker push "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
