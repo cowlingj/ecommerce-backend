@@ -1,6 +1,6 @@
 dependencies:
 - name: helpers
-  repository: http://localhost:8879
+  repository: https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/
   version: 0.0.1
-digest: sha256:67e05968dec494a553bd0b54c1da93e199d0f4649d937cf88e38e70dc8ece677
-generated: "2019-09-13T17:25:07.059115746+01:00"
+digest: sha256:11880feb387fcb2551bd12e4960f6bf695a99836ae09bcf037b99511e8be39d1
+generated: "2019-09-18T14:03:12.034603276+01:00"
