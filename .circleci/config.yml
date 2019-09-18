@@ -3,35 +3,78 @@ workflows:
   version: 2
   workflow:
     jobs:
-      - build:
+      - build-cms-main:
           filters:
             branches:
               only:
                 - master
-jobs:
-  build:
+      - build-cms-integration-test:
+          filters:
+            branches:
+              only:
+                - master
+      - build-auth-main:
+          filters:
+            branches:
+              only:
+                - master
+      - build-postgres-client:
+          filters:
+            branches:
+              only:
+                - master
+# TODO: use remote images
+#       - build-auth-init:
+#           filters:
+#             branches:
+#               only:
+#                 - master
+#           requires:
+#             - build-postgres-client
+      - build-mongodb-main:
+          filters:
+            branches:
+              only:
+                - master
+executors:
+  gcloud:
     shell: /bin/sh -le
     docker:
       - image: google/cloud-sdk
+jobs:
+  build-cms-main:
+    executor: gcloud
     steps:
-      - setup_remote_docker
-      - checkout
       - docker_package:
           image: "cms.admin"
           path: "cms/main/"
+  build-cms-integration-test:
+    executor: gcloud
+    steps:
       - docker_package:
           image: "integration-test.cms.admin"
           path: "cms/integration-test/main"
+  build-auth-main:
+    executor: gcloud
+    steps:
       - docker_package:
           image: "auth.admin"
           path: "auth/main/"
+  build-postgres-client:
+    executor: gcloud
+    steps:
       - docker_package:
           image: "client.postgres.data"
           path: "postgres/client/"
-# TODO: make init based of gcp image
-#       - docker_package:
-#           image: "init.auth.admin"
-#           path: "auth/init/"
+  build-auth-init:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "init.auth.admin"
+          path: "auth/init/"
+  build-mongodb-main:
+    executor: gcloud
+    steps:
       - docker_package:
           image: "mongodb.data"
           path: "mongodb/main/"
@@ -43,6 +86,8 @@ commands:
       path:
         type: string
     steps:
+      - setup_remote_docker
+      - checkout
       - run:
           name: Setup GCP
           command: |
@@ -60,7 +105,7 @@ commands:
           command: |
             docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
             docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
-      - run:
+      - deploy:
           name: Docker push
           command: |
             docker push "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
