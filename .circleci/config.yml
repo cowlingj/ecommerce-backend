@@ -125,10 +125,10 @@ executors:
     shell: /bin/sh -leo pipefail
     docker:
       - image: alpine:latest
-  docker_and_git:
+  git:
     shell: /bin/sh -leo pipefail
     docker:
-      - image: docker/stable-git
+      - image: alpine/git:1.0.7
   helm:
     shell: /bin/sh -leo pipefail
     docker:
@@ -212,7 +212,7 @@ jobs:
     steps:
       - generate_index
   commit_if_different:
-    executor: docker_and_git
+    executor: git
     steps:
       - commit_if_workspace_different:
           message: "Update helm repo"
