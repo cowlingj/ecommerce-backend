@@ -1,45 +1,136 @@
+# SECRETS:
+# HELM_REPO_PREFIX - url for the helm repo (/helm/repo is appended to complete full url)
+# GIT_USER_NAME - username for git account to use
+# GIT_USER_EMAIL - email for git account to use
+# GITHUB_TOKEN - github personal access token (requires permission to commit to repo)
+# GCP_SERVICE_KEY - key for gcp service account (backslash sequences must be escaped)
+# GCP_PROJECT_ID - gcp project id
+# GCP_REGISTRY_PREFIX - the registry prefix to use for gcp container registry (determines storage location)
+---
+
 version: 2.1
 workflows:
   version: 2
-  workflow:
+
+  package:
     jobs:
       - build-cms-main:
           filters:
-            branches:
+            tags:
               only:
-                - master
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
       - build-cms-integration-test:
           filters:
-            branches:
+            tags:
               only:
-                - master
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
       - build-auth-main:
-          filters:
-            branches:
+            tags:
               only:
-                - master
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
       - build-postgres-client:
-          filters:
-            branches:
+            tags:
               only:
-                - master
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
       - build-auth-init:
           filters:
-            branches:
+            tags:
               only:
-                - master
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
           requires:
             - build-postgres-client
       - build-mongodb-main:
           filters:
-            branches:
+            tags:
               only:
-                - master
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+
+  update_helm_charts:
+    jobs:
+      - package-helpers:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+      - package-elasticsearch:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+      - package-postgres:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+          requires:
+            - package-helpers
+      - package-mongodb:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+          requires:
+            - package-helpers
+      - package-cms:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+          requires:
+            - package-helpers
+            - package-mongodb
+      - package-cms-integration-test:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+      - package-auth:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+          requires:
+            - package-elasticsearch
+            - package-postgres
+      - generate_index:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+          requires:
+            - package-auth
+            - package-cms
+            - package-cms-integration-test
+            - package-elasticsearch
+            - package-helpers
+            - package-mongodb
+            - package-postgres
+      - commit_if_different:
+          filters:
+            tags:
+              only:
+                - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+          requires:
+            - generate_index
+
 executors:
   gcloud:
     shell: /bin/sh -le
     docker:
       - image: google/cloud-sdk
+  alpine:
+    shell: /bin/sh -leo pipefail
+    docker:
+      - image: alpine:latest
+  docker_and_git:
+    shell: /bin/sh -leo pipefail
+    docker:
+      - image: docker/stable-git
+  helm:
+    shell: /bin/sh -leo pipefail
+    docker:
+      - image: alpine/helm:2.14.0
+
 jobs:
   build-cms-main:
     executor: gcloud
@@ -77,6 +168,52 @@ jobs:
       - docker_package:
           image: "mongodb.data"
           path: "mongodb/main/"
+
+  package-helpers:
+    executor: helm
+    steps:
+      - helm_package:
+          path: helm/helpers/
+  package-elasticsearch:
+    executor: helm
+    steps:
+      - helm_package:
+          path: elasticsearch/charts/elasticsearch/
+  package-postgres:
+    executor: helm
+    steps:
+      - helm_package:
+          path: postgres/charts/postgres/
+  package-mongodb:
+    executor: helm
+    steps:
+      - helm_package:
+          path: mongodb/charts/mongodb/
+  package-cms:
+    executor: helm
+    steps:
+      - helm_package:
+          path: cms/charts/cms/
+  package-cms-integration-test:
+    executor: helm
+    steps:
+      - helm_package:
+          path: cms/charts/cms-integration-test/
+  package-auth:
+    executor: helm
+    steps:
+      - helm_package:
+          path: auth/charts/auth/
+  generate_index:
+    executor: helm
+    steps:
+      - helm_index
+  commit_if_different:
+    executor: docker_and_git
+    steps:
+      - commit_if_workspace_different:
+          message: "Update helm repo"
+
 commands:
   docker_package:
     parameters:
@@ -90,8 +227,9 @@ commands:
       - run:
           name: Setup GCP
           command: |
-            echo "${GCP_SERVICE_KEY}" | gcloud auth activate-service-account "${GCP_SERVICE_ACCOUNT}" --key-file=-
+            echo "${GCP_SERVICE_KEY}" | gcloud auth activate-service-account --key-file=-
             gcloud --quiet config set project ${GCP_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GCP_ZONE}
             gcloud auth configure-docker
       - run:
           name: Docker build
@@ -102,10 +240,68 @@ commands:
       - run:
           name: Docker tag
           command: |
-            docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
-            docker tag tmp "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
+            docker tag tmp "${GCP_REGISTRY_PREFIX}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
+            docker tag tmp "${GCP_REGISTRY_PREFIX}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
       - deploy:
           name: Docker push
           command: |
-            docker push "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
-            docker push "${DOCKER_REGISTRY}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
+            docker push "${GCP_REGISTRY_PREFIX}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
+            docker push "${GCP_REGISTRY_PREFIX}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
+  helm_package:
+    parameters:
+      path:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: helm package
+          command: |
+            mkdir --parents /tmp/helm/repo
+            helm package --dependency-update --destination /tmp/helm/repo/ << parameters.path >>
+      - persist_to_workspace:
+          root: /
+          paths:
+            - /tmp/helm/repo/*
+  helm_index:
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: helm index
+          command: |
+            helm index --url ${HELM_REPO_PREFIX}/helm/repo/ /tmp/workspace/tmp/helm/repo/
+            mkdir --parents /tmp/helm/repo
+            mv /tmp/workspace/tmp/helm/repo/index.yaml /tmp/helm/repo/index.yaml
+      - persist_to_workspace:
+          root: /
+          paths:
+            - /tmp/helm/repo/index.yaml
+  commit_if_workspace_different:
+    parameters:
+      workspace_dir:
+        type: string
+        default: ""
+      src_dir:
+        type: string
+        default: "."
+      message:
+        type: string
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: git config
+          command: |
+            git config user.name "${GIT_USER_NAME}"
+            git config user.email "${GIT_USER_EMAIL}"
+      - run:
+          name: replace files
+          command: cp /tmp/workspace/<< parameters.workspace_dir >> << parameters.src_dir >>
+      - run:
+          name: possibly commit diff
+          command: |
+            if ! git diff --quiet; then
+              git add --all
+              git commit --message "[CIRCLE CI] << parameters.message >>"
+              git push -q https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
+            fi

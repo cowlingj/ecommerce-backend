@@ -1,7 +1,7 @@
 dependencies:
   - name: mongodb
-    repository: https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/
+    repository: file://../../../mongodb/charts/mongodb/
     version: 0.0.1
   - name: helpers
-    repository: https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/
+    repository: file://../../../helm/charts/helpers/
     version: 0.0.1
