@@ -25,10 +25,12 @@ workflows:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
       - build-auth-main:
+          filters:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
       - build-postgres-client:
+          filters:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
