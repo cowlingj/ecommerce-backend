@@ -257,6 +257,9 @@ commands:
     steps:
       - checkout
       - run:
+          name: helm init
+          command: helm init --client-only
+      - run:
           name: helm package
           command: |
             mkdir --parents /tmp/helm/repo
