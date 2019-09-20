@@ -210,7 +210,7 @@ jobs:
   generate_index:
     executor: helm
     steps:
-      - helm_index
+      - generate_index
   commit_if_different:
     executor: docker_and_git
     steps:
@@ -268,14 +268,14 @@ commands:
           root: /tmp/helm/
           paths:
             - repo/*
-  helm_index:
+  generate_index:
     steps:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          name: helm index
+          name: helm repo index
           command: |
-            helm index --url ${HELM_REPO_PREFIX}/helm/repo/ /tmp/workspace/tmp/helm/repo/
+            helm repo index --url ${HELM_REPO_PREFIX}/helm/repo/ /tmp/workspace/tmp/helm/repo/
             mkdir --parents /tmp/helm/repo
             mv /tmp/workspace/tmp/helm/repo/index.yaml /tmp/helm/repo/index.yaml
       - persist_to_workspace:
