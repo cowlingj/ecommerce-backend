@@ -303,7 +303,7 @@ commands:
             git config user.email "${GIT_USER_EMAIL}"
       - run:
           name: replace files
-          command: cp /tmp/workspace/<< parameters.workspace_dir >> << parameters.src_dir >>
+          command: cp -r /tmp/workspace/<< parameters.workspace_dir >> << parameters.src_dir >>
       - run:
           name: possibly commit diff
           command: |
