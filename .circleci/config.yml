@@ -303,11 +303,12 @@ commands:
             git config user.email "${GIT_USER_EMAIL}"
       - run:
           name: replace files
-          command: cp -r /tmp/workspace/<< parameters.workspace_dir >> << parameters.src_dir >>
+          command: cp -r /tmp/workspace/<< parameters.workspace_dir >>/* << parameters.src_dir >>
       - run:
           name: possibly commit diff
           command: |
             if ! git diff --quiet; then
+              echo "changes detected, committing"
               git add --all
               git commit --message "[CIRCLE CI] << parameters.message >>"
               git push -q https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
