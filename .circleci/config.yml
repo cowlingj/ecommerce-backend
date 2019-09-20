@@ -20,16 +20,22 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
       - build-cms-integration-test:
           filters:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
       - build-auth-main:
           filters:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
       - build-postgres-client:
           filters:
             tags:
@@ -40,6 +46,8 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
           requires:
             - build-postgres-client
       - build-mongodb-main:
@@ -47,6 +55,8 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
 
   update_helm_charts:
     jobs:
@@ -55,16 +65,22 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
       - package-elasticsearch:
           filters:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
       - package-postgres:
           filters:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
           requires:
             - package-helpers
       - package-mongodb:
@@ -72,6 +88,8 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
           requires:
             - package-helpers
       - package-cms:
@@ -79,6 +97,8 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
           requires:
             - package-helpers
             - package-mongodb
@@ -87,11 +107,15 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
       - package-auth:
           filters:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
           requires:
             - package-elasticsearch
             - package-postgres
@@ -100,6 +124,8 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
           requires:
             - package-auth
             - package-cms
@@ -113,6 +139,8 @@ workflows:
             tags:
               only:
                 - /release\.[0-9]+\.[0-9]+\.[0-9]+(-.*)?/
+            branches:
+              ignore: /.*/
           requires:
             - generate_index
 
