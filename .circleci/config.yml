@@ -262,9 +262,9 @@ commands:
             mkdir --parents /tmp/helm/repo
             helm package --dependency-update --destination /tmp/helm/repo/ << parameters.path >>
       - persist_to_workspace:
-          root: /
+          root: /tmp/helm/
           paths:
-            - /tmp/helm/repo/
+            - repo/*
   helm_index:
     steps:
       - attach_workspace:
@@ -276,9 +276,9 @@ commands:
             mkdir --parents /tmp/helm/repo
             mv /tmp/workspace/tmp/helm/repo/index.yaml /tmp/helm/repo/index.yaml
       - persist_to_workspace:
-          root: /
+          root: /tmp/helm/
           paths:
-            - /tmp/helm/repo/index.yaml
+            - repo/index.yaml
   commit_if_workspace_different:
     parameters:
       workspace_dir:
