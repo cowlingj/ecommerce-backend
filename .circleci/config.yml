@@ -5,6 +5,7 @@
 # GITHUB_TOKEN - github personal access token (requires permission to commit to repo)
 # GCP_SERVICE_KEY - key for gcp service account (backslash sequences must be escaped)
 # GCP_PROJECT_ID - gcp project id
+# GCP_ZONE - gcp compute zone
 # GCP_REGISTRY_PREFIX - the registry prefix to use for gcp container registry (determines storage location)
 ---
 
@@ -263,7 +264,7 @@ commands:
       - persist_to_workspace:
           root: /
           paths:
-            - /tmp/helm/repo/*
+            - /tmp/helm/repo/
   helm_index:
     steps:
       - attach_workspace:
