@@ -176,7 +176,7 @@ jobs:
     executor: helm
     steps:
       - helm_package:
-          path: helm/helpers/
+          path: helm/charts/helpers/
   package-elasticsearch:
     executor: helm
     steps:
