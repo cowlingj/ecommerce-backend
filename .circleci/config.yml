@@ -27,7 +27,7 @@ workflows:
           filters:
             tags:
               only:
-                - /^.*$/
+                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
               ignore: /.*/
       - build-auth-main:
@@ -163,7 +163,7 @@ executors:
   helm:
     shell: /bin/sh -leo pipefail
     docker:
-      - image: alpine/helm:2.14.0
+      - image: praqma/helmsman:v1.12.0
 
 jobs:
   build-cms-main:
