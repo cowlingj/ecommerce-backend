@@ -1,5 +1,6 @@
 # SECRETS:
 # HELM_REPO_PREFIX - url for the helm repo (/helm/repo is appended to complete full url)
+# HELM_REPO_BRANCH - branch for push to helm repo
 # GIT_USER_NAME - username for git account to use
 # GIT_USER_EMAIL - email for git account to use
 # GITHUB_TOKEN - github personal access token (requires permission to commit to repo)
@@ -344,5 +345,5 @@ commands:
               git commit --message "[CIRCLE CI] << parameters.message >>"
               git push --quiet \
                 https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git 2>&1 \
-                HEAD:${CIRCLE_BRANCH} | sed s/${GITHUB_TOKEN}/**********/
+                HEAD:${HELM_REPO_BRANCH} | sed s/${GITHUB_TOKEN}/**********/
             fi
