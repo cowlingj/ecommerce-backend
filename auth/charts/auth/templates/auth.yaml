@@ -30,6 +30,13 @@ spec:
       containers:
         - name: main
           image: {{ printf "%s:%s" "fusionauth/fusionauth-app" .Values.fusionauth.app.version }}
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
           readinessProbe:
             tcpSocket:
               port: 9011

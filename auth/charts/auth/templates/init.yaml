@@ -22,6 +22,13 @@ spec:
       containers:
       - name: main
         image: "docker.pkg.github.com/cowlingj/ecommerce-backend/init.auth.admin:0.0.1"
+        resources:
+            limits:
+              cpu: 100m
+              memory: 64Mi
+            requests:
+              cpu: 50m
+              memory: 32Mi
         env:
           - name: PGUSER
             valueFrom:
@@ -47,5 +54,3 @@ spec:
               secretKeyRef:
                 name: auth-secrets
                 key: authKey
-          - name: AUTH_KEY_2
-            value: "$(AUTH_KEY)"

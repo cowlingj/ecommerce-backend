@@ -20,9 +20,15 @@ spec:
     spec:
       containers:
         - name: main
-          # TODO: use normal postgres image, aditional changes will be done via external deployments
           # TODO: same for mongodb (init for cms)
           image: "postgres:11.5-alpine"
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
           env:
             - name: POSTGRES_USER
               valueFrom:

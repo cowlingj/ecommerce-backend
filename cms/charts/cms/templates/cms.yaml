@@ -21,6 +21,13 @@ spec:
       containers:
         - name: main
           image: {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/cms.admin" .Chart.AppVersion | quote }}
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 32Mi
           ports:
             - containerPort: 80
           readinessProbe:
