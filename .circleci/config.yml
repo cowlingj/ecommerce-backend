@@ -27,7 +27,7 @@ workflows:
           filters:
             tags:
               only:
-                - /^release.*$/
+                - /^.*$/
             branches:
               ignore: /.*/
       - build-auth-main:
