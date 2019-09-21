@@ -343,5 +343,5 @@ commands:
               git add --all
               git commit --message "[CIRCLE CI] << parameters.message >>"
               git push --quiet \
-                https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git | sed s/${GITHUB_TOKEN}/**********/
+                https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git 2>&1 | sed s/${GITHUB_TOKEN}/**********/
             fi
