@@ -342,5 +342,6 @@ commands:
               echo "changes detected, committing"
               git add --all
               git commit --message "[CIRCLE CI] << parameters.message >>"
-              git push -q https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
+              git push --quiet \
+                https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git | sed s/${GITHUB_TOKEN}/**********/
             fi
