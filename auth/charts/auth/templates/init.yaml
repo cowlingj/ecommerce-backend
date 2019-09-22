@@ -22,7 +22,7 @@ spec:
           command: [ "ncat", "-z", "auth", "9011" ]
       containers:
       - name: main
-        image: {{ printf "%s:%s" .Values.init.image .Values.init.version }}}
+        image: {{ printf "%s:%s" .Values.init.image .Values.init.version }}
         resources:
             limits:
               cpu: 100m
