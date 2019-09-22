@@ -6,7 +6,7 @@ A headless cms built with [keystonejs](https://keystonejs.com)
 
 ## Images
 
-main: docker.pkg.github.com/cowlingj/ecommerce-backend/cms.admin:0.0.1
+main: gcr.io/gke-test-253221/cms.admin:0.0.1
 
 ## Getting Started
 

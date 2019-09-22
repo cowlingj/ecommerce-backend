@@ -1,3 +1,3 @@
 ## Images
 
-main: docker.pkg.github.com/cowlingj/ecommerce-backend/postgres.data:0.0.1
+client: gcr.io/gke-test-253221/client.postgres.data:0.0.1

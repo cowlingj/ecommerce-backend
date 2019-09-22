@@ -1,1 +1,2 @@
 env: production
+image: gcr.io/gke-test-253221/mongodb.data

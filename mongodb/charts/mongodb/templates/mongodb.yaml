@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: main
-          image: {{ printf "%s:%s" "docker.pkg.github.com/cowlingj/ecommerce-backend/mongodb.data" .Chart.AppVersion }}
+          image: {{ printf "%s:%s" .Values.image .Chart.AppVersion }}
           resources:
             limits:
               cpu: 100m

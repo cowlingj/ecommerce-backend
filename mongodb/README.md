@@ -4,7 +4,7 @@ A mongodb cluster
 
 ## Images
 
-main: docker.pkg.github.com/cowlingj/ecommerce-backend/mongodb.data:0.0.1
+main: gcr.io/gke-test-253221/mongodb.data:0.0.1
 
 ## Getting Started
 
