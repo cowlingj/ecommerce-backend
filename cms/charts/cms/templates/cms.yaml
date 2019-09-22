@@ -24,10 +24,10 @@ spec:
           resources:
             limits:
               cpu: 100m
-              memory: 128Mi
+              memory: 256Mi
             requests:
               cpu: 100m
-              memory: 32Mi
+              memory: 128Mi
           ports:
             - containerPort: 80
           readinessProbe:
