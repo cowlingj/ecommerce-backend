@@ -18,7 +18,7 @@ keystone.init({
 	'session': false,
 	'auth': true,
 	'user model': 'User',
-	'admin path': '/cms/admin'
+	'admin path': 'cms/admin'
 })
 
 keystone.import('models')
