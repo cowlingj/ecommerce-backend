@@ -1,11 +1,7 @@
-var graphql = require('./graphql')
-var middleware = require('./middleware')
-var keystone = require('keystone').middleware
+var keystone = require('keystone')
 
 exports = module.exports = function (app) {
-	graphql.default(app)
-
-	app.get('/', (_req, res) => { res.redirect('/keystone') })
+	app.get('/', (_req, res) => { res.redirect(keystone.get('admin path')) })
 	app.all('*', (_req, res) => { res.sendStatus(404) })
 	app.use((_err, _req, res, _next) => { res.sendStatus(500) })
 }

@@ -1,18 +1,15 @@
 // Simulate config options from your production environment by
 // customising the .env file in your project's root folder.
 require('dotenv').config();
-const path = require('path')
 
-// Require keystone
 var keystone = require('keystone');
 
-// Initialise Keystone with your project's configuration.
-// See http://keystonejs.com/guide/config for available options
-// and documentation.
+var express = require('express');
 
 keystone.init({
 	'name': 'Uni Cycle',
 	'brand': 'Uni Cycle',
+	'port': 80,
 
 	'static': 'public',
 	'favicon': 'public/assets/favicon.ico',
@@ -21,32 +18,22 @@ keystone.init({
 	'session': false,
 	'auth': true,
 	'user model': 'User',
-	//'module root': __dirname
+	'admin path': '/cms/admin'
 })
 
-// Load your project's Models
 keystone.import('models')
 
-// Setup common locals for your templates. The following are required for the
-// bundled templates and layouts. Any runtime locals (that should be set uniquely
-// for each request) should be added to ./routes/middleware.js
-// keystone.set('locals', {
-// 	_: require('lodash'),
-// 	env: keystone.get('env'),
-// 	utils: keystone.utils,
-// 	editable: keystone.content.editable,
-// });
-
-// Load your project's Routes
 keystone.set('routes', require('./routes'));
 
-
-// Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	'Users, Apps & Permissions': [ 'User', 'Role', 'AuthCode' ],
-	'Resources': [ 'String', 'Upload' ],
+	'Users': [ 'User' ],
+	'Resources': [ 'String', /*'Upload'*/ ],
 })
 
-// Start Keystone to connect to your database and initialise the web server
-
 keystone.start();
+
+const app = express();
+
+require('./api')(app);
+
+app.listen(8080, () => console.log(`api endpoint available`))

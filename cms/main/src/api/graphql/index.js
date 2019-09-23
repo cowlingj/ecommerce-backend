@@ -5,11 +5,10 @@ const path = require('path')
 
 const server = new ApolloServer({
   typeDefs: importSchema(path.join(__dirname, 'schema', 'schema.graphql')),
-  debug: true,
-  playground: true,
+  debug: process.env.NODE_ENV == 'development',
+  playground: process.env.NODE_ENV == 'development',
   resolvers: {
     Query: {
-      users: async () => await keystone.list('User').model.find().exec(),
       strings: async () => await keystone.list('String').model.find().exec()
     }
   },
