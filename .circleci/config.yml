@@ -339,6 +339,7 @@ commands:
       - run:
           name: possibly commit diff
           command: |
+            git add --intent-to-add --all
             if ! git diff --quiet; then
               echo "changes detected, committing"
               git add --all
