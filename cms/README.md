@@ -52,7 +52,7 @@ docker build [--tag <TAG_NAME>] ./main
 
 helm:
 ```sh
-docker build -t cms.frontned.local:<Chart.AppVersion> ./main
+docker build -t cms.admin.local:<Chart.AppVersion> ./main
 ```
 
 ### Usage

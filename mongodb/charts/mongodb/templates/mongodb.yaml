@@ -1,26 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb
+  name: {{ .Values.name }}
   labels:
-    app: mongodb
-    group: backend
-    version: {{ .Chart.AppVersion }}
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb
-      group: backend
+      app: {{ .Values.name }}
+      group: {{ .Values.group }}
+      version: {{ .Values.version }}
   template:
     metadata:
       labels:
-        app: mongodb
-        group: backend
+        app: {{ .Values.name }}
+        group: {{ .Values.group }}
+        version: {{ .Values.version }}
     spec:
+      {{ if .Values.imagePullSecret -}}
+        imagePullSecrets:
+          - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: main
-          image: {{ printf "%s:%s" .Values.image .Chart.AppVersion }}
+          image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
           resources:
             limits:
               cpu: 100m
@@ -45,18 +51,22 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb
+  name: {{ .Values.name }}
   labels:
-    app: mongodb
-    group: backend
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
 spec:
   type: {{ template "helpers.service.type" .Values.env }}
   selector:
-    app: mongodb
-    group: backend
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
   ports:
-    - name: tcp-mongodb
-      port: 27017
-      targetPort: 27017
-
+    {{ with .Values.ports.main -}}
+      - name: {{ printf "\"%s-%s\"" .protocol .name }}
+        port: {{ .port }}
+        protocol: {{ .protocol }}
+        targetPort: 27017
+    {{- end }}
   

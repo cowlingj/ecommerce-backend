@@ -1,35 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cms
+  name: {{ .Values.name }}
   labels:
-    app: cms
-    group: frontend
-    version: {{ .Chart.AppVersion }}
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: cms
-      group: frontend
+      app: {{ .Values.name }}
+      group: {{ .Values.group }}
+      version: {{ .Values.version }}
   template:
     metadata:
       labels:
-        app: cms
-        group: frontend
+        app: {{ .Values.name }}
+        group: {{ .Values.group }}
+        version: {{ .Values.version }}
     spec:
+      {{ if .Values.imagePullSecret -}}
+        imagePullSecrets:
+          - name: {{ .Values.imagePullSecret }}
+      {{- end }}
       containers:
         - name: main
-          image: {{ printf "%s:%s" .Values.image .Chart.AppVersion | quote }}
+          image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
           resources:
             limits:
-              cpu: 200m
+              cpu: 300m
               memory: 256Mi
             requests:
               cpu: 200m
               memory: 128Mi
           ports:
             - containerPort: 80
+            - containerPort: 8080
           readinessProbe:
             tcpSocket:
               port: 80
@@ -37,27 +44,38 @@ spec:
             - name: COOKIE_SECRET
               value: {{ quote .Values.cookieSecret }}
             - name: MONGO_URI
-              value: {{ quote .Values.db }}
+              value: {{ printf "\"mongodb://%s:%s/%s\"" .Values.mongodb.name ( toString .Values.mongodb.port ) .Values.cms.db }}
             - name: NODE_ENV
-              value: {{ .Values.env | quote }}
+              value: {{ quote .Values.env }}
             - name: PORT
-              value: {{ .Values.port | quote }}
+              value: "80"
             - name: IP
               value: "0.0.0.0"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: cms
+  name: {{ .Values.name }}
   labels:
-    app: cms
-    group: frontend
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
 spec:
   type: {{ template "helpers.service.type" .Values.env }}
   selector:
-    app: cms
-    group: frontend
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
   ports:
-    - name: http-cms
-      port: {{ .Values.port }}
-      targetPort: {{ .Values.port }}
+    {{ with .Values.ports.ui -}}
+      - name: {{ printf "\"%s-%s\"" .protocol .name }}
+        port: {{ .port }}
+        protocol: {{ .protocol }}
+        targetPort: 80
+    {{- end }}
+    {{ with .Values.ports.api -}}
+      - name: {{ printf "\"%s-%s\"" .protocol .name }}
+        port: {{ .port }}
+        protocol: {{ .protocol }}
+        targetPort: 8080
+    {{- end }}

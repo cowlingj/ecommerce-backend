@@ -10,7 +10,7 @@ trap clean EXIT
 clean
 
 docker build -t integration.test.local:test ./main
-docker build -t cms.frontend.local:test ../main
+docker build -t cms.admin.local:test ../main
 
 # TODO: helm serve?
 
