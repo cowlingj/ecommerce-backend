@@ -63,7 +63,7 @@ spec:
     group: {{ .Values.group }}
     version: {{ .Values.version }}
   ports:
-    {{- with .Values.ports.main -}}
+    {{- with .Values.ports.main }}
     name: {{ printf "\"%s-%s\"" .protocol .name }}
     port: {{ .port }}
     protocol: {{ .protocol }}
