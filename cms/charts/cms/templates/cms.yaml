@@ -44,7 +44,7 @@ spec:
             - name: COOKIE_SECRET
               value: {{ quote .Values.cookieSecret }}
             - name: MONGO_URI
-              value: {{ printf "\"mongodb://%s:%s/%s\"" .Values.mongodb.name ( toString .Values.mongodb.port ) .Values.cms.db }}
+              value: {{ quote .Values.cms.mongodbUrl }}
             - name: NODE_ENV
               value: {{ quote .Values.env }}
             - name: PORT
