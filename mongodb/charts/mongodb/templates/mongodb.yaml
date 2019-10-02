@@ -64,9 +64,9 @@ spec:
     version: {{ .Values.version }}
   ports:
     {{- with .Values.ports.main }}
-    name: {{ printf "\"%s-%s\"" .protocol .name }}
-    port: {{ .port }}
-    protocol: {{ .protocol }}
-    targetPort: 27017
+    - name: {{ printf "\"%s-%s\"" .protocol .name }}
+      port: {{ .port }}
+      protocol: {{ .protocol }}
+      targetPort: 27017
     {{- end }}
   
