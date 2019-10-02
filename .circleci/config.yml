@@ -18,118 +18,75 @@ workflows:
     jobs:
       - build-cms-main:
           filters:
-            tags:
-              only:
-              # regex: release prefixed semver range
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
       - build-cms-integration-test:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
       - build-auth-main:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
       - build-postgres-client:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
       - build-auth-init:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
           requires:
             - build-postgres-client
       - build-mongodb-main:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
 
   update_helm_charts:
     jobs:
       - package-helpers:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
       - package-elasticsearch:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
       - package-postgres:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
           requires:
             - package-helpers
       - package-mongodb:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
           requires:
             - package-helpers
       - package-cms:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
           requires:
             - package-helpers
             - package-mongodb
       - package-cms-integration-test:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
       - package-auth:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
           requires:
             - package-elasticsearch
             - package-postgres
       - generate_index:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
           requires:
             - package-auth
             - package-cms
@@ -140,11 +97,8 @@ workflows:
             - package-postgres
       - commit_if_different:
           filters:
-            tags:
-              only:
-                - /^release[0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-z0-9-]+(?:\.[a-zA-z0-9-]+)*)?$/
             branches:
-              ignore: /.*/
+              only: master
           requires:
             - generate_index
 

@@ -70,12 +70,12 @@ spec:
     {{- with .Values.ports.ui }}
     - name: {{ printf "\"%s-%s\"" .protocol .name }}
       port: {{ .port }}
-      protocol: {{ .protocol }}
+      protocol: TCP
       targetPort: 80
     {{- end }}
     {{- with .Values.ports.api }}
     - name: {{ printf "\"%s-%s\"" .protocol .name }}
       port: {{ .port }}
-      protocol: {{ .protocol }}
+      protocol: TCP
       targetPort: 8080
     {{- end }}
