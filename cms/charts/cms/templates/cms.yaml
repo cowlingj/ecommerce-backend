@@ -67,15 +67,15 @@ spec:
     group: {{ .Values.group }}
     version: {{ .Values.version }}
   ports:
-    {{ with .Values.ports.ui -}}
-      - name: {{ printf "\"%s-%s\"" .protocol .name }}
-        port: {{ .port }}
-        protocol: {{ .protocol }}
-        targetPort: 80
+    {{- with .Values.ports.ui }}
+    - name: {{ printf "\"%s-%s\"" .protocol .name }}
+      port: {{ .port }}
+      protocol: {{ .protocol }}
+      targetPort: 80
     {{- end }}
-    {{ with .Values.ports.api -}}
-      - name: {{ printf "\"%s-%s\"" .protocol .name }}
-        port: {{ .port }}
-        protocol: {{ .protocol }}
-        targetPort: 8080
+    {{- with .Values.ports.api }}
+    - name: {{ printf "\"%s-%s\"" .protocol .name }}
+      port: {{ .port }}
+      protocol: {{ .protocol }}
+      targetPort: 8080
     {{- end }}
