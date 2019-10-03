@@ -5,57 +5,62 @@ ignore:
   SNYK-JS-LODASH-450202:
     - keystone > asyncdi > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > grappling-hook > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > embedly > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > expression-match > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
   SNYK-JS-LODASH-73638:
     - keystone > asyncdi > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > grappling-hook > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > embedly > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > expression-match > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
   SNYK-JS-LODASH-73639:
     - keystone > asyncdi > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > grappling-hook > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > embedly > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > expression-match > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
   'npm:lodash:20180130':
     - keystone > embedly > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
     - keystone > expression-match > lodash:
         reason: None given
-        expires: 'Never'
+        expires: Never
   SNYK-JS-MARKED-451341:
     - keystone > marked:
         reason: None given
-        expires: 'Never'
+        expires: Never
 # patches apply the minimum changes required to fix a vulnerability
 patch:
   'npm:lodash:20180130':
     - keystone > asyncdi > lodash:
-        patched: 'Never'
+        patched: Never
     - keystone > grappling-hook > lodash:
-        patched: 'Never'
+        patched: Never
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-10-03T22:11:55.138Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-03T22:11:55.138Z'
