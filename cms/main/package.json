@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "apollo-server-express": "^2.9.3",
+    "apollo-server-express": "^2.9.4",
     "async": "2.6.3",
     "dotenv": "4.0.0",
     "graphql-import": "^0.7.1",
