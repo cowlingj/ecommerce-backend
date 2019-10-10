@@ -2,7 +2,9 @@ var keystone = require('keystone');
 var Types = keystone.Field.Types;
 
 var StringResource = keystone.List('String', {
-  label: "Text"
+  label: "Text",
+  singular: "Text",
+  plural: "Text"
 })
 
 StringResource.add({
