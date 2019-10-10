@@ -1,7 +1,9 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
 
-var StringResource = keystone.List('String')
+var StringResource = keystone.List('String', {
+  label: "Text"
+})
 
 StringResource.add({
   name: { type: Types.Key, required: true, initial: true, unique: true },

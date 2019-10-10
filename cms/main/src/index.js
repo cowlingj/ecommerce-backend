@@ -34,12 +34,13 @@ async function init() {
 	keystone.set('nav', {
 		'Users': [ 'User' ],
 		'Resources': [ 'String', /*'Upload'*/ ],
+		'Events': [ 'Event' ]
 	})
 
 	await new Promise((resolve, reject) => {
 		try {
 		keystone.start(() => {
-			console.log('keystone endpoints available')
+			console.log('keystone endpoint available')
 			resolve()
 		})
 		} catch (e) {
