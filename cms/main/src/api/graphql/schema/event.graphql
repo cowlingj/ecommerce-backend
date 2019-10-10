@@ -1,0 +1,9 @@
+type Query {
+  events: [Event]
+}
+
+type Event {
+  id: String
+  title: String
+  description: String
+}

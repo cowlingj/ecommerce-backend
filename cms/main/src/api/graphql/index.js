@@ -9,7 +9,9 @@ const server = new ApolloServer({
   playground: process.env.NODE_ENV == 'development',
   resolvers: {
     Query: {
-      strings: async () => await keystone.list('String').model.find().exec()
+      strings: async () => await keystone.list('String').model.find().exec(),
+      users: async () => await keystone.list('User').model.find().exec(),
+      events: async () => await keystone.list('Event').model.find().exec()
     }
   },
 });

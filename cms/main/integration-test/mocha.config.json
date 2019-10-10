@@ -1,0 +1,8 @@
+{
+  "spec": [
+    "integration-test/**/*.spec.js"
+  ],
+  "require": [
+    "@babel/register"
+  ]
+}
