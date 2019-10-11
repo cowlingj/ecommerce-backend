@@ -82,7 +82,6 @@ workflows:
           requires:
             - package-auth
             - package-cms
-            - package-cms-integration-test
             - package-elasticsearch
             - package-helpers
             - package-mongodb
