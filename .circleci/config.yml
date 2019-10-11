@@ -20,10 +20,6 @@ workflows:
           filters:
             branches:
               only: master
-      - build-cms-integration-test:
-          filters:
-            branches:
-              only: master
       - build-auth-main:
           filters:
             branches:
@@ -72,10 +68,6 @@ workflows:
           requires:
             - package-helpers
             - package-mongodb
-      - package-cms-integration-test:
-          filters:
-            branches:
-              only: master
       - package-auth:
           filters:
             branches:
@@ -127,12 +119,6 @@ jobs:
       - docker_package:
           image: "cms.admin"
           path: "cms/main/"
-  build-cms-integration-test:
-    executor: gcloud
-    steps:
-      - docker_package:
-          image: "integration-test.cms.admin"
-          path: "cms/integration-test/main"
   build-auth-main:
     executor: gcloud
     steps:
@@ -183,11 +169,6 @@ jobs:
     steps:
       - helm_package:
           path: cms/charts/cms/
-  package-cms-integration-test:
-    executor: helm
-    steps:
-      - helm_package:
-          path: cms/charts/cms-integration-test/
   package-auth:
     executor: helm
     steps:
