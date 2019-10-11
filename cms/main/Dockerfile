@@ -1,9 +1,17 @@
-FROM node:lts
-LABEL version="0.0.1"
+FROM node:lts as build
 
-COPY package-lock.json /usr/lib/app/
-COPY package.json /usr/lib/app/
-COPY /src /usr/lib/app/src
+COPY . /usr/lib/app/
+WORKDIR /usr/lib/app
+RUN npm install
+RUN npm run build
+
+FROM node:lts as run
+
+COPY --from=build /usr/lib/app/package.json /usr/lib/app/package.json
+COPY --from=build /usr/lib/app/dist /usr/lib/app/dist
 WORKDIR /usr/lib/app
 RUN npm install --production
+
 ENTRYPOINT [ "npm", "run", "start" ]
+
+LABEL version="0.0.1"
