@@ -18,6 +18,6 @@ const server = new ApolloServer({
 
 module.exports = {
   default: (app) => {
-    server.applyMiddleware({ app, path: '/graphql' })
+    server.applyMiddleware({ app, path: '/' })
   }
 }
