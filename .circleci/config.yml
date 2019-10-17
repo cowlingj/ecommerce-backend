@@ -75,6 +75,17 @@ workflows:
           requires:
             - package-elasticsearch
             - package-postgres
+      - package-backend:
+          filters:
+            branches:
+              only: master
+          requires:
+            - package-auth
+            - package-cms
+            - package-elasticsearch
+            - package-helpers
+            - package-mongodb
+            - package-postgres
       - generate_index:
           filters:
             branches:
@@ -86,6 +97,7 @@ workflows:
             - package-helpers
             - package-mongodb
             - package-postgres
+            - package-backend
       - commit_if_different:
           filters:
             branches:
@@ -173,6 +185,11 @@ jobs:
     steps:
       - helm_package:
           path: auth/charts/auth/
+  package-backend:
+    executor: helm
+    steps:
+      - helm_package:
+          path: helm/charts/ecommerce-backend/
   generate_index:
     executor: helm
     steps:
