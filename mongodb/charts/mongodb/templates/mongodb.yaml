@@ -1,3 +1,4 @@
+{{- if .Values.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,9 +25,16 @@ spec:
         imagePullSecrets:
           - name: {{ .Values.imagePullSecret }}
       {{- end }}
+      volumes:
+        - name: db
+          persistentVolumeClaim:
+          claimName: mongodb
       containers:
         - name: main
           image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
+          volumeMounts:
+            - name: db
+              mountPath: /data/db
           resources:
             limits:
               cpu: 100m
@@ -69,4 +77,5 @@ spec:
       protocol: TCP
       targetPort: 27017
     {{- end }}
+{{- end }}
   

@@ -1,0 +1,28 @@
+{{- if .Values.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongodb
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 256M
+  accessModes:
+    - ReadWriteMany
+  gcePersistentDisk:
+    pdName: {{ .Values.persistenceDiskName }}
+    fsType: ext4
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb
+spec:
+  storageClassName: ""
+  volumeName: mongodb
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 128M
+{{- end }}
