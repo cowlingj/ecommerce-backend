@@ -1,3 +1,4 @@
+enabled: true
 env: production
 name: cms
 group: frontend

@@ -1,0 +1,53 @@
+all: &all
+  env: production
+  enabled: true
+  peerDependenciesHandled: true
+
+elasticsearch:
+  <<: *all 
+
+auth:
+  <<: *all
+  fusionauth:
+    app:
+      version: latest
+    search:
+      servers: http://elasticsearch-0.elasticsearch.svc.cluster.local:9200
+  init:
+    image: gcr.io/gke-test-253221/init.auth.admin
+    version: 0.0.1
+
+cms:
+  <<: *all
+  name: cms
+  group: frontend
+  image: "gcr.io/gke-test-253221/cms.admin"
+  imagePullSecret: gcr
+  version: "0.0.1"
+  mongodbUrl: null
+  cookieSecret: null
+  ports:
+    ui:
+      port: 80
+      protocol: http
+      name: ui
+    api:
+      port: 8080
+      protocol: http
+      name: api
+
+mongodb:
+  <<: *all
+  name: mongodb
+  group: frontend
+  image: gcr.io/gke-test-253221/mongodb.data
+  imagePullSecret: gcr
+  version: "4.2.0"
+  ports:
+    main:
+      port: 8080
+      protocol: mongo
+      name: main
+
+postgres:
+  <<: *all

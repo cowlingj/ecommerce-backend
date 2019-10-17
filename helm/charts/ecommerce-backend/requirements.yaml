@@ -1,0 +1,19 @@
+dependencies:
+  - name: elasticsearch
+    repository: file://../../../elasticsearch/charts/elasticsearch/
+    version: 0.0.1
+  - name: auth
+    repository: file://../../../auth/charts/auth/
+    version: 0.0.1
+  - name: cms
+    repository: file://../../../cms/charts/cms/
+    version: 0.0.1
+  - name: mongodb
+    repository: file://../../../mongodb/charts/mongodb/
+    version: 0.0.1
+  - name: postgres
+    repository: file://../../../postgres/charts/postgres/
+    version: 0.0.1
+  - name: helpers
+    repository: file://../../../helm/charts/helpers/
+    version: 0.0.1

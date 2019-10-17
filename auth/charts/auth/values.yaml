@@ -1,3 +1,4 @@
+enabled: true
 env: production
 fusionauth:
   app:

@@ -1,3 +1,5 @@
+{{- template "helpers.peerDependencyCheck" .Values.peerDependenciesHandled }}
+{{- if .Values.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -55,3 +57,4 @@ spec:
               secretKeyRef:
                 name: auth-secrets
                 key: authKey
+{{- end }}

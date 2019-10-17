@@ -1,7 +1,1 @@
-dependencies:
-  - name: mongodb
-    repository: file://../../../mongodb/charts/mongodb/
-    version: 0.0.1
-  - name: helpers
-    repository: file://../../../helm/charts/helpers/
-    version: 0.0.1
+dependencies: []

@@ -5,3 +5,9 @@
     {{ "ClusterIP" }}
   {{- end -}}
 {{- end }}
+
+{{- define "helpers.peerDependencyCheck" }}
+  {{- if not . }}
+    {{- fail "It appears peer dependencies have not been handled (.Values.peerDependenciesHandled=false)" }}
+  {{- end }}
+{{- end }}

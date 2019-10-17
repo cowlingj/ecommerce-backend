@@ -1,3 +1,5 @@
+{{- template "helpers.peerDependencyCheck" .Values.peerDependenciesHandled }}
+{{- if .Values.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -86,5 +88,5 @@ spec:
       port: 9011
       targetPort: 9011
       protocol: TCP
-
+{{- end }}
   

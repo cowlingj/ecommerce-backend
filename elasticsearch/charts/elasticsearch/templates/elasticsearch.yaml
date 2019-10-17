@@ -1,3 +1,5 @@
+{{- template "helpers.peerDependencyCheck" .Values.peerDependenciesHandled }}
+{{- if .Values.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -51,3 +53,4 @@ spec:
     - name: http-public
       port: 9200
       targetPort: 9200
+{{- end }}
