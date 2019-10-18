@@ -2,13 +2,16 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mongodb-volume
+  name: mongodb
 spec:
   storageClassName: ""
   capacity:
     storage: 256M
   accessModes:
     - ReadWriteMany
+  claimRef:
+    kind: PersistentVolumeClaim
+    name: mongodb
   gcePersistentDisk:
     pdName: {{ .Values.persistenceDiskName }}
     fsType: ext4
