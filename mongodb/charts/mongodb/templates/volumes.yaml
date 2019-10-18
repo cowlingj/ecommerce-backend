@@ -7,6 +7,7 @@ spec:
   storageClassName: ""
   capacity:
     storage: 256M
+  reclaimPolicy: Delete
   accessModes:
     - ReadWriteMany
   claimRef:
@@ -22,7 +23,7 @@ metadata:
   name: mongodb
 spec:
   storageClassName: ""
-  volumeName: mongodb-volume
+  volumeName: mongodb
   accessModes:
     - ReadWriteOnce
   resources:
