@@ -46,7 +46,7 @@ spec:
             - name: COOKIE_SECRET
               value: {{ quote .Values.cookieSecret }}
             - name: MONGO_URI
-              value: {{ quote .Values.cms.mongodbUrl }}
+              value: {{ quote .Values.mongodbUrl }}
             - name: NODE_ENV
               value: {{ quote .Values.env }}
             - name: PORT
