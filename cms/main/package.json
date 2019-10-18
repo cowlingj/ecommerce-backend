@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/register": "^7.6.2",
-    "apollo-server-express": "^2.9.4",
+    "apollo-server-express": "^2.9.5",
     "async": "2.6.3",
     "dotenv": "4.0.0",
     "graphql-import": "^0.7.1",
