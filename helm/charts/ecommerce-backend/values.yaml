@@ -24,7 +24,7 @@ cms:
   image: "gcr.io/gke-test-253221/cms.admin"
   imagePullSecret: gcr
   version: "0.0.1"
-  mongodbUrl: null
+  mongodbUrl: "mongodb://mongodb.mongodb:8080"
   cookieSecret: null
   ports:
     ui:
@@ -37,17 +37,32 @@ cms:
       name: api
 
 mongodb:
+  image:
+    tag: 4.2.0
+    debug: false
+  service:
+    name: mongodb
+    port: 8080
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    request:
+      cpu: 50m
+      memory: 128Mi
+  persistence:
+    # storageClass: standard
+    size: 128Mi
+  podLabels:
+    group: data
+
+mongodb-init:
   <<: *all
   name: mongodb
-  group: frontend
-  image: gcr.io/gke-test-253221/mongodb.data
+  group: data
+  image: gcr.io/gke-test-253221/init.mongodb.data
   imagePullSecret: gcr
-  version: "4.2.0"
-  ports:
-    main:
-      port: 8080
-      protocol: mongo
-      name: main
+  version: "0.0.1"
 
 postgres:
   <<: *all

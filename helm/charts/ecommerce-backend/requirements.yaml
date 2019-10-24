@@ -9,7 +9,11 @@ dependencies:
     repository: file://../../../cms/charts/cms/
     version: 0.0.1
   - name: mongodb
-    repository: file://../../../mongodb/charts/mongodb/
+    repository: https://kubernetes-charts.storage.googleapis.com
+    version: 7.4.3
+  - name: init
+    alias: mongodb-init
+    repository: file://../../../mongodb/charts/init/
     version: 0.0.1
   - name: postgres
     repository: file://../../../postgres/charts/postgres/

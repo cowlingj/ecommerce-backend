@@ -1,0 +1,34 @@
+{{- template "helpers.peerDependencyCheck" .Values.peerDependenciesHandled }}
+{{- if .Values.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
+spec:
+  backoffLimit: 10
+  template:
+    metadata:
+      app: {{ .Values.name }}
+      group: {{ .Values.group }}
+      version: {{ .Values.version }}
+    spec:
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+        - name: main
+          image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+{{ end }}
+  

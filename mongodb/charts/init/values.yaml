@@ -1,0 +1,7 @@
+enabled: true
+env: production
+name: mongodb
+group: data
+image: gcr.io/gke-test-253221/init.mongodb.data
+imagePullSecret: gcr
+version: "0.0.1"

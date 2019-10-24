@@ -1,10 +1,10 @@
 # Mongodb
 
-A mongodb cluster
+A mongodb client
 
 ## Images
 
-main: gcr.io/gke-test-253221/mongodb.data:0.0.1
+init: gcr.io/gke-test-253221/init.mongodb.data:0.0.1
 
 ## Getting Started
 

@@ -34,7 +34,7 @@ workflows:
               only: master
           requires:
             - build-postgres-client
-      - build-mongodb-main:
+      - build-mongodb-init:
           filters:
             branches:
               only: master
@@ -148,12 +148,12 @@ jobs:
       - docker_package:
           image: "init.auth.admin"
           path: "auth/init/"
-  build-mongodb-main:
+  build-mongodb-init:
     executor: gcloud
     steps:
       - docker_package:
-          image: "mongodb.data"
-          path: "mongodb/main/"
+          image: "init.mongodb.data"
+          path: "mongodb/init/"
 
   package-helpers:
     executor: helm
@@ -174,7 +174,7 @@ jobs:
     executor: helm
     steps:
       - helm_package:
-          path: mongodb/charts/mongodb/
+          path: mongodb/charts/init/
   package-cms:
     executor: helm
     steps:
