@@ -27,7 +27,7 @@ spec:
           - name: {{ .Values.imagePullSecret }}
       {{- end }}
       initContainers:
-        - name: main
+        - name: mongodb
           image: {{ printf "\"%s:%s\"" .Values.init.mongodb.image .Values.init.mongodb.version }}
           env:
             - name: ADMIN_USERNAME
