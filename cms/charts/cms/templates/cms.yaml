@@ -73,7 +73,7 @@ spec:
               port: 80
           env:
             - name: COOKIE_SECRET
-              value: {{ quote .Values.cookieSecret }}
+              value: {{ default (randAlphaNum 32) .Values.cookieSecret }}
             - name: MONGO_URI
               value: {{ quote .Values.mongodbUrl }}
             - name: NODE_ENV

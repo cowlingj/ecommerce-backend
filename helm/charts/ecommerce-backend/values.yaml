@@ -17,6 +17,40 @@ auth:
     image: gcr.io/gke-test-253221/init.auth.admin
     version: 0.0.1
 
+mongodb-config:
+  <<: *all
+  name: &mongodb-config-name mongodb
+  group: data
+  version: "0.0.1"
+  rootPassword: null # generate random password
+  mongodbPassword: null # generate random password
+
+mongodb:
+  image:
+    tag: 4.2.0
+    debug: false
+  service:
+    name: mongodb
+    port: 8080
+  existingSecret: *mongodb-config-name
+  mongodbUsername: &mongodb-admin-username admin
+  mongodbDatabase: &mongodb-admin-database admin
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    request:
+      cpu: 50m
+      memory: 128Mi
+  persistence:
+    # storageClass: standard
+    size: 128Mi
+  podLabels:
+    group: data
+
+postgres:
+  <<: *all
+
 cms:
   <<: *all
   name: cms
@@ -48,37 +82,3 @@ cms:
         mongodbUsername: cms
         mongodbDatabase: cms
         mongodbPassword: null # generate random password
-
-mongodb:
-  image:
-    tag: 4.2.0
-    debug: false
-  service:
-    name: mongodb
-    port: 8080
-  existingSecret: *mongodb-config-name
-  mongodbUsername: &mongodb-admin-username admin
-  mongodbDatabase: &mongodb-admin-database admin
-  resources:
-    limits:
-      cpu: 100m
-      memory: 256Mi
-    request:
-      cpu: 50m
-      memory: 128Mi
-  persistence:
-    # storageClass: standard
-    size: 128Mi
-  podLabels:
-    group: data
-
-mongodb-config:
-  <<: *all
-  name: &mongodb-config-name mongodb
-  group: data
-  version: "0.0.1"
-  rootPassword: null # generate random password
-  mongodbPassword: null # generate random password
-
-postgres:
-  <<: *all
