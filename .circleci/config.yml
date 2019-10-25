@@ -151,7 +151,7 @@ jobs:
     executor: gcloud
     steps:
       - docker_package:
-          image: "init.mongodb.data"
+          image: "init.cms.admin"
           path: "cms/init/"
 
   package-helpers:
