@@ -67,7 +67,6 @@ workflows:
               only: master
           requires:
             - package-helpers
-            - package-mongodb
       - package-auth:
           filters:
             branches:
