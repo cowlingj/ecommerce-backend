@@ -3,4 +3,4 @@ LABEL version="0.0.1"
 
 COPY /init-scripts/ /init
 
-ENTRYPOINT [ "sh", "-c", "for f in /init/*; do source \"$f\"; done" ]
+ENTRYPOINT [ "sh", "-c", "for f in /init/*; do . \"$f\"; done" ]
