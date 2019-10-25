@@ -48,6 +48,8 @@ spec:
                   key: mongodb-password
             - name: CMS_DB
               value: {{ .Values.init.mongodb.cms.mongodbDatabase }}
+            - name: DB_HOST
+              value: {{ .Values.mongodbHost }}
           resources:
             limits:
               cpu: 100m
@@ -75,7 +77,7 @@ spec:
             - name: COOKIE_SECRET
               value: {{ default (randAlphaNum 32) .Values.cookieSecret }}
             - name: MONGO_URI
-              value: {{ quote .Values.mongodbUrl }}
+              value: {{ printf "\"mongodb://%s/%s?authSource=%s\"" .Values.mongodbHost .Values.mongodbCmsDbName .Values.mongoDbAdminDbName }}
             - name: NODE_ENV
               value: {{ quote .Values.env }}
             - name: PORT
