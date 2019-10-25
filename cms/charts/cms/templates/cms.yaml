@@ -76,8 +76,13 @@ spec:
           env:
             - name: COOKIE_SECRET
               value: {{ default (randAlphaNum 32) .Values.cookieSecret }}
+            - name: _CMS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.init.mongodb.cms.secretName }}
+                  key: mongodb-password
             - name: MONGO_URI
-              value: {{ printf "\"mongodb://%s/%s?authSource=%s\"" .Values.mongodbHost .Values.mongodbCmsDbName .Values.mongodbAdminDbName }}
+              value: {{ printf "\"mongodb://%s:$(_CMS_DB_PASSWORD)@%s/%s?authSource=%s\"" .Values.init.mongodb.cms.mongodbUsername .Values.mongodbHost .Values.mongodbCmsDbName .Values.mongodbAdminDbName }}
             - name: NODE_ENV
               value: {{ quote .Values.env }}
             - name: PORT
