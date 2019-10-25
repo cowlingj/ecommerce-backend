@@ -1,4 +1,4 @@
-if [ mongo --verbose --username "$CMS_USERNAME" --password "$CMS_PASSWORD" --host "$DB_HOST" -- "$CMS_DB" ]; then
+if mongo --verbose --username "$CMS_USERNAME" --password "$CMS_PASSWORD" --host "$DB_HOST" -- "$CMS_DB"; then
   echo "CMS database already exists"
   exit 0
 fi

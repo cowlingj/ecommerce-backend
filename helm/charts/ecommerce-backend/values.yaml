@@ -63,7 +63,7 @@ cms:
   image: "gcr.io/gke-test-253221/cms.admin"
   imagePullSecret: gcr
   version: "0.0.1"
-  mongodbHost: "mongodb.mongodb:8080"
+  mongodbHost: null
   mongodbCmsDbName: &cms-db-name cms
   mongodbAdminDbName: *mongodb-admin-database
   cookieSecret: null
