@@ -55,7 +55,7 @@ workflows:
               only: master
           requires:
             - package-helpers
-      - package-mongodb:
+      - package-mongodb-config:
           filters:
             branches:
               only: master
@@ -84,7 +84,7 @@ workflows:
             - package-cms
             - package-elasticsearch
             - package-helpers
-            - package-mongodb
+            - package-mongodb-config
             - package-postgres
       - generate_index:
           filters:
@@ -95,7 +95,7 @@ workflows:
             - package-cms
             - package-elasticsearch
             - package-helpers
-            - package-mongodb
+            - package-mongodb-config
             - package-postgres
             - package-backend
       - commit_if_different:
@@ -170,11 +170,11 @@ jobs:
     steps:
       - helm_package:
           path: postgres/charts/postgres/
-  package-mongodb:
+  package-mongodb-config:
     executor: helm
     steps:
       - helm_package:
-          path: mongodb/charts/init/
+          path: mongodb/charts/config/
   package-cms:
     executor: helm
     steps:

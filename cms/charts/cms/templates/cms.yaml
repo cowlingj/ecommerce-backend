@@ -26,6 +26,35 @@ spec:
         imagePullSecrets:
           - name: {{ .Values.imagePullSecret }}
       {{- end }}
+      initContainers:
+        - name: main
+          image: {{ printf "\"%s:%s\"" .Values.init.mongodb.image .Values.init.mongodb.version }}
+          env:
+            - name: ADMIN_USERNAME
+              value: {{ .Values.init.mongodb.admin.mongodbUsername }}
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.init.mongodb.admin.secretName }}
+                  key: mongodb-password
+            - name: ADMIN_DB
+              value: {{ .Values.init.mongodb.admin.mongodbDatabase }}
+            - name: CMS_USERNAME
+              value: {{ .Values.init.mongodb.cms.mongodbUsername }}
+            - name: CMS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.init.mongodb.cms.secretName }}
+                  key: mongodb-password
+            - name: CMS_DB
+              value: {{ .Values.init.mongodb.cms.mongodbDatabase }}
+          resources:
+            limits:
+              cpu: 100m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
       containers:
         - name: main
           image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
@@ -70,13 +99,13 @@ spec:
     version: {{ .Values.version }}
   ports:
     {{- with .Values.ports.ui }}
-    - name: {{ printf "\"%s-%s\"" .protocol .name }}
+    - name: {{ printf "\"http-%s\"" .name }}
       port: {{ .port }}
       protocol: TCP
       targetPort: 80
     {{- end }}
     {{- with .Values.ports.api }}
-    - name: {{ printf "\"%s-%s\"" .protocol .name }}
+    - name: {{ printf "\"http-%s\"" .name }}
       port: {{ .port }}
       protocol: TCP
       targetPort: 8080

@@ -35,6 +35,19 @@ cms:
       port: 8080
       protocol: http
       name: api
+  init:
+    mongodb:
+      admin:
+        secretName: *mongodb-config-name
+        mongodbUsername: *mongodb-admin-username
+        mongodbDatabase: *mongodb-admin-database
+      cms:
+        name: mongodb-cms-config
+        existingSecret: false
+        secretName: cms-mongodb
+        mongodbUsername: cms
+        mongodbDatabase: cms
+        mongodbPassword: null # generate random password
 
 mongodb:
   image:
@@ -43,6 +56,9 @@ mongodb:
   service:
     name: mongodb
     port: 8080
+  existingSecret: *mongodb-config-name
+  mongodbUsername: &mongodb-admin-username admin
+  mongodbDatabase: &mongodb-admin-database admin
   resources:
     limits:
       cpu: 100m
@@ -56,13 +72,13 @@ mongodb:
   podLabels:
     group: data
 
-mongodb-init:
+mongodb-config:
   <<: *all
-  name: mongodb
+  name: &mongodb-config-name mongodb
   group: data
-  image: gcr.io/gke-test-253221/init.mongodb.data
-  imagePullSecret: gcr
   version: "0.0.1"
+  rootPassword: null # generate random password
+  mongodbPassword: null # generate random password
 
 postgres:
   <<: *all
