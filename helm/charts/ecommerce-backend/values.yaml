@@ -4,7 +4,8 @@ all: &all
   peerDependenciesHandled: true
 
 elasticsearch:
-  <<: *all 
+  enabled: false
+  peerDependenciesHandled: true
 
 auth:
   enabled: false
@@ -59,7 +60,7 @@ cms:
   <<: *all
   name: cms
   group: frontend
-  image: "gcr.io/gke-test-253221/init.cms.admin"
+  image: "gcr.io/gke-test-253221/cms.admin"
   imagePullSecret: gcr
   version: "0.0.1"
   mongodbHost: "mongodb.mongodb:8080"

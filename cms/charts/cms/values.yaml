@@ -18,7 +18,7 @@ ports:
     name: api
 init:
   mongodb:
-    image: "gcr.io/gke-test-253221/cms.admin"
+    image: "gcr.io/gke-test-253221/init.cms.admin"
     version: "0.0.1"
     admin:
       secretName: null

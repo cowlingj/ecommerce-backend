@@ -77,7 +77,7 @@ spec:
             - name: COOKIE_SECRET
               value: {{ default (randAlphaNum 32) .Values.cookieSecret }}
             - name: MONGO_URI
-              value: {{ printf "\"mongodb://%s/%s?authSource=%s\"" .Values.mongodbHost .Values.mongodbCmsDbName .Values.mongoDbAdminDbName }}
+              value: {{ printf "\"mongodb://%s/%s?authSource=%s\"" .Values.mongodbHost .Values.mongodbCmsDbName .Values.mongodbAdminDbName }}
             - name: NODE_ENV
               value: {{ quote .Values.env }}
             - name: PORT
