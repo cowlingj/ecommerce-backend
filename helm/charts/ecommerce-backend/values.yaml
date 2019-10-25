@@ -7,7 +7,8 @@ elasticsearch:
   <<: *all 
 
 auth:
-  <<: *all
+  enabled: false
+  # <<: *all
   fusionauth:
     app:
       version: latest
@@ -49,7 +50,8 @@ mongodb:
     group: data
 
 postgres:
-  <<: *all
+  # <<: *all
+  enabled: false
 
 cms:
   <<: *all
