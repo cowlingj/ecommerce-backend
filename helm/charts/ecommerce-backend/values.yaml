@@ -82,9 +82,9 @@ cms:
         mongodbUsername: *mongodb-admin-username
         mongodbDatabase: *mongodb-admin-database
       cms:
-        name: mongodb-cms-config
+        name: &cms-init-cms-name mongodb-cms-config
         existingSecret: false
-        secretName: cms-mongodb
+        secretName: *cms-init-cms-name
         mongodbUsername: cms
         mongodbDatabase: *cms-db-name
         mongodbPassword: null # generate random password
