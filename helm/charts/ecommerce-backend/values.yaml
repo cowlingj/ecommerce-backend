@@ -80,7 +80,7 @@ cms:
     mongodb:
       admin:
         secretName: *mongodb-config-name
-        mongodbUsername: *mongodb-admin-username
+        mongodbUsername: root # *mongodb-admin-username
         mongodbDatabase: *mongodb-admin-database
       cms:
         name: &cms-init-cms-name mongodb-cms-config
