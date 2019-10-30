@@ -5,6 +5,9 @@ fi
 
 echo "database \"$CMS_DB\" doesn't exist, creating (entering verbose mode)"
 
+echo "ADMIN CREDS: $ADMIN_USERNAME $ADMIN_PASSWORD"
+echo "CMS CREDS: $CMS_USERNAME $CMS_PASSWORD"
+
 set -xv
 
 mongo --username "$ADMIN_USERNAME" --password "$ADMIN_PASSWORD" --host "$DB_HOST" --verbose <<EOF
