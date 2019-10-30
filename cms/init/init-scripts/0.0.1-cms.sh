@@ -5,7 +5,8 @@ fi
 
 echo "database \"$CMS_DB\" doesn't exist, creating (entering verbose mode)"
 
-mongo --username "$ADMIN_USERNAME" --password "$ADMIN_PASSWORD" --host "$DB_HOST" --verbose -- "$ADMIN_DB" <<EOF
+mongo --username "$ADMIN_USERNAME" --password "$ADMIN_PASSWORD" --host "$DB_HOST" --verbose <<EOF
+  use $ADMIN_DB
   db.createUser({
       user: "$CMS_USERNAME",
       pwd: "$CMS_PASSWORD",
