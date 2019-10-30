@@ -22,7 +22,7 @@ auth:
 
 mongodb-config:
   <<: *all
-  name: &mongodb-config-name mongodb
+  name: &mongodb-config-name mongodb-config
   group: data
   version: "0.0.1"
   rootPassword: null # generate random password
@@ -36,8 +36,6 @@ mongodb:
     name: mongodb
     port: 8080
   existingSecret: *mongodb-config-name
-  mongodbUsername: &mongodb-admin-username admin
-  mongodbDatabase: &mongodb-admin-database admin
   resources:
     limits:
       cpu: 100m
@@ -65,7 +63,7 @@ cms:
   version: "0.0.1"
   mongodbHost: null
   mongodbCmsDbName: &cms-db-name cms
-  mongodbAdminDbName: *mongodb-admin-database
+  mongodbAdminDbName: &mongodb-admin-database auth
   cookieSecret: null
   ports:
     ui:
@@ -80,7 +78,7 @@ cms:
     mongodb:
       admin:
         secretName: *mongodb-config-name
-        mongodbUsername: root # *mongodb-admin-username
+        mongodbUsername: root # default bitnami mongodb root user
         mongodbDatabase: *mongodb-admin-database
       cms:
         name: &cms-init-cms-name mongodb-cms-config
