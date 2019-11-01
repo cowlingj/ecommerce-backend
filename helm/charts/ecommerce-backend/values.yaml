@@ -74,6 +74,10 @@ cms:
       port: 8080
       protocol: http
       name: api
+  users:
+    secretName: cms-users
+    existingSecret: false
+    list: []
   init:
     mongodb:
       admin:

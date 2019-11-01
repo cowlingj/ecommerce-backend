@@ -9,6 +9,10 @@ mongodbHost: null
 mongodbCmsDbName: &cms-db-name cms
 mongodbAdminDbName: &admin-db-name admin
 cookieSecret: null
+users:
+  secretName: cms-users
+  existingSecret: false
+  list: []
 ports:
   ui:
     port: 80

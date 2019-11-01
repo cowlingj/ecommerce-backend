@@ -1,5 +1,3 @@
 exports.create = {
-	User: [
-		{ email: 'admin@test.com', password: 'admin' }
-	]
+	User: JSON.parse(process.env.USERS ? process.env.USERS : '[]')
 }
