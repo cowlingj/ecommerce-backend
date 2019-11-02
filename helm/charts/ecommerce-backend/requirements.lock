@@ -1,0 +1,24 @@
+dependencies:
+- name: elasticsearch
+  repository: file://../../../elasticsearch/charts/elasticsearch/
+  version: 0.0.1
+- name: auth
+  repository: file://../../../auth/charts/auth/
+  version: 0.0.1
+- name: cms
+  repository: file://../../../cms/charts/cms/
+  version: 0.0.1
+- name: mongodb
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 7.4.3
+- name: config
+  repository: file://../../../mongodb/charts/config/
+  version: 0.0.1
+- name: postgres
+  repository: file://../../../postgres/charts/postgres/
+  version: 0.0.1
+- name: helpers
+  repository: file://../../../helm/charts/helpers/
+  version: 0.0.1
+digest: sha256:4c8ca6a3db209e93ab31aa168512b01c31529dd2fc4635ef6ef6a8d344935b15
+generated: "2019-11-02T16:02:26.067489984Z"
