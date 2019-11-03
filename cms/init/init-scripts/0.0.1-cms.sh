@@ -5,6 +5,8 @@ fi
 
 echo "database \"$CMS_DB\" doesn't exist, creating (entering verbose mode)"
 
+echo "CMS u ($CMS_USERNAME) pw ($CMS_PASSWORD) ADMIN u ($ADMIN_USERNAME) pw ($ADMIN_PASSWORD)"
+
 mongo --username "$ADMIN_USERNAME" --password "$ADMIN_PASSWORD" --host "$DB_HOST" --verbose <<EOF
   use $ADMIN_DB
   db.createUser({
