@@ -31,7 +31,7 @@ mongodb-config:
 mongodb:
   image:
     tag: 4.2.0
-    debug: false
+    debug: true
   service:
     name: mongodb
     port: 8080
