@@ -26,16 +26,15 @@ mongodb-config:
   group: data
   version: "0.0.1"
   rootPassword: null # generate random password
-  mongodbPassword: null # generate random password
 
 mongodb:
   image:
     tag: 4.2.0
-    debug: true
   service:
     name: mongodb
     port: 8080
   existingSecret: *mongodb-config-name
+  fullnameOverride: mongodb
   resources:
     limits:
       cpu: 100m
@@ -63,7 +62,7 @@ cms:
   version: "0.0.1"
   mongodbHost: null
   mongodbCmsDbName: &cms-db-name cms
-  mongodbAdminDbName: &mongodb-admin-database auth
+  mongodbAdminDbName: &mongodb-admin-database admin
   cookieSecret: null
   ports:
     ui:
