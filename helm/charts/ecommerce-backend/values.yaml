@@ -36,12 +36,8 @@ mongodb:
   existingSecret: *mongodb-config-name
   fullnameOverride: mongodb
   resources:
-    limits:
-      cpu: 100m
-      memory: 256Mi
-    request:
-      cpu: 50m
-      memory: 128Mi
+    limits: {}
+    requests: {}
   persistence:
     # storageClass: standard
     size: 128Mi
