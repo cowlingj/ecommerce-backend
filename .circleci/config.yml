@@ -38,6 +38,10 @@ workflows:
           filters:
             branches:
               only: master
+      - build-mongodb-debug:
+          filters:
+            branches:
+              only: master
 
   update_helm_charts:
     jobs:
@@ -153,6 +157,12 @@ jobs:
       - docker_package:
           image: "init.cms.admin"
           path: "cms/init/"
+  build-mongodb-debug:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "mongodb.data"
+          path: "mongodb/debugImage/"
 
   package-helpers:
     executor: helm
