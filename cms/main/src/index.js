@@ -8,8 +8,6 @@ async function init() {
 
 	dotenv.config()
 
-	console.log('mongo uri: ' + process.env.MONGO_URI)
-
 	keystone.init({
 		'name': 'Uni Cycle',
 		'brand': 'Uni Cycle',
