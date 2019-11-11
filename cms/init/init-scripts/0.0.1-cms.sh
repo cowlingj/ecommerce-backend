@@ -1,4 +1,14 @@
-if mongo --verbose --username "$CMS_USERNAME" --password "$CMS_PASSWORD" --host "$DB_HOST" --authenticationDatabase "$ADMIN_DB" -- "$CMS_DB"; then
+
+set -vx
+
+if mongo --verbose \
+         --username "$CMS_USERNAME" \
+         --password "$CMS_PASSWORD" \
+         --host "$DB_HOST" \
+         --authenticationDatabase "$ADMIN_DB" \
+         -- "$CMS_DB" \
+         <<< ""
+then
   echo "database \"$CMS_DB\" already exists, exiting"
   exit 0
 fi
