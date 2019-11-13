@@ -44,7 +44,7 @@ mongodb:
     group: data
   configmap: |
     storage:
-      dbPath: bitnami/db
+      dbPath: /bitnami/mongodb/db
       journal:
         enabled: true
       directoryPerDB: true
