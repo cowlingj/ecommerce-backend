@@ -11,7 +11,7 @@
     "keystone": "^4.2.1",
     "lodash": "^4.17.12",
     "pug": "^2.0.4",
-    "snyk": "^1.241.0",
+    "snyk": "^1.242.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
