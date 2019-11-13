@@ -39,10 +39,32 @@ mongodb:
     limits: {}
     requests: {}
   persistence:
-    # storageClass: standard
     size: 128Mi
   podLabels:
     group: data
+  configmap: |
+    storage:
+      dbPath: bitnami/db
+      journal:
+        enabled: true
+      directoryPerDB: true
+    systemLog:
+      destination: file
+    net:
+      port: 27017
+      unixDomainSocket:
+        enabled: false
+      ipv6: true
+      bindIpAll: true
+    #replication:
+      #replSetName: {{MONGODB_REPLICA_SET_NAME}}
+      #enableMajorityReadConcern: true
+    processManagement:
+      fork: false
+    setParameter:
+      enableLocalhostAuthBypass: false
+    security:
+      authorization: enabled
 
 postgres:
   # <<: *all
