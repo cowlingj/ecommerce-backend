@@ -3,9 +3,9 @@ entries:
   auth:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: 2019-11-13T01:49:09.734681643Z
+    created: 2019-11-13T21:20:55.040465987Z
     description: fusion auth instance
-    digest: 62739ff6e49d00d524eff9d8724141ebed451b5fea6b86487b8618393973bfb2
+    digest: 309bee0dc5b5bb10bdf731690fc102efe3776e0e3687aab4af3da4e084965008
     name: auth
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/auth-0.0.1.tgz
@@ -13,16 +13,16 @@ entries:
   cms:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: 2019-11-13T01:49:09.734887408Z
-    digest: 5350330f1cf166b72c026828c9139093adb1d31d93ad5d7cc60c252643a68d4a
+    created: 2019-11-13T21:20:55.040647017Z
+    digest: 019413cd3d359e4b6fc3cc9f5749dcdb607d28597b9f5fa5996649c523ae0d6d
     name: cms
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/cms-0.0.1.tgz
     version: 0.0.1
   config:
   - apiVersion: v1
-    created: 2019-11-13T01:49:09.735005566Z
-    digest: f3dfa229ca47164505c0ff3865c10a761ae5529bcedabd581948dd518e022d6b
+    created: 2019-11-13T21:20:55.040763941Z
+    digest: 83eb4e3b37ad3e30c745683d0211d2da4b7a8108e0f8ec202aac4228bee7f3d3
     name: config
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/config-0.0.1.tgz
@@ -30,9 +30,9 @@ entries:
   ecommerce-backend:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: 2019-11-13T01:49:09.736625903Z
+    created: 2019-11-13T21:20:55.042448502Z
     description: umberella package for ecommerce-backend
-    digest: ef5c1636e3104973a8f7b9c79c3188d908110e010d5f9dec45c1de5c4b376363
+    digest: ed60098e261636f82b0a3bae8375aaf49873a21832e9d4f1662780d0bd496fe9
     name: ecommerce-backend
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/ecommerce-backend-0.0.1.tgz
@@ -40,8 +40,8 @@ entries:
   elasticsearch:
   - apiVersion: v1
     appVersion: 6.3.0
-    created: 2019-11-13T01:49:09.736772631Z
-    digest: 686f946bd1a71c929da149565c11ddec8f5ae2efe402718675e90e0cf7d27d1d
+    created: 2019-11-13T21:20:55.042600151Z
+    digest: b2e3c52a620e8e1e42fbc9cb732f97b6a5e73f267137e354863c0f5e369ed16d
     name: elasticsearch
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/elasticsearch-0.0.1.tgz
@@ -49,9 +49,9 @@ entries:
   helpers:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: 2019-11-13T01:49:09.736902954Z
+    created: 2019-11-13T21:20:55.042751351Z
     description: utility template functions
-    digest: 85740242084eff072dc1691eb9de47078a65281be6e2d475bb8ba8af3b5ade1f
+    digest: 9d4fdf62f55731a30b1a5317f26984986215c46e360ce5bfc7642a484287cd93
     name: helpers
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/helpers-0.0.1.tgz
@@ -59,10 +59,10 @@ entries:
   postgres:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: 2019-11-13T01:49:09.737040995Z
-    digest: 84ef1b4ee04e317403dd8d0716f86c1be4b066904a511940e66d1dda4fbcd54c
+    created: 2019-11-13T21:20:55.042891996Z
+    digest: f3504797aea3edcbba54b3582d3ae3b177de916a1a819df82642d21136f73587
     name: postgres
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/postgres-0.0.1.tgz
     version: 0.0.1
-generated: 2019-11-13T01:49:09.734418249Z
+generated: 2019-11-13T21:20:55.040160232Z
