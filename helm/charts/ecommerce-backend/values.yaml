@@ -40,11 +40,12 @@ mongodb:
     requests: {}
   persistence:
     size: 128Mi
+    mountPath: /data/
   podLabels:
     group: data
-  configmap: |
+  configmap:
     storage:
-      dbPath: /bitnami/mongodb/db
+      dbPath: /data/db
       journal:
         enabled: true
       directoryPerDB: true
