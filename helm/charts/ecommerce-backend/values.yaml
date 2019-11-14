@@ -49,6 +49,8 @@ mongodb:
       journal:
         enabled: true
       directoryPerDB: true
+    systemLog:
+      destination: syslog
     net:
       port: 27017
       unixDomainSocket:
