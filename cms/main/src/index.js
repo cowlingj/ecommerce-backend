@@ -15,6 +15,8 @@ async function init() {
 	//	+ `:${proces.env.MONGODB_SERVICE_PORT}`
 	//	+`/${proces.env.MONGODB_DB}`
 
+	console.log(encodeURI(process.env.MONGO_URI || 'mongodb://localhost:27017'))
+
 	keystone.init({
 		'name': 'Uni Cycle',
 		'brand': 'Uni Cycle',
