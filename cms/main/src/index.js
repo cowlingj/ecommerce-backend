@@ -8,14 +8,19 @@ async function init() {
 
 	dotenv.config()
 
-	console.log("URI = " + process.env.MONGO_URI)
+	// TODO: construct uri
+	// let uri = `mongodb://${proces.env.MONGODB_USERNAME}`
+	//	+ `:${proces.env.MONGODB_PASSWORD}`
+	//	+ `@${proces.env.MONGODB_SERVICE_HOST}`
+	//	+ `:${proces.env.MONGODB_SERVICE_PORT}`
+	//	+`/${proces.env.MONGODB_DB}`
 
 	keystone.init({
 		'name': 'Uni Cycle',
 		'brand': 'Uni Cycle',
 		'port': parseInt(process.env.ADMIN_PORT) || 80,
 		'host': process.env.IP || '0.0.0.0',
-		'mongo': process.env.MONGO_URI || 'mongodb://localhost:27017',
+		'mongo': encodeURI(process.env.MONGO_URI || 'mongodb://localhost:27017'),
 		'cookie secret': process.env.COOKIE_SECRET,
 		'module root': __dirname,
 
