@@ -36,36 +36,16 @@ mongodb:
   existingSecret: *mongodb-config-name
   fullnameOverride: mongodb
   resources:
-    limits: {}
-    requests: {}
+    limits:
+      cpu: 100m
+      memory: 512Mi
+    requests:
+      cpu: 50m
+      memory: 256Mi
   persistence:
     size: 128Mi
-    mountPath: /data/
   podLabels:
     group: data
-  configmap:
-    storage:
-      dbPath: /data/db
-      journal:
-        enabled: true
-      directoryPerDB: true
-    systemLog:
-      destination: syslog
-    net:
-      port: 27017
-      unixDomainSocket:
-        enabled: false
-      ipv6: true
-      bindIpAll: true
-    #replication:
-      #replSetName: {{MONGODB_REPLICA_SET_NAME}}
-      #enableMajorityReadConcern: true
-    processManagement:
-      fork: false
-    setParameter:
-      enableLocalhostAuthBypass: false
-    security:
-      authorization: enabled
 
 postgres:
   # <<: *all
