@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@babel/register": "^7.6.2",
+    "@babel/register": "^7.7.0",
     "apollo-server-express": "^2.9.7",
     "async": "2.6.3",
     "dotenv": "4.0.0",
