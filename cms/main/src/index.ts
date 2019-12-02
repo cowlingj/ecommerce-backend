@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === "development") {
 
 const mongoUri = process.env.MONGO_URI
   ? process.env.MONGO_URI
-  : `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?${process.env.DB_QUERY_STRING}`;
+  : `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?${process.env.DB_QUERY_STRING}`;
 
 const keystone = new Keystone({
   name: "Uni-Cycle",
