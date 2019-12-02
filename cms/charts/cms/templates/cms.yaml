@@ -111,7 +111,7 @@ spec:
       volumes:
         - name: user-data-volume
           secret:
-            name: {{ .Values.users.secretName }}
+            secretName: {{ .Values.users.secretName }}
             items:
               - key: users
                 path: users.json
