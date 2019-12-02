@@ -31,25 +31,27 @@ spec:
           image: {{ printf "\"%s:%s\"" .Values.init.mongodb.image .Values.init.mongodb.version }}
           env:
             - name: ADMIN_USERNAME
-              value: {{ .Values.init.mongodb.admin.mongodbUsername }}
+              value: {{ .Values.mongodb.admin.username | quote }}
             - name: ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.init.mongodb.admin.secretName }}
+                  name: {{ .Values.mongodb.admin.secretName }}
                   key: mongodb-root-password
             - name: ADMIN_DB
-              value: {{ .Values.init.mongodb.admin.mongodbDatabase }}
+              value: {{ .Values.mongodb.admin.database | quote }}
             - name: CMS_USERNAME
-              value: {{ .Values.init.mongodb.cms.mongodbUsername }}
+              value: {{ .Values.mongodb.cms.username | quote }}
             - name: CMS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.init.mongodb.cms.secretName }}
+                  name: {{ .Values.mongodb.cms.secretName }}
                   key: mongodb-password
             - name: CMS_DB
-              value: {{ .Values.init.mongodb.cms.mongodbDatabase }}
+              value: {{ .Values.mongodb.cms.database | quote }}
             - name: DB_HOST
-              value: {{ .Values.mongodbHost }}
+              value: {{ .Values.mongodb.host | quote }}
+            - name: DB_PORT
+              value: {{ .Values.mongodb.port | quote }}
           resources:
             limits:
               cpu: 100m
@@ -76,24 +78,44 @@ spec:
           env:
             - name: COOKIE_SECRET
               value: {{ default (randAlphaNum 32) .Values.cookieSecret }}
-            - name: _CMS_DB_PASSWORD
+            - name: DB_USERNAME
+              value: {{ .Values.mongodb.cms.username | quote }}
+            - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.init.mongodb.cms.secretName }}
+                  name: {{ .Values.mongodb.cms.secretName }}
                   key: mongodb-password
-            - name: MONGO_URI
-              value: {{ printf "\"mongodb://%s:$(_CMS_DB_PASSWORD)@%s/%s?authSource=%s\"" .Values.init.mongodb.cms.mongodbUsername .Values.mongodbHost .Values.mongodbCmsDbName .Values.mongodbAdminDbName }}
+            - name: DB_HOST
+              value: {{ .Values.mongodb.host | quote }}
+            - name: DB_PORT
+              value: {{ .Values.mongodb.port | quote }}
+            - name: DB_NAME
+              value: {{ .Values.mongodb.cms.dbName | quote }}
+            - name: DB_QUERY_STRING
+              value: {{ printf "\"authSource=%s\"" .Values.mongodb.admin.database }}
             - name: NODE_ENV
               value: {{ quote .Values.env }}
             - name: PORT
               value: "80"
             - name: IP
               value: "0.0.0.0"
-            - name: USERS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.users.secretName }}
-                  key: users
+            - name: USERS_FILE
+              value: /etc/secrets/users.json
+          {{ if .Values.users.secretName -}}
+          volumeMounts:
+            - name: user-data-volume
+              mountPath: /etc/secrets
+              readOnly: true
+          {{- end }}
+      {{ if .Values.users.secretName -}}
+      volumes:
+        - name: user-data-volume
+          secret:
+            name: {{ .Values.users.secretName }}
+            items:
+              - key: users
+                path: users.json
+      {{- end }}
 ---
 apiVersion: v1
 kind: Service

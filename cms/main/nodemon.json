@@ -1,0 +1,5 @@
+{
+    "exec": "babel --copy-files --extensions \"js,.ts\" --out-dir ./intermediates/babel ./src/ && keystone dev --entry ./intermediates/babel/index.js",
+    "watch": [ "src" ],
+    "ext": "js,ts,json"
+}

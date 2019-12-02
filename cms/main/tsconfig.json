@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es6",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "allowJs": true,
+        "noEmit": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "typeRoots" : [
+            "./node_modules/@types",
+            "./typings"
+        ],
+        "paths": {
+            "@keystonejs/keystone": [
+                "typings/keystonejs__keystone",
+                "node_modules/@types/keystonejs__keystone"
+            ],
+            "@keystonejs/adapter-mongoose": [
+                "typings/keystonejs__adapter-mongoose",
+                "node_modules/@types/keystonejs__adapter-mongoose"
+            ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ]
+}

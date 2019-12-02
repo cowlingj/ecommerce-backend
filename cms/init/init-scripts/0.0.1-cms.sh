@@ -5,6 +5,7 @@ if echo "" | mongo --verbose \
          --username "$CMS_USERNAME" \
          --password "$CMS_PASSWORD" \
          --host "$DB_HOST" \
+         --port "$DB_PORT" \
          --authenticationDatabase "$ADMIN_DB" \
          -- "$CMS_DB"
 then
@@ -14,7 +15,13 @@ fi
 
 echo "database \"$CMS_DB\" doesn't exist, creating (entering verbose mode)"
 
-mongo --username "$ADMIN_USERNAME" --password "$ADMIN_PASSWORD" --host "$DB_HOST" --verbose <<EOF
+mongo \
+  --username "$ADMIN_USERNAME" \
+  --password "$ADMIN_PASSWORD" \
+  --host "$DB_HOST" \
+  --port "$DB_PORT" \
+  --verbose \
+  <<EOF
   use $ADMIN_DB
   db.createUser({
       user: "$CMS_USERNAME",

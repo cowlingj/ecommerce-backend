@@ -1,4 +1,4 @@
 apiVersion: v1
 name: cms
 version: 0.0.1
-appVersion: 0.0.1
+appVersion: 0.0.2

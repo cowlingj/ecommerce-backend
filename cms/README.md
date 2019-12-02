@@ -60,10 +60,11 @@ docker build -t cms.admin.local:<Chart.AppVersion> ./main
 local:
 ```sh
 cd main
+npm run build
 npm run start
 ```
 
-There is also a `dev` script that will detect changes and reload (package needs to be installed without `--production` flag).
+> There is also a `dev` script that will detect changes and reload (package needs to be installed without `--production` flag).
 
 docker:
 ```sh
@@ -76,9 +77,8 @@ make sure values.yaml is correct then:
 helm install [--name <RELEASE_NAME>] ./chart
 ```
 
-The admin UI is available bu default at `http://<HOST>:3000/`.
-A graphql endpoint is exposed at `http://<HOST>:3000/graphql`,
-in development mode the playground is also available here.
+The admin UI is available bu default at `http://<HOST>:3000/cms/admin`.
+A graphql endpoint is exposed at `http://<HOST>:3000/cms/graphql`.
 
 ### Configuration
 
@@ -91,8 +91,3 @@ in development mode the playground is also available here.
 Other configuration options can be found on the [keystonejs](https://keystonejs.com/documentation/configuration) website.
 
 > For local development [dotenv](https://www.npmjs.com/package/dotenv) is supported
-
-### Tests
-
-Integration tests check the expose graphql api (all of the admin UI is handled by keystone).
-These tests can be run with the `test.sh` script (in the `/integration-test` directory), or manually by deploying the helm chart under then deploying the test runner in the foreground with `kubectl`.

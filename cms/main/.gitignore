@@ -25,6 +25,7 @@
 # Build artifacts
 /dist
 /build
+/intermediates
 **/*.tgz
 **/*.tar.gz
 
@@ -32,9 +33,6 @@
 /node_modules/
 /jspm_packages/
 /bower_components/
-
-# TypeScript v1 declaration files
-typings/
 
 # Cache
 /.npm
@@ -48,7 +46,7 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-/.env
+.env
 
 # IDE / Editor
 **/*.swp

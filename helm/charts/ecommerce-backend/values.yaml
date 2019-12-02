@@ -58,11 +58,26 @@ cms:
   group: frontend
   image: "gcr.io/gke-test-253221/cms.admin"
   imagePullSecret: gcr
-  version: "0.0.1"
-  mongodbHost: null
-  mongodbCmsDbName: &cms-db-name cms
-  mongodbAdminDbName: &mongodb-admin-database admin
+  version: "0.0.2"
   cookieSecret: null
+  mongodb:
+    host: null
+    port: 8080
+    cms:
+      username: cms
+      dbName: cms
+      secretName: cms-mongodb
+      existingSecret: false
+      password: null
+    admin:
+      username: root
+      dbName: admin
+      secretName: *mongodb-config-name
+      password: null
+  users:
+    secretName: cms-users
+    existingSecret: false
+    list: []
   ports:
     ui:
       port: 80
@@ -72,20 +87,7 @@ cms:
       port: 8080
       protocol: http
       name: api
-  users:
-    secretName: cms-users
-    existingSecret: false
-    list: []
   init:
     mongodb:
-      admin:
-        secretName: *mongodb-config-name
-        mongodbUsername: root # default bitnami mongodb root user
-        mongodbDatabase: *mongodb-admin-database
-      cms:
-        name: &cms-init-cms-name mongodb-cms-config
-        existingSecret: false
-        secretName: *cms-init-cms-name
-        mongodbUsername: cms
-        mongodbDatabase: *cms-db-name
-        mongodbPassword: null # generate random password
+      image: "gcr.io/gke-test-253221/init.cms.admin"
+      version: "0.0.1"
