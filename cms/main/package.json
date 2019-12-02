@@ -5,11 +5,11 @@
   "version": "5.0.0",
   "author": "Jonathan Cowling",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon",
-    "build": "babel --copy-files --extensions \"js,.ts\" --out-dir ./intermediates/babel ./src/ && keystone build --entry ./intermediates/babel/index.js --out ./dist",
-    "start": "keystone start --entry dist/index.js",
-    "tsc": "tsc",
-    "clean": "rm -r dist/ intermediates/ || exit 0"
+    "dev": "scripts/dev.sh",
+    "build": "scripts/build.sh",
+    "start": "scripts/start.sh",
+    "tsc": "scripts/tsc.sh",
+    "clean": "scripts/clean.sh"
   },
   "dependencies": {
     "@keystonejs/adapter-mongoose": "^5.0.0",
