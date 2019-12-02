@@ -77,7 +77,8 @@ cms:
   users:
     secretName: cms-users
     existingSecret: false
-    list: []
+    data:
+      users: []
   ports:
     ui:
       port: 80
