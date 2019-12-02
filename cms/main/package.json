@@ -18,7 +18,7 @@
     "@keystonejs/auth-password": "^5.0.0",
     "@keystonejs/fields": "^5.0.0",
     "@keystonejs/keystone": "^5.0.0",
-    "@keystonejs/logger": "^5.0.0",
+    "@keystonejs/logger": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
