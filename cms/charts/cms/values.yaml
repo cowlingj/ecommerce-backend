@@ -11,13 +11,13 @@ mongodb:
   port: null
   cms:
     username: cms
-    dbName: cms
+    database: cms
     secretName: cms-mongodb
     existingSecret: false
     password: null
   admin:
     username: root
-    dbName: admin
+    database: admin
     secretName: null
     password: null
 users:

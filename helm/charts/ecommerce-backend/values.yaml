@@ -65,13 +65,13 @@ cms:
     port: 8080
     cms:
       username: cms
-      dbName: cms
+      database: cms
       secretName: cms-mongodb
       existingSecret: false
       password: null
     admin:
       username: root
-      dbName: admin
+      database: admin
       secretName: *mongodb-config-name
       password: null
   users:
