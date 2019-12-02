@@ -18,7 +18,8 @@
     "@keystonejs/auth-password": "^5.0.0",
     "@keystonejs/fields": "^5.0.0",
     "@keystonejs/keystone": "^5.0.0",
-    "@keystonejs/logger": "^5.0.0"
+    "@keystonejs/logger": "^5.0.0",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
@@ -31,7 +32,6 @@
     "@types/keystonejs__auth-password": "^5.0.0",
     "@types/keystonejs__keystone": "^5.2.0",
     "@types/keystonejs__logger": "^5.0.0",
-    "dotenv": "^8.2.0",
     "nodemon": "^2.0.1",
     "typescript": "^3.7.2"
   }
