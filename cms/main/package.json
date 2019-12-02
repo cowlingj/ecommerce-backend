@@ -19,7 +19,6 @@
     "@keystonejs/fields": "^5.0.0",
     "@keystonejs/keystone": "^5.0.0",
     "@keystonejs/logger": "^5.0.0",
-    "graphql-tag": "^2.10.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.4",
