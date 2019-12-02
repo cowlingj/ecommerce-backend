@@ -90,7 +90,7 @@ spec:
             - name: DB_PORT
               value: {{ .Values.mongodb.port | quote }}
             - name: DB_NAME
-              value: {{ .Values.mongodb.cms.dbName | quote }}
+              value: {{ .Values.mongodb.cms.database | quote }}
             - name: DB_QUERY_STRING
               value: {{ printf "\"authSource=%s\"" .Values.mongodb.admin.database }}
             - name: NODE_ENV
