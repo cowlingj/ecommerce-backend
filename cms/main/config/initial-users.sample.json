@@ -1,0 +1,9 @@
+{
+  "users": [
+      {
+          "username": "admin",
+          "password": "superSecretPassword",
+          "isAdmin": true
+      }
+  ]
+}

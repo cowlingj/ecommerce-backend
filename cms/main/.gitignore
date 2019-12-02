@@ -54,3 +54,7 @@
 
 # Mac OSX
 .DS_Store
+
+# configuration files
+/config/*
+!/config/*.sample.*
