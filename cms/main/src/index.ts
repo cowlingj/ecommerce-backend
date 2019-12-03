@@ -51,9 +51,9 @@ module.exports = {
       apiPath: "/cms/graphql",
       graphiqlPath: "/cms/playground",
       enableDefaultRoute: true,
-      isAccessAllowed: ({ authentication: { item: user } }) =>
-        Boolean(true),
-      authStrategy
+      // isAccessAllowed: ({ authentication: { item: user } }) =>
+      //   Boolean(true),
+      // authStrategy
     })
   ]
 };
