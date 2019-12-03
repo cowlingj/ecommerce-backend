@@ -1,9 +1,5 @@
 import { Keystone } from "@keystonejs/keystone";
 import fs from 'fs'
-import { type } from "os";
-
-// initialUsersData from "../config/initial-users.json";
-
 
 export default async function createInitialUsersIfNotExisting(
   keystone: Keystone
@@ -60,6 +56,8 @@ export default async function createInitialUsersIfNotExisting(
   const usersToCreate = initialUsersData.users
     .filter(initialUser => !currentUsernames.includes(initialUser.username))
     .map(user => ({ data: user }));
+
+  console.log(usersToCreate)
 
   await keystone.executeQuery(
     `mutation ($create: [UsersCreateInput!]!) {
