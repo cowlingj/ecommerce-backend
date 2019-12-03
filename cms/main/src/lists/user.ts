@@ -13,8 +13,12 @@ export default function(keystone: Keystone) {
                 type: Password,
             },
         },
-        access: ({ authentication: { item: user }, operation: operation }) => (
-            Boolean(true)
-        )
+        access: (auth) => {
+          console.log(JSON.stringify({
+            msg: "accessing user",
+            auth: auth
+          }))
+          return Boolean(true)
+        }
   })
 }
