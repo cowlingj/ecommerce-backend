@@ -53,7 +53,7 @@ module.exports = {
       enableDefaultRoute: true,
       // isAccessAllowed: ({ authentication: { item: user } }) =>
       //   Boolean(true),
-      // authStrategy
+      authStrategy
     })
   ]
 };

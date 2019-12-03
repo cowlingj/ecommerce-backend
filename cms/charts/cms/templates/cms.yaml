@@ -62,6 +62,7 @@ spec:
       containers:
         - name: main
           image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
+          imagePullPolicy: Always
           resources:
             limits:
               cpu: 300m
