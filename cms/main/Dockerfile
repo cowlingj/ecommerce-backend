@@ -8,6 +8,7 @@ RUN npm run build
 FROM node:lts as run
 
 COPY --from=build /usr/lib/app/package.json /usr/lib/app/package.json
+COPY --from=build /usr/lib/app/package-lock.json /usr/lib/app/package-lock.json
 COPY --from=build /usr/lib/app/dist /usr/lib/app/dist
 COPY --from=build /usr/lib/app/scripts /usr/lib/app/scripts
 

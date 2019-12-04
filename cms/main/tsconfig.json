@@ -17,6 +17,10 @@
                 "typings/keystonejs__keystone",
                 "node_modules/@types/keystonejs__keystone"
             ],
+            "@keystonejs/logger": [
+              "typings/keystonejs__logger",
+              "node_modules/@types/keystonejs__logger"
+            ],
             "@keystonejs/adapter-mongoose": [
                 "typings/keystonejs__adapter-mongoose",
                 "node_modules/@types/keystonejs__adapter-mongoose"

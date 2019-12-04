@@ -20,6 +20,7 @@ const mongoUri = process.env.MONGO_URI
 const keystone = new Keystone({
   name: "Uni-Cycle",
   adapter: new MongooseAdapter({ mongoUri }),
+  secureCookies: false,
   queryLimits: {
     maxTotalResults: 100
   },
@@ -50,14 +51,9 @@ module.exports = {
       adminPath: "/cms/admin",
       apiPath: "/cms/graphql",
       graphiqlPath: "/cms/playground",
-      enableDefaultRoute: true,
-      isAccessAllowed: (auth) => {
-        console.log(JSON.stringify({
-          msg: "accessing user",
-          auth: auth
-        }))
-        return Boolean(true)
-      },
+      enableDefaultRoute: false,
+      isAccessAllowed: ({ authentication: { item: user } }) =>
+        Boolean(user && user.isAdmin),
       authStrategy
     })
   ]

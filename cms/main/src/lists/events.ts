@@ -25,7 +25,14 @@ export default function(keystone: Keystone) {
       }
     },
     labelResolver: (item) => `${item.title} (${item.start} - ${item.end})`,
-    access: ({ authentication: { item: user }, operation: operation }) =>
-      Boolean(operation == "auth" || (user && user.isAdmin))
+    access: {
+      create: ({ authentication: { item: user } }) =>
+        Boolean(user && user.isAdmin),
+      read: true,
+      update: ({ authentication: { item: user } }) =>
+        Boolean(user && user.isAdmin),
+      delete: ({ authentication: { item: user } }) =>
+        Boolean(user && user.isAdmin)
+    }
   });
 }

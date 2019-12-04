@@ -32,6 +32,7 @@
     "@types/keystonejs__auth-password": "^5.0.0",
     "@types/keystonejs__keystone": "^5.2.0",
     "@types/keystonejs__logger": "^5.0.0",
+    "@types/pino": "^5.8.13",
     "nodemon": "^2.0.1",
     "typescript": "^3.7.2"
   }
