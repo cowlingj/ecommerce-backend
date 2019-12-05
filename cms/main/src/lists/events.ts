@@ -13,7 +13,7 @@ export default function(keystone: Keystone) {
       title: {
         type: Text,
       },
-      decription: {
+      description: {
           type: Text,
           isMultiline: true
       },
