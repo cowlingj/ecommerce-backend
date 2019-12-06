@@ -7,6 +7,7 @@ import setupLists from "./lists";
 import onConnect from "./on-connect";
 import { config } from "dotenv";
 import path from "path";
+import RedirectApp from './apps/redirect-app'
 
 if (process.env.NODE_ENV === "development") {
   config({ path: path.resolve(process.cwd(), "config", ".env") });
@@ -55,6 +56,11 @@ module.exports = {
       isAccessAllowed: ({ authentication: { item: user } }) =>
         Boolean(user && user.isAdmin),
       authStrategy
+    }),
+    new RedirectApp({
+      routes: [
+        { path: "/cms", redirect: "/cms/admin" },
+      ]
     })
   ]
 };
