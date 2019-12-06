@@ -23,4 +23,6 @@ export default class {
 
     return app;
   }
+
+  build(){}
 }
