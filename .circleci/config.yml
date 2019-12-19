@@ -20,28 +20,28 @@ workflows:
           filters:
             branches:
               only: master
-      - build-auth-main:
-          filters:
-            branches:
-              only: master
-      - build-postgres-client:
-          filters:
-            branches:
-              only: master
-      - build-auth-init:
-          filters:
-            branches:
-              only: master
-          requires:
-            - build-postgres-client
+      # - build-auth-main:
+      #     filters:
+      #       branches:
+      #         only: master
+      # - build-postgres-client:
+      #     filters:
+      #       branches:
+      #         only: master
+      # - build-auth-init:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires:
+      #       - build-postgres-client
       - build-cms-init:
           filters:
             branches:
               only: master
-      - build-mongodb-debug:
-          filters:
-            branches:
-              only: master
+      # - build-mongodb-debug:
+      #     filters:
+      #       branches:
+      #         only: master
 
   update_helm_charts:
     jobs:
@@ -49,16 +49,16 @@ workflows:
           filters:
             branches:
               only: master
-      - package-elasticsearch:
-          filters:
-            branches:
-              only: master
-      - package-postgres:
-          filters:
-            branches:
-              only: master
-          requires:
-            - package-helpers
+      # - package-elasticsearch:
+      #     filters:
+      #       branches:
+      #         only: master
+      # - package-postgres:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires:
+      #       - package-helpers
       - package-mongodb-config:
           filters:
             branches:
@@ -71,35 +71,35 @@ workflows:
               only: master
           requires:
             - package-helpers
-      - package-auth:
-          filters:
-            branches:
-              only: master
-          requires:
-            - package-elasticsearch
-            - package-postgres
+      # - package-auth:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires:
+      #       - package-elasticsearch
+      #       - package-postgres
       - package-backend:
           filters:
             branches:
               only: master
           requires:
-            - package-auth
+            # - package-auth
             - package-cms
-            - package-elasticsearch
+            # - package-elasticsearch
             - package-helpers
             - package-mongodb-config
-            - package-postgres
+            # - package-postgres
       - generate_index:
           filters:
             branches:
               only: master
           requires:
-            - package-auth
+            # - package-auth
             - package-cms
-            - package-elasticsearch
+            # - package-elasticsearch
             - package-helpers
             - package-mongodb-config
-            - package-postgres
+            # - package-postgres
             - package-backend
       - commit_if_different:
           filters:
@@ -133,52 +133,52 @@ jobs:
       - docker_package:
           image: "cms.admin"
           path: "cms/main/"
-  build-auth-main:
-    executor: gcloud
-    steps:
-      - docker_package:
-          image: "auth.admin"
-          path: "auth/main/"
-  build-postgres-client:
-    executor: gcloud
-    steps:
-      - docker_package:
-          image: "client.postgres.data"
-          path: "postgres/client/"
-  build-auth-init:
-    executor: gcloud
-    steps:
-      - docker_package:
-          image: "init.auth.admin"
-          path: "auth/init/"
+  # build-auth-main:
+  #   executor: gcloud
+  #   steps:
+  #     - docker_package:
+  #         image: "auth.admin"
+  #         path: "auth/main/"
+  # build-postgres-client:
+  #   executor: gcloud
+  #   steps:
+  #     - docker_package:
+  #         image: "client.postgres.data"
+  #         path: "postgres/client/"
+  # build-auth-init:
+  #   executor: gcloud
+  #   steps:
+  #     - docker_package:
+  #         image: "init.auth.admin"
+  #         path: "auth/init/"
   build-cms-init:
     executor: gcloud
     steps:
       - docker_package:
           image: "init.cms.admin"
           path: "cms/init/"
-  build-mongodb-debug:
-    executor: gcloud
-    steps:
-      - docker_package:
-          image: "mongodb.data"
-          path: "mongodb/debugImage/"
+  # build-mongodb-debug:
+  #   executor: gcloud
+  #   steps:
+  #     - docker_package:
+  #         image: "mongodb.data"
+  #         path: "mongodb/debugImage/"
 
   package-helpers:
     executor: helm
     steps:
       - helm_package:
           path: helm/charts/helpers/
-  package-elasticsearch:
-    executor: helm
-    steps:
-      - helm_package:
-          path: elasticsearch/charts/elasticsearch/
-  package-postgres:
-    executor: helm
-    steps:
-      - helm_package:
-          path: postgres/charts/postgres/
+  # package-elasticsearch:
+  #   executor: helm
+  #   steps:
+  #     - helm_package:
+  #         path: elasticsearch/charts/elasticsearch/
+  # package-postgres:
+  #   executor: helm
+  #   steps:
+  #     - helm_package:
+  #         path: postgres/charts/postgres/
   package-mongodb-config:
     executor: helm
     steps:
@@ -189,11 +189,11 @@ jobs:
     steps:
       - helm_package:
           path: cms/charts/cms/
-  package-auth:
-    executor: helm
-    steps:
-      - helm_package:
-          path: auth/charts/auth/
+  # package-auth:
+  #   executor: helm
+  #   steps:
+  #     - helm_package:
+  #         path: auth/charts/auth/
   package-backend:
     executor: helm
     steps:
