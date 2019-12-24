@@ -1,0 +1,5 @@
+{
+    "exec": "NODE_ENV=development webpack && node 'dist/index.js'",
+    "watch": [ "src" ],
+    "ext": "js,ts,json"
+}

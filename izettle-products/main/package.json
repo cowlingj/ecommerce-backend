@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "dev": "PORT=3000 node index.js",
-    "start": "node index.js",
+    "dev": "nodemon",
+    "build": "webpack",
+    "start": "node dist/index.js",
+    "lint": "eslint src/**",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +25,29 @@
   "homepage": "https://github.com/cowlingj/ecommerce-backend#readme",
   "dependencies": {
     "apollo-server": "^2.9.14",
+    "dotenv": "^8.2.0",
     "graphql": "^14.5.8"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-typescript": "^7.7.7",
+    "@types/node": "^13.1.0",
+    "@types/terser-webpack-plugin": "^2.2.0",
+    "@types/webpack": "^4.41.0",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.7.0",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "terser-webpack-plugin": "^2.3.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
   }
 }
