@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+      group: {{ .Values.group }}
+      version: {{ .Values.version }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+        group: {{ .Values.group }}
+        version: {{ .Values.version }}
+    spec:
+      {{ if .Values.imagePullSecret -}}
+        imagePullSecrets:
+          - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      containers:
+        - name: main
+          image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          env:
+            - name: PORT
+              value: "80"
+            - name: HOST
+              value: "0.0.0.0"
+          ports:
+            - containerPort: 80
+          readinessProbe:
+            tcpSocket:
+              port: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.serviceName }}
+  labels:
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
+spec:
+  type: {{ template "helpers.service.type" .Values.env }}
+  selector:
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
+  ports:
+    {{- with .Values.ports.main }}
+    - name: {{ printf "\"%s-%s\"" .protocol .name }}
+      port: {{ .port }}
+      protocol: TCP
+      targetPort: 80
+    {{- end }}

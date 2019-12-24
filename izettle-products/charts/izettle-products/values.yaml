@@ -1,0 +1,14 @@
+# namespace: default {{ .Release.Namespace }}
+env: production
+name: izettle-products
+group: backend
+version: "0.0.1"
+image: gcr.io/gke-test-253221/izettle-products.backend
+imagePullSecret: gcr
+serviceName: products
+ports:
+  main:
+    name: main
+    port: 80
+    protocol: http
+
