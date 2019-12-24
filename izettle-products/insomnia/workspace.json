@@ -290,17 +290,17 @@
       },
       "created": 1577132214642,
       "description": "",
-      "headers": [],
+      "headers": [
+        {
+          "id": "pair_7d3ec72eb5ed4b9d97f0bd454be6676c",
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
       "isPrivate": false,
       "metaSortKey": -1577132214642,
       "method": "PUT",
-      "modified": 1577132214642,
-      "name": "put /organizations/{organizationUuid}/inventory",
-      "parameters": [],
-      "parentId": "fld_4536ec36e8314b61a6f428518b029b0d",
-      "settingDisableRenderRequestBody": false,
-      "settingEncodeUrl": true,
-      "settingRebuildPath": true,
+      "modified": 1577139935762,
       "settingSendCookies": true,
       "settingStoreCookies": true,
       "url": "{{ base_url }}/organizations/{{ organizationUuid }}/inventory",
