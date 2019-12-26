@@ -3,16 +3,16 @@ entries:
   cms:
   - apiVersion: v1
     appVersion: 0.0.2
-    created: 2019-12-24T04:10:53.153910117Z
-    digest: 60a343c15ad11e9d34551ec5ee48c5609c1fd93d0827aa6b340cb0c26a387d73
+    created: 2019-12-26T00:31:30.403951716Z
+    digest: b4c30f8d9812c74ef02ea20517120f589524daecc553e8d493eeeecd3b7b1684
     name: cms
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/cms-0.0.1.tgz
     version: 0.0.1
   config:
   - apiVersion: v1
-    created: 2019-12-24T04:10:53.154049105Z
-    digest: 44ab2b7d440d580445ba2e36b40488fb26b7fdd4dc46bfb4ba114a5a48fe132c
+    created: 2019-12-26T00:31:30.404157034Z
+    digest: d431928d40cb4a817cf89f34a8ddf7e9593574df088a3538cb75b06d0b71b104
     name: config
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/config-0.0.1.tgz
@@ -20,9 +20,9 @@ entries:
   ecommerce-backend:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: 2019-12-24T04:10:53.155702086Z
+    created: 2019-12-26T00:31:30.406896554Z
     description: umberella package for ecommerce-backend
-    digest: d800d1f2fb701476b852cd6abdc2272e5ea12540df802e2fb774974b00549bb1
+    digest: 9266093abbf8a3d6173b2875124d8ed7b0a1462bd38f727e6e076802874f8aed
     name: ecommerce-backend
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/ecommerce-backend-0.0.1.tgz
@@ -30,11 +30,11 @@ entries:
   helpers:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: 2019-12-24T04:10:53.155845694Z
+    created: 2019-12-26T00:31:30.40712813Z
     description: utility template functions
-    digest: ba5d33e331aaa1af1d4461f9fab79713a25956692299df1de29262c0f637e927
+    digest: 4ede36bec068b52d638e9856dd215ce72e870c9b96eb1ed7d0358478ce464be4
     name: helpers
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/helpers-0.0.1.tgz
     version: 0.0.1
-generated: 2019-12-24T04:10:53.153598566Z
+generated: 2019-12-26T00:31:30.4035127Z
