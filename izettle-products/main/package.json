@@ -6,8 +6,10 @@
     "dev": "nodemon",
     "build": "webpack",
     "start": "node dist/index.js",
-    "lint": "eslint src/**",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint *.ts src/**.ts",
+    "test": "npm run-script test:unit && npm run-script test:integration",
+    "test:unit": "jest --passWithNoTests --config test/jest.unit.config.json",
+    "test:integration": "jest --config test/jest.integration.config.json"
   },
   "repository": {
     "type": "git",
@@ -26,7 +28,8 @@
   "dependencies": {
     "apollo-server": "^2.9.14",
     "dotenv": "^8.2.0",
-    "graphql": "^14.5.8"
+    "graphql": "^14.5.8",
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
@@ -34,14 +37,20 @@
     "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-typescript": "^7.7.7",
+    "@jagi/jest-transform-graphql": "^1.0.2",
+    "@types/jest": "^24.0.24",
     "@types/node": "^13.1.0",
     "@types/terser-webpack-plugin": "^2.2.0",
     "@types/webpack": "^4.41.0",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
     "@typescript-eslint/parser": "^2.13.0",
+    "apollo-boost": "^0.4.7",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.7.0",
+    "graphql-tag": "^2.10.1",
+    "jest": "^24.9.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "terser-webpack-plugin": "^2.3.1",

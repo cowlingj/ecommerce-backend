@@ -17,9 +17,12 @@ const config: webpack.Configuration = {
       {
         test: /(\.ts)|(\.js)|(\.json)$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader"
-        }
+        loader: "babel-loader"
+      },
+      {
+        test: /\.(graphql|gql)$/,
+        exclude: /node_modules/,
+        loader: 'graphql-tag/loader'
       },
       {
         test: /\.mjs$/,
