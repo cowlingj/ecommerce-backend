@@ -21,10 +21,10 @@ spec:
         group: {{ .Values.group }}
         version: {{ .Values.version }}
     spec:
-      {{- required "no imagePullSecret" .Values.imagePullSecret -}}
-      {{ if .Values.imagePullSecret -}}
+      {{- default "no imagePullSecret" .Values.imagePullSecret -}}
+      {{ if true -}}
         imagePullSecrets:
-          - name: {{ .Values.imagePullSecret }}
+          - name: gcr
       {{- end }}
       containers:
         - name: main
