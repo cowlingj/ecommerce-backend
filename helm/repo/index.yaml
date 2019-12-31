@@ -3,16 +3,16 @@ entries:
   cms:
   - apiVersion: v1
     appVersion: 0.0.2
-    created: 2019-12-29T01:06:59.313325059Z
-    digest: 6167cfe585dd03725130054fd0ed690da2c139d0f5b632a1243ae98fadb44d7b
+    created: 2019-12-31T12:35:17.734793323Z
+    digest: 565b191a6bbbfa14e9f84b94af7077a527c9738e46e172fe385b14ca9cf60ef9
     name: cms
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/cms-0.0.1.tgz
     version: 0.0.1
   config:
   - apiVersion: v1
-    created: 2019-12-29T01:06:59.313447129Z
-    digest: 7df669a2ebde239cc720f22a64d9ae9a9e3a2fff944962a1043a0b339cce3870
+    created: 2019-12-31T12:35:17.735032592Z
+    digest: 5c26b93ab51f401aad5b27687a2c6895fa1bfefb37b957a016d35fb8cc614f91
     name: config
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/config-0.0.1.tgz
@@ -20,9 +20,9 @@ entries:
   ecommerce-backend:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: 2019-12-29T01:06:59.315080022Z
+    created: 2019-12-31T12:35:17.737942084Z
     description: umberella package for ecommerce-backend
-    digest: 9882729e893fb0bf70c715f6ac993892d2cef516d0239319640da3eb49c0b08f
+    digest: e4049eee6093b91e5e087840ad1032b732a367a935bf9a6ac573366f12e66f45
     name: ecommerce-backend
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/ecommerce-backend-0.0.1.tgz
@@ -30,11 +30,20 @@ entries:
   helpers:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: 2019-12-29T01:06:59.315214693Z
+    created: 2019-12-31T12:35:17.738181531Z
     description: utility template functions
-    digest: 249aa5aec00f930dfbd1721bae8ca759f519a925d9da730cab8b90299ecea357
+    digest: 939621be9954c3b9f4d086f7a99402167af2569681fbb0492febd0b114bab2b3
     name: helpers
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/helpers-0.0.1.tgz
     version: 0.0.1
-generated: 2019-12-29T01:06:59.313005265Z
+  izettle-products:
+  - apiVersion: v1
+    appVersion: 0.0.1
+    created: 2019-12-31T12:35:17.738457063Z
+    digest: b4c017f71a5b40c3f0eacec4cf859ffb6517018a8b967272c45756344762d9a8
+    name: izettle-products
+    urls:
+    - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/izettle-products-0.0.1.tgz
+    version: 0.0.1
+generated: 2019-12-31T12:35:17.734340923Z
