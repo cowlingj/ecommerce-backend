@@ -78,7 +78,10 @@ cms:
     secretName: cms-users
     existingSecret: false
     data:
-      users: []
+      users:
+        - username: admin
+          password: password
+          isAdmin: true
   ports:
     ui:
       port: 80
@@ -92,3 +95,27 @@ cms:
     mongodb:
       image: "gcr.io/gke-test-253221/init.cms.admin"
       version: "0.0.1"
+
+izettle-products:
+  <<: *all
+  name: izettle-products
+  group: backend
+  version: "0.0.1"
+  image: gcr.io/gke-test-253221/izettle-products.backend
+  imagePullSecret: gcr
+  serviceName: products
+  existingCredentialsSecret: false
+  credentialsSecretName: izettle-credentials-secret
+  izettleCredentials:
+    username: null
+    password: null
+    client_id: null
+    client_secret: null
+  izettleEndpoints:
+    auth: https://oauth.izettle.com
+    products: https://products.izettle.com
+  ports:
+    main:
+      name: main
+      port: 80
+      protocol: http

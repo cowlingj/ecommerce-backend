@@ -1,3 +1,4 @@
+{{- if .Values.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -39,12 +40,47 @@ spec:
               value: "80"
             - name: HOST
               value: "0.0.0.0"
+            - name: SECRETS_DIR
+              value: /etc/secrets
+            - name: IZETTLE_CREDENTIALS_FILE
+              value: izettle/credentials.json
+            - name: IZETTLE_AUTH_URI
+              value: {{ .Values.izettleEndpoints.auth }}
+            - name: IZETTLE_PRODUCTS_URI
+              value: {{ .Values.izettleEndpoints.products }}
+          volumeMounts:
+            - name: izettle-credentials-volume
+              mountPath: /etc/secrets/izettle
+              readOnly: true
+      volumes:
+        - name: izettle-credentials-volume
+          secret:
+            secretName: {{ .Values.credentialsSecretName }}
+            items:
+              - key: credentials
+                path: credentials.json
           ports:
             - containerPort: 80
           readinessProbe:
             tcpSocket:
               port: 80
+{{- end }}
 ---
+{{- if and .Values.enabled (not .Values.existingSecret) }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.credentialsSecretName }}
+  labels:
+    app: {{ .Values.name }}
+    group: {{ .Values.group }}
+    version: {{ .Values.version }}
+type: Opaque
+data:
+  credentials: {{ .Values.izettleCredentials | toJson | b64enc | quote }}
+{{- end }}
+---
+{{ if .Values.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -66,3 +102,4 @@ spec:
       protocol: TCP
       targetPort: 80
     {{- end }}
+{{- end }}

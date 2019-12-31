@@ -24,7 +24,10 @@ users:
   secretName: cms-users
   existingSecret: false
   data:
-    users: []
+    users:
+      - username: admin
+        password: password
+        isAdmin: true
 ports:
   ui:
     port: 80

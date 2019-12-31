@@ -21,3 +21,6 @@ dependencies:
   - name: helpers
     repository: file://../../../helm/charts/helpers/
     version: 0.0.1
+  - name: izettle-products
+    repository: file://../../../izettle-products/charts/izettle-products
+    version: 0.0.1

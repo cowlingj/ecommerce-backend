@@ -1,4 +1,5 @@
 # namespace: default {{ .Release.Namespace }}
+enabled: true
 env: production
 name: izettle-products
 group: backend
@@ -6,6 +7,17 @@ version: "0.0.1"
 image: gcr.io/gke-test-253221/izettle-products.backend
 imagePullSecret: gcr
 serviceName: products
+existingCredentialsSecret: false
+credentialsSecretName: izettle-credentials-secret
+izettleCredentials:
+  username: null
+  password: null
+  client_id: null
+  client_secret: null
+
+izettleEndpoints:
+  auth: https://oauth.izettle.com
+  products: https://products.izettle.com
 ports:
   main:
     name: main
