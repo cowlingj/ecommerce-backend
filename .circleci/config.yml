@@ -20,7 +20,7 @@ workflows:
           filters:
             branches:
               only: master
-      - build-izettle-products-main:
+      - build-izettle-products:
           filters:
             branches:
               only: master
