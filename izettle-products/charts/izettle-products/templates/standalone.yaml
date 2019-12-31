@@ -21,11 +21,9 @@ spec:
         group: {{ .Values.group }}
         version: {{ .Values.version }}
     spec:
-      {{- default "no imagePullSecret" .Values.imagePullSecret -}}
-      {{ if true -}}
+        {{ printf "#%s" (toJson .Values) }}
         imagePullSecrets:
           - name: gcr
-      {{- end }}
       containers:
         - name: main
           image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
