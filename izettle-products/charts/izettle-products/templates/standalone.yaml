@@ -21,9 +21,9 @@ spec:
         group: {{ .Values.group }}
         version: {{ .Values.version }}
     spec:
-        {{ printf "#%s" (toJson .Values) }}
-        imagePullSecrets:
-          - name: gcr
+      {{ printf "# %s" (toJson .Values) }}
+      imagePullSecrets:
+        - name: gcr
       containers:
         - name: main
           image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
