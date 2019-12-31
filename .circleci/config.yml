@@ -20,6 +20,10 @@ workflows:
           filters:
             branches:
               only: master
+      - build-izettle-products-main:
+          filters:
+            branches:
+              only: master
       # - build-auth-main:
       #     filters:
       #       branches:
@@ -71,6 +75,12 @@ workflows:
               only: master
           requires:
             - package-helpers
+      - package-izettle-products:
+          filters:
+            branches:
+              only: master
+          requires:
+            - package-helpers
       # - package-auth:
       #     filters:
       #       branches:
@@ -85,6 +95,7 @@ workflows:
           requires:
             # - package-auth
             - package-cms
+            - package-izettle-products
             # - package-elasticsearch
             - package-helpers
             - package-mongodb-config
@@ -96,6 +107,7 @@ workflows:
           requires:
             # - package-auth
             - package-cms
+            - package-izettle-products
             # - package-elasticsearch
             - package-helpers
             - package-mongodb-config
@@ -157,6 +169,12 @@ jobs:
       - docker_package:
           image: "init.cms.admin"
           path: "cms/init/"
+  build-izettle-products:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "izettle-products.backend"
+          path: "izettle-products/main"
   # build-mongodb-debug:
   #   executor: gcloud
   #   steps:
@@ -189,6 +207,11 @@ jobs:
     steps:
       - helm_package:
           path: cms/charts/cms/
+  package-izettle-products:
+    executor: helm
+    steps:
+      - helm_package:
+          path: izettle-products/charts/izettle-products/
   # package-auth:
   #   executor: helm
   #   steps:
