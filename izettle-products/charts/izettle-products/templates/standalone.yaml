@@ -21,6 +21,7 @@ spec:
         group: {{ .Values.group }}
         version: {{ .Values.version }}
     spec:
+      {{- required "no imagePullSecret" .Values.imagePullSecret -}}
       {{ if .Values.imagePullSecret -}}
         imagePullSecrets:
           - name: {{ .Values.imagePullSecret }}
