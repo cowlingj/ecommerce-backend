@@ -47,16 +47,22 @@ const oauth2Client = oauth2.create({
 
 const resolvers = {
   Query: {
-    allProducts: async (): Promise<never[]> => {
+    allProducts: async (): Promise<any[]> => {
 
-      const token = oauth2Client.accessToken.create(
-        await oauth2Client.ownerPassword.getToken({
-          username: credentials.username,
-          password: credentials.password,
-          scope: ''
-        })
-      ).token['access_token']
+      let token: string
 
+      try {
+        token = oauth2Client.accessToken.create(
+          await oauth2Client.ownerPassword.getToken({
+            username: credentials.username,
+            password: credentials.password,
+            scope: ''
+          })
+        ).token['access_token']
+      } catch (err: Error) {
+        console.log(`error getting oauth token ${err}`)
+        throw err
+      }
 
       const res = await fetch(
         `${process.env.IZETTLE_PRODUCTS_URI}/organizations/self/products/v2/`,
@@ -83,7 +89,11 @@ const server = new ApolloServer({ typeDefs, resolvers, playground: process.env.N
 
 server.listen({
   port: parseInt(process.env.PORT ?? '') || 80,
-  host: process.env.HOST ?? "0.0.0.0"
+  host: process.env.HOST ?? "0.0.0.0",
+  formatError: (err: Error) => {
+    console.log(err);
+    return { err };
+  },
 }).then(({ url }: { url: string }) => {
   console.log(`Server ready at ${url}`);
 });
