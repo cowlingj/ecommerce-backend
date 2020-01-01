@@ -59,7 +59,7 @@ const resolvers = {
             scope: ''
           })
         ).token['access_token']
-      } catch (err: Error) {
+      } catch (err) {
         console.log(`error getting oauth token ${err}`)
         throw err
       }
