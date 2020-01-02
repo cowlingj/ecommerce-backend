@@ -123,15 +123,19 @@ describe("Server", () => {
       }
     ];
 
-    interface WithBody { body: { [key: string]: unknown } }
+    interface WithBody {
+      body: { [key: string]: unknown };
+    }
     interface Req extends http.IncomingMessage, WithBody {}
 
     const getTokenCalls: unknown[] = [];
     serversToCloseAfterEachTest.push(
       connect()
-        .use(urlencoded({
-          extended: false
-        }))
+        .use(
+          urlencoded({
+            extended: false
+          })
+        )
         .use(
           "/token/",
           (
@@ -139,8 +143,7 @@ describe("Server", () => {
             res: http.ServerResponse,
             next: Function
           ) => {
-
-            const req = _req as unknown as Req
+            const req = (_req as unknown) as Req;
 
             if (req.method !== "POST") {
               return next();
@@ -162,9 +165,9 @@ describe("Server", () => {
             res.setHeader("Content-Type", "application/json");
             res.end(
               JSON.stringify({
-                'access_token': token,
-                'refresh_token': null,
-                'expires_in': null
+                access_token: token,
+                refresh_token: null,
+                expires_in: null
               })
             );
           }
@@ -209,8 +212,10 @@ describe("Server", () => {
       `
     });
 
-    expect(allProductsCalls).toEqual([ null ]);
-    expect(getTokenCalls).toEqual([ { contentType: "application/x-www-form-urlencoded" } ]);
+    expect(allProductsCalls).toEqual([null]);
+    expect(getTokenCalls).toEqual([
+      { contentType: "application/x-www-form-urlencoded" }
+    ]);
     expect(res.data).toMatchObject({
       allProducts: [{ id: "uuid-1", name: "name-1" }]
     });
