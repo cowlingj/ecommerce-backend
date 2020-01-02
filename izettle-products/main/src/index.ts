@@ -5,7 +5,7 @@ import products from "@/product.gql";
 import fetch from "node-fetch";
 import fs from "fs";
 import path from "path";
-import oauth2 from "simple-oauth2";
+import form from "form-urlencoded";
 
 if (
   process.env.IZETTLE_AUTH_URI === undefined ||
@@ -30,21 +30,6 @@ const credentials: {
   )
 );
 
-const oauth2Client = oauth2.create({
-  client: {
-    id: credentials.client_id,
-    secret: credentials.client_secret
-  },
-  auth: {
-    tokenHost: process.env.IZETTLE_AUTH_URI,
-    tokenPath: "/token"
-  },
-  options: {
-    bodyFormat: "form",
-    authorizationMethod: "body"
-  }
-});
-
 const resolvers = {
   Query: {
     allProducts: async (): Promise<
@@ -53,16 +38,36 @@ const resolvers = {
         name: string;
       }[]
     > => {
-      let token: string;
+      let token: {
+        accessToken: string;
+        refreshToken: string;
+        expiresIn: number;
+      };
 
       try {
-        const res = await oauth2Client.ownerPassword.getToken({
-          username: credentials.username,
-          password: credentials.password,
-          scope: ""
+        const res = await fetch(`${process.env.IZETTLE_AUTH_URI}/token`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Accept: "application/json"
+          },
+          /* eslint-disable @typescript-eslint/camelcase */
+          body: form({
+            client_id: credentials.client_id,
+            client_secret: credentials.client_secret,
+            username: credentials.username,
+            password: credentials.password,
+            grant_type: "password"
+          })
+          /* eslint-enable @typescript-eslint/camelcase */
         });
-        console.log(res);
-        token = oauth2Client.accessToken.create(res).token["access_token"];
+
+        const json = await res.json();
+        token = {
+          accessToken: json.access_token,
+          refreshToken: json.refresh_token,
+          expiresIn: json.expires_in
+        };
       } catch (err) {
         console.log(`error getting oauth token ${err}`);
         throw err;
@@ -72,7 +77,7 @@ const resolvers = {
         `${process.env.IZETTLE_PRODUCTS_URI}/organizations/self/products/v2/`,
         {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token.accessToken}`
           }
         }
       );

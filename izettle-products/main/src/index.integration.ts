@@ -139,7 +139,7 @@ describe("Server", () => {
         .use(
           "/token/",
           (
-            _req: http.IncomingMessage, // { body: unknown } | http.IncomingMessage,
+            _req: http.IncomingMessage,
             res: http.ServerResponse,
             next: Function
           ) => {
@@ -164,11 +164,13 @@ describe("Server", () => {
             }
             res.setHeader("Content-Type", "application/json");
             res.end(
+              /* eslint-disable @typescript-eslint/camelcase */
               JSON.stringify({
                 access_token: token,
                 refresh_token: null,
                 expires_in: null
               })
+              /* eslint-enable @typescript-eslint/camelcase */
             );
           }
         )

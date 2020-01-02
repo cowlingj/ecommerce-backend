@@ -29,9 +29,9 @@
   "dependencies": {
     "apollo-server": "^2.9.14",
     "dotenv": "^8.2.0",
+    "form-urlencoded": "^4.1.1",
     "graphql": "^14.5.8",
-    "node-fetch": "^2.6.0",
-    "simple-oauth2": "^3.1.0"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
@@ -41,6 +41,7 @@
     "@babel/preset-typescript": "^7.7.7",
     "@jagi/jest-transform-graphql": "^1.0.2",
     "@types/body-parser": "^1.17.1",
+    "@types/form-urlencoded": "^2.0.1",
     "@types/graphql": "^14.5.0",
     "@types/jest": "^24.0.24",
     "@types/node": "^13.1.0",
