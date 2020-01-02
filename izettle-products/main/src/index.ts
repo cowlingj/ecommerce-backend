@@ -56,12 +56,14 @@ const resolvers = {
       let token: string
 
       try {
+        const res = await oauth2Client.ownerPassword.getToken({
+          username: credentials.username,
+          password: credentials.password,
+          scope: ''
+        })
+        console.log(res)
         token = oauth2Client.accessToken.create(
-          await oauth2Client.ownerPassword.getToken({
-            username: credentials.username,
-            password: credentials.password,
-            scope: ''
-          })
+          res
         ).token['access_token']
       } catch (err) {
         console.log(`error getting oauth token ${err}`)
