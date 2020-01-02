@@ -1,9 +1,1 @@
-type Query {
-  allProducts: [Product]
-}
-
-type Product {
-  id: ID!
-  name: String!
-}
-
+type Query

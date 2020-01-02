@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server'
 import dotenv from 'dotenv'
-import typeDefs from '@/schema.gql'
+import schema from '@/schema.gql'
+import products from '@/product.gql'
 import fetch from 'node-fetch'
 import fs from 'fs'
 import path from 'path'
@@ -40,14 +41,17 @@ const oauth2Client = oauth2.create({
     tokenPath: '/token'
   },
   options: {
-    bodyFormat: 'json',
+    bodyFormat: 'form',
     authorizationMethod: 'body'
   }
 })
 
 const resolvers = {
   Query: {
-    allProducts: async (): Promise<any[]> => {
+    allProducts: async (): Promise<{
+      id: string;
+      name: string;
+    }[]> => {
 
       let token: string
 
@@ -85,7 +89,10 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers, playground: process.env.NODE_ENV === 'development' });
+const server = new ApolloServer({ typeDefs: [
+  schema,
+  products
+], resolvers, playground: process.env.NODE_ENV === 'development' });
 
 server.listen({
   port: parseInt(process.env.PORT ?? '') || 80,

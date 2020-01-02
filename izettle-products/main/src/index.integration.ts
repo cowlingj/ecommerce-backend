@@ -6,7 +6,7 @@ import { promisify } from "util";
 import connect from "connect";
 import path from "path";
 import fs from "fs";
-import { json } from "body-parser";
+import { urlencoded } from "body-parser";
 
 describe("Server", () => {
   let serversToCloseAfterEachTest: http.Server[] = [];
@@ -123,22 +123,30 @@ describe("Server", () => {
       }
     ];
 
-    let getTokenCalls = 0;
+    interface WithBody { body: { [key: string]: unknown } }
+    interface Req extends http.IncomingMessage, WithBody {}
+
+    const getTokenCalls: unknown[] = [];
     serversToCloseAfterEachTest.push(
       connect()
-        .use(json())
+        .use(urlencoded({
+          extended: false
+        }))
         .use(
           "/token/",
           (
-            req: { body: unknown } | http.IncomingMessage,
+            _req: http.IncomingMessage, // { body: unknown } | http.IncomingMessage,
             res: http.ServerResponse,
             next: Function
           ) => {
+
+            const req = _req as unknown as Req
+
             if (req.method !== "POST") {
               return next();
             }
 
-            getTokenCalls++;
+            getTokenCalls.push({ contentType: req.headers["content-type"] });
 
             if (
               req.body["username"] !== testCredentials.username ||
@@ -164,7 +172,7 @@ describe("Server", () => {
         .listen(3002)
     );
 
-    let allProductsCalls = 0;
+    const allProductsCalls: unknown[] = [];
     serversToCloseAfterEachTest.push(
       connect()
         .use(
@@ -178,7 +186,7 @@ describe("Server", () => {
               return next();
             }
 
-            allProductsCalls++;
+            allProductsCalls.push(null);
             if (req.headers.authorization !== `Bearer ${token}`) {
               throw new Error(
                 "no valid bearer token used for get all products"
@@ -201,8 +209,8 @@ describe("Server", () => {
       `
     });
 
-    expect(allProductsCalls).toBe(1);
-    expect(getTokenCalls).toBe(1);
+    expect(allProductsCalls).toEqual([ null ]);
+    expect(getTokenCalls).toEqual([ { contentType: "application/x-www-form-urlencoded" } ]);
     expect(res.data).toMatchObject({
       allProducts: [{ id: "uuid-1", name: "name-1" }]
     });

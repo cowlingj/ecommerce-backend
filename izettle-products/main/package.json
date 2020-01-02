@@ -9,7 +9,8 @@
     "lint": "eslint *.ts src/**.ts",
     "test": "npm run-script test:unit && npm run-script test:integration",
     "test:unit": "jest --passWithNoTests --config test/jest.unit.config.json",
-    "test:integration": "jest --config test/jest.integration.config.json"
+    "test:integration": "jest --config test/jest.integration.config.json",
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "@babel/preset-typescript": "^7.7.7",
     "@jagi/jest-transform-graphql": "^1.0.2",
     "@types/body-parser": "^1.17.1",
+    "@types/graphql": "^14.5.0",
     "@types/jest": "^24.0.24",
     "@types/node": "^13.1.0",
     "@types/node-fetch": "^2.5.4",
