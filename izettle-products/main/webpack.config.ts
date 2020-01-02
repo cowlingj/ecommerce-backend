@@ -31,6 +31,7 @@ const config: webpack.Configuration = {
       }
     ]
   },
+  devtool: process.env.NODE_ENV as WebpackMode === 'development'? 'inline-cheap-module-source-map' : false,
   resolve: {
     extensions: [".ts", ".js", ".mjs", "json"],
     alias: {
