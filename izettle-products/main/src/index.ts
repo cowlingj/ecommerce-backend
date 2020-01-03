@@ -84,7 +84,7 @@ const resolvers = {
       if (!res.ok) {
         throw new Error(`get all products failed (status: ${res.status})`);
       }
-      return (await res.json()).data.map(
+      return (await res.json()).map(
         (izettleProduct: { uuid: string; name: string }) => {
           return {
             id: izettleProduct.uuid,

@@ -197,7 +197,7 @@ describe("Server", () => {
                 "no valid bearer token used for get all products"
               );
             }
-            res.end(JSON.stringify({ data: products }));
+            res.end(JSON.stringify(products));
           }
         )
         .listen(3001)
