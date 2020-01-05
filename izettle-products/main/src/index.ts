@@ -6,6 +6,9 @@ import fetch from "node-fetch";
 import fs from "fs";
 import path from "path";
 import form from "form-urlencoded";
+import { config } from "dotenv";
+
+config()
 
 if (
   process.env.IZETTLE_AUTH_URI === undefined ||
