@@ -1,4 +1,4 @@
-FROM node:13.2.0-alpine as build
+FROM node:13.5.0-slim as build
 
 COPY / /usr/lib/app
 WORKDIR /usr/lib/app
@@ -6,7 +6,7 @@ RUN npm install
 
 RUN npm run build
 
-FROM node:13.2.0-alpine as run
+FROM node:13.5.0-slim as run
 
 COPY --from=build /usr/lib/app/dist /usr/lib/app/dist
 COPY --from=build /usr/lib/app/package.json /usr/lib/app/package.json
