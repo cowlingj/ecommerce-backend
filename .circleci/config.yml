@@ -53,6 +53,14 @@ workflows:
           filters:
             branches:
               only: master
+      - package-nginx-ingress:
+          filters:
+            branches:
+              only: master
+      - package-istio-ingress:
+          filters:
+            branches:
+              only: master
       # - package-elasticsearch:
       #     filters:
       #       branches:
@@ -94,6 +102,8 @@ workflows:
               only: master
           requires:
             # - package-auth
+            - package-nginx-ingress
+            - package-istio-ingress
             - package-cms
             - package-izettle-products
             # - package-elasticsearch
@@ -106,6 +116,8 @@ workflows:
               only: master
           requires:
             # - package-auth
+            - package-nginx-ingress
+            - package-istio-ingress
             - package-cms
             - package-izettle-products
             # - package-elasticsearch
@@ -187,6 +199,16 @@ jobs:
     steps:
       - helm_package:
           path: helm/charts/helpers/
+  package-nginx-ingress:
+    executor: helm
+    steps:
+      - helm_package:
+          path: helm/charts/nginx-ingress/
+  package-istio-ingress:
+    executor: helm
+    steps:
+      - helm_package:
+          path: helm/charts/istio-ingress/
   # package-elasticsearch:
   #   executor: helm
   #   steps:
@@ -201,7 +223,7 @@ jobs:
     executor: helm
     steps:
       - helm_package:
-          path: mongodb/charts/config/
+          path: mongodb/charts/mongodb-config/
   package-cms:
     executor: helm
     steps:

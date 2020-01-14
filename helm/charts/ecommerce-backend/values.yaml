@@ -119,3 +119,9 @@ izettle-products:
       name: main
       port: 80
       protocol: http
+
+nginx-ingress:
+  enabled: false
+
+istio-ingress:
+  enabled: true

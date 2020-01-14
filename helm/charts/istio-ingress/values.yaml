@@ -1,0 +1,10 @@
+enabled: true
+useHtttps: true
+domainName: null
+certIssuer: letsencrypt
+cms:
+  host: cms.admin.cluster
+  port: 80
+store:
+  host: store.frontend.cluster
+  port: 80

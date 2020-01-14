@@ -1,0 +1,20 @@
+{{- if .Values.enabled }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: store
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - ingress
+  http:
+  - match:
+    - uri:
+        prefix: "/store"
+    route:
+    - destination:
+        port:
+          number: {{ .Values.store.port }}
+        host: {{ .Values.store.host | quote }}
+{{- end }}
