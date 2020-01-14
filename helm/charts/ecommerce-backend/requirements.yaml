@@ -11,9 +11,8 @@ dependencies:
   - name: mongodb
     repository: https://kubernetes-charts.storage.googleapis.com
     version: 7.4.3
-  - name: config
-    alias: mongodb-config
-    repository: file://../../../mongodb/charts/config/
+  - name: mongodb-config
+    repository: file://../../../mongodb/charts/mongodb-config/
     version: 0.0.1
   - name: postgres
     repository: file://../../../postgres/charts/postgres/
