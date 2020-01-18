@@ -41,9 +41,9 @@ const authStrategy = keystone.createAuthStrategy({
   }
 });
 
-module.exports = {
-  keystone,
-  apps: [
+export { keystone }
+
+export const apps = [
     new GraphQLApp({
       apiPath: "/cms/graphql",
       graphiqlPath: "/cms/playground"
@@ -63,4 +63,3 @@ module.exports = {
       ]
     })
   ]
-};
