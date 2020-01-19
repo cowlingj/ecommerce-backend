@@ -16,5 +16,11 @@
     "jsx",
     "json",
     "node"
+  ],
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "src/**/*.ts",
+    "!src/**/*.integration.ts",
+    "!src/index.ts"
   ]
 }

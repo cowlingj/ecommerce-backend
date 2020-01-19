@@ -1,12 +1,14 @@
-import { ApolloServer } from "apollo-server";
-import dotenv from "dotenv";
-import schema from "@/schema.gql";
-import products from "@/product.gql";
-import fetch from "node-fetch";
-import fs from "fs";
-import path from "path";
-import form from "form-urlencoded";
+import { ApolloServer } from "apollo-server-express";
+import express from "express"
+import schema from "@/graphql/schema.gql";
+import products from "@/graphql/product.gql";
 import { config } from "dotenv";
+import allProducts from '@/products/allProducts/allProducts'
+import productById from './products/productById/productById'
+import auth from "@/auth/auth"
+import fetch from 'node-fetch'
+import fs from 'fs'
+import path from 'path'
 
 config()
 
@@ -18,8 +20,6 @@ if (
 ) {
   throw new Error("environment variables not set up");
 }
-
-dotenv.config();
 
 const credentials: {
   username: string;
@@ -35,87 +35,39 @@ const credentials: {
 
 const resolvers = {
   Query: {
-    allProducts: async (): Promise<
-      {
-        id: string;
-        name: string;
-      }[]
-    > => {
-      let token: {
-        accessToken: string;
-        refreshToken: string;
-        expiresIn: number;
-      };
-
-      try {
-        const res = await fetch(`${process.env.IZETTLE_AUTH_URI}/token`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Accept: "application/json"
-          },
-          /* eslint-disable @typescript-eslint/camelcase */
-          body: form({
-            client_id: credentials.client_id,
-            client_secret: credentials.client_secret,
-            username: credentials.username,
-            password: credentials.password,
-            grant_type: "password"
-          })
-          /* eslint-enable @typescript-eslint/camelcase */
-        });
-
-        const json = await res.json();
-        token = {
-          accessToken: json.access_token,
-          refreshToken: json.refresh_token,
-          expiresIn: json.expires_in
-        };
-      } catch (err) {
-        console.log(`error getting oauth token ${err}`);
-        throw err;
-      }
-
-      const res = await fetch(
-        `${process.env.IZETTLE_PRODUCTS_URI}/organizations/self/products/v2/`,
-        {
-          headers: {
-            Authorization: `Bearer ${token.accessToken}`
-          }
-        }
-      );
-      if (!res.ok) {
-        throw new Error(`get all products failed (status: ${res.status})`);
-      }
-      return (await res.json()).map(
-        (izettleProduct: { uuid: string; name: string }) => {
-          return {
-            id: izettleProduct.uuid,
-            name: izettleProduct.name
-          };
-        }
-      );
-    }
+    allProducts,
+    productById
   }
 };
 
-const server = new ApolloServer({
+const apollo = new ApolloServer({
   typeDefs: [schema, products],
   resolvers,
-  playground: process.env.NODE_ENV === "development"
+  playground: process.env.NODE_ENV === "development",
+  context: ({req}) => req
 });
 
-server
-  .listen({
-    port: parseInt(process.env.PORT ?? "") || 80,
-    host: process.env.HOST ?? "0.0.0.0",
-    formatError: (err: Error) => {
-      console.log(err);
-      return { err };
+const app = express()
+app.use(auth({
+  fetch,
+  auth: {
+    accessTokenUrl: `${process.env.IZETTLE_AUTH_URI}/token`,
+    credentials: {
+      username: credentials.username,
+      password: credentials.password,
+      clientId: credentials.client_id,
+      clientSecret: credentials.client_secret
     }
-  })
-  .then(({ url }: { url: string }) => {
-    console.log(`Server ready at ${url}`);
-  });
+  },
+  key: "token"
+}))
+apollo.applyMiddleware({app, path: '*'})
+
+const port = parseInt(process.env.PORT ? process.env.PORT : "") || 80
+const host = process.env.HOST ? process.env.HOST : "0.0.0.0"
+
+const server = app.listen(port, host, () => {
+    console.log(`Server ready at ${host}:${port}`);
+})
 
 export default server;

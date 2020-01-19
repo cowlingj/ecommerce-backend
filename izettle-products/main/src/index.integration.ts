@@ -1,16 +1,16 @@
-import { ApolloServer } from "apollo-server";
 import ApolloClient, { gql } from "apollo-boost";
 import fetch from "node-fetch";
-import http from "http";
+import { Server, IncomingMessage, ServerResponse } from "http";
 import { promisify } from "util";
 import connect from "connect";
 import path from "path";
 import fs from "fs";
 import { urlencoded } from "body-parser";
+import allSettled from 'promise.allsettled'
 
 describe("Server", () => {
-  let serversToCloseAfterEachTest: http.Server[] = [];
-  let server: ApolloServer;
+  let serversToCloseAfterEachTest: Server[] = [];
+  let server: Server;
   let client: ApolloClient<undefined>;
   let originalHost: string | undefined;
   let originalPort: string | undefined;
@@ -28,7 +28,7 @@ describe("Server", () => {
     process.env.PORT = "3000";
     process.env.HOST = "localhost";
     process.env.IZETTLE_PRODUCTS_URI = "http://localhost:3001";
-    process.env.IZETTLE_AUTH_URI = "http://localhost:3002";
+    process.env.IZETTLE_AUTH_URI = "http://localhost:3002/token";
     process.env.SECRETS_DIR = path.resolve(process.cwd(), "test", "secrets");
     process.env.IZETTLE_CREDENTIALS_FILE = "izettle_credentials.json";
 
@@ -58,38 +58,16 @@ describe("Server", () => {
 
   afterAll(async () => {
     client.stop();
-    await server.stop();
+    await promisify(server.close.bind(server))()
   });
 
   afterEach(async () => {
-    await Promise.all(
+    await allSettled(
       serversToCloseAfterEachTest.map(server =>
-        promisify((cb: (err?: Error) => void) => server.close(cb))()
+        promisify(server.close.bind(server))()
       )
     );
     serversToCloseAfterEachTest = [];
-  });
-
-  it("is running at uri", async () => {
-    const res = await client.query({
-      query: gql`
-        {
-          __schema {
-            queryType {
-              name
-            }
-          }
-        }
-      `
-    });
-
-    expect(res.data).toMatchObject({
-      __schema: {
-        queryType: {
-          name: "Query"
-        }
-      }
-    });
   });
 
   it("Can get a list of products", async () => {
@@ -126,7 +104,7 @@ describe("Server", () => {
     interface WithBody {
       body: { [key: string]: unknown };
     }
-    interface Req extends http.IncomingMessage, WithBody {}
+    type Req = IncomingMessage & WithBody
 
     const getTokenCalls: unknown[] = [];
     serversToCloseAfterEachTest.push(
@@ -139,11 +117,11 @@ describe("Server", () => {
         .use(
           "/token/",
           (
-            _req: http.IncomingMessage,
-            res: http.ServerResponse,
+            _req: IncomingMessage,
+            res: ServerResponse,
             next: Function
           ) => {
-            const req = (_req as unknown) as Req;
+            const req = _req as Req;
 
             if (req.method !== "POST") {
               return next();
@@ -163,12 +141,13 @@ describe("Server", () => {
               );
             }
             res.setHeader("Content-Type", "application/json");
+
             res.end(
               /* eslint-disable @typescript-eslint/camelcase */
               JSON.stringify({
                 access_token: token,
-                refresh_token: null,
-                expires_in: null
+                refresh_token: "refresh token",
+                expires_in: 3600
               })
               /* eslint-enable @typescript-eslint/camelcase */
             );
@@ -183,8 +162,8 @@ describe("Server", () => {
         .use(
           "/organizations/self/products/v2/",
           (
-            req: http.IncomingMessage,
-            res: http.ServerResponse,
+            req: IncomingMessage,
+            res: ServerResponse,
             next: Function
           ) => {
             if (req.method !== "GET") {

@@ -15,7 +15,7 @@
           "outFiles": [
             "${workspaceFolder}/izettle-products/main/dist/*.js"
           ],
-          "envFile": "${workspaceFolder}/izettle-products/main/dev/.env",
+          "envFile": "${workspaceFolder}/izettle-products/main/.env",
           "cwd": "${workspaceFolder}/izettle-products/main/"
         }
     ]
