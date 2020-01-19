@@ -1,0 +1,22 @@
+{
+  "name": "products-api",
+  "version": "0.0.1",
+  "description": "Graphql API for product service",
+  "main": "schema.gql",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cowlingj/ecommerce-backend.git"
+  },
+  "keywords": [
+    "graphql"
+  ],
+  "author": "Jonathan Cowling",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cowlingj/ecommerce-backend/issues"
+  },
+  "homepage": "https://github.com/cowlingj/ecommerce-backend#readme"
+}

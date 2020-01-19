@@ -8,6 +8,9 @@
     "^.+\\.ts$": "babel-jest",
     "^.+\\.(gql)|(graphql)$": "@jagi/jest-transform-graphql"
   },
+  "transformIgnorePatterns": [
+    "<rootDir>/node_modules/(?!products-api$)"
+  ],
   "testRegex": "(?:\\.|\\/)integration\\.ts$",
   "moduleFileExtensions": [
     "ts",
