@@ -9,7 +9,7 @@
     "^.+\\.(gql)|(graphql)$": "@jagi/jest-transform-graphql"
   },
   "transformIgnorePatterns": [
-    "<rootDir>/node_modules/(?!products-api$)"
+    "<rootDir>/node_modules/(?!@cowlingj/products-api)"
   ],
   "testRegex": "(?:\\.|\\/)integration\\.ts$",
   "moduleFileExtensions": [

@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server-express";
 import express from "express"
-import schema from "products-api/schema.gql";
-import products from "products-api/product.gql";
+import schema from "@cowlingj/products-api/schema.gql";
+import products from "@cowlingj/products-api/product.gql";
 import { config } from "dotenv";
 import allProducts from '@/products/allProducts/allProducts'
 import productById from './products/productById/productById'

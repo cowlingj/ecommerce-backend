@@ -1,5 +1,5 @@
 {
-  "name": "products-api",
+  "name": "@cowlingj/products-api",
   "version": "0.0.1",
   "description": "Graphql API for product service",
   "main": "schema.gql",

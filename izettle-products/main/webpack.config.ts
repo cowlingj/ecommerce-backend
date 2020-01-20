@@ -21,7 +21,7 @@ const config: webpack.Configuration = {
       },
       {
         test: /\.(graphql|gql)$/,
-        exclude: /node_modules\/(?!products-api$)/,
+        exclude: /node_modules\/(?!@cowlingj\/products-api)/,
         loader: "graphql-tag/loader"
       },
       {

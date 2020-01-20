@@ -27,14 +27,14 @@
   },
   "homepage": "https://github.com/cowlingj/ecommerce-backend#readme",
   "dependencies": {
+    "@cowlingj/products-api": "0.0.1",
     "apollo-server": "^2.9.14",
     "apollo-server-express": "^2.9.16",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "form-urlencoded": "^4.1.1",
     "graphql": "^14.5.8",
-    "node-fetch": "^2.6.0",
-    "products-api": "file:../../packages/products-api"
+    "node-fetch": "^2.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
