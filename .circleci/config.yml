@@ -187,7 +187,7 @@ jobs:
     steps:
       - helm_package:
           path: helm/charts/ecommerce-backend/
-  generate_index:
+  generate-index:
     executor: helm
     steps:
       - generate_index
