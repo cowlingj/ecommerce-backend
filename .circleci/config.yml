@@ -150,7 +150,7 @@ jobs:
       tag: '12.14.1'
     steps:
       - npm_package:
-          path: "./products/api"
+          path: "~/project/products/api"
 
   package-helpers:
     executor: helm
