@@ -21,7 +21,7 @@ dependencies:
     repository: file://../../../helm/charts/helpers/
     version: 0.0.1
   - name: izettle-products
-    repository: file://../../../products/izettle/charts/izettle-products
+    repository: file://../../../products/charts/izettle-products
     version: 0.0.1
   - name: nginx-ingress
     repository: file://../../../helm/charts/nginx-ingress/
