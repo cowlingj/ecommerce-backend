@@ -145,8 +145,9 @@ jobs:
           image: "izettle-products.backend"
           path: "products/izettle"
   build-products-api:
-    executor: node/default
-    tag: '12.14.1'
+    executor:
+      name: node/default
+      tag: '12.14.1'
     steps:
       - npm_package:
           path: "products/api"
