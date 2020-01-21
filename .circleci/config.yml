@@ -295,6 +295,9 @@ commands:
         default: "."
       message:
         type: string
+      attempts:
+        type: integer
+        default: 3
     steps:
       - checkout
       - attach_workspace:
@@ -317,7 +320,13 @@ commands:
               echo "changes detected, committing"
               git add --all
               git commit --message "[CIRCLE CI] [ci skip] << parameters.message >>"
-              git push --quiet \
-                https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git 2>&1 \
-                HEAD:${HELM_REPO_BRANCH} | sed s/${GITHUB_TOKEN}/**********/
+              git pull --no-edit
+              PUSH_FAILS=0
+              while ! git push --quiet \
+                  https://${GITHUB_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git 2>&1 \
+                  HEAD:${HELM_REPO_BRANCH} | sed s/${GITHUB_TOKEN}/**********/; do
+                if [ "$PUSH_FAILS" -ge "<< parameters.attempts >>" ]; then
+                  exit 1
+                fi
+                PUSH_FAILS="$(expr "$PUSH_FAILS" + 1)"
             fi
