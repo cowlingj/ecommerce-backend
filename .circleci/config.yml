@@ -11,6 +11,10 @@
 ---
 
 version: 2.1
+
+orbs:
+  node: circleci/node@1.1.6
+
 workflows:
   version: 2
 
@@ -20,32 +24,26 @@ workflows:
           filters:
             branches:
               only: master
+      - build-products-api:
+          filters:
+            branches:
+              only: master
       - build-izettle-products:
           filters:
             branches:
               only: master
-      # - build-auth-main:
-      #     filters:
-      #       branches:
-      #         only: master
-      # - build-postgres-client:
-      #     filters:
-      #       branches:
-      #         only: master
-      # - build-auth-init:
-      #     filters:
-      #       branches:
-      #         only: master
-      #     requires:
-      #       - build-postgres-client
+          requires:
+            - build-products-api
       - build-cms-init:
           filters:
             branches:
               only: master
-      # - build-mongodb-debug:
-      #     filters:
-      #       branches:
-      #         only: master
+      - git-commit-packages:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build-products-api
 
   update_helm_charts:
     jobs:
@@ -61,16 +59,6 @@ workflows:
           filters:
             branches:
               only: master
-      # - package-elasticsearch:
-      #     filters:
-      #       branches:
-      #         only: master
-      # - package-postgres:
-      #     filters:
-      #       branches:
-      #         only: master
-      #     requires:
-      #       - package-helpers
       - package-mongodb-config:
           filters:
             branches:
@@ -89,43 +77,30 @@ workflows:
               only: master
           requires:
             - package-helpers
-      # - package-auth:
-      #     filters:
-      #       branches:
-      #         only: master
-      #     requires:
-      #       - package-elasticsearch
-      #       - package-postgres
       - package-backend:
           filters:
             branches:
               only: master
           requires:
-            # - package-auth
             - package-nginx-ingress
             - package-istio-ingress
             - package-cms
             - package-izettle-products
-            # - package-elasticsearch
             - package-helpers
             - package-mongodb-config
-            # - package-postgres
-      - generate_index:
+      - generate-index:
           filters:
             branches:
               only: master
           requires:
-            # - package-auth
             - package-nginx-ingress
             - package-istio-ingress
             - package-cms
             - package-izettle-products
-            # - package-elasticsearch
             - package-helpers
             - package-mongodb-config
-            # - package-postgres
             - package-backend
-      - commit_if_different:
+      - git-commit-repo:
           filters:
             branches:
               only: master
@@ -157,24 +132,6 @@ jobs:
       - docker_package:
           image: "cms.admin"
           path: "cms/main/"
-  # build-auth-main:
-  #   executor: gcloud
-  #   steps:
-  #     - docker_package:
-  #         image: "auth.admin"
-  #         path: "auth/main/"
-  # build-postgres-client:
-  #   executor: gcloud
-  #   steps:
-  #     - docker_package:
-  #         image: "client.postgres.data"
-  #         path: "postgres/client/"
-  # build-auth-init:
-  #   executor: gcloud
-  #   steps:
-  #     - docker_package:
-  #         image: "init.auth.admin"
-  #         path: "auth/init/"
   build-cms-init:
     executor: gcloud
     steps:
@@ -186,13 +143,13 @@ jobs:
     steps:
       - docker_package:
           image: "izettle-products.backend"
-          path: "izettle-products/main"
-  # build-mongodb-debug:
-  #   executor: gcloud
-  #   steps:
-  #     - docker_package:
-  #         image: "mongodb.data"
-  #         path: "mongodb/debugImage/"
+          path: "products/izettle"
+  build-products-api:
+    executor: node/default
+    tag: '12.14.1'
+    steps:
+      - npm_package:
+          path: "products/api"
 
   package-helpers:
     executor: helm
@@ -209,16 +166,6 @@ jobs:
     steps:
       - helm_package:
           path: helm/charts/istio-ingress/
-  # package-elasticsearch:
-  #   executor: helm
-  #   steps:
-  #     - helm_package:
-  #         path: elasticsearch/charts/elasticsearch/
-  # package-postgres:
-  #   executor: helm
-  #   steps:
-  #     - helm_package:
-  #         path: postgres/charts/postgres/
   package-mongodb-config:
     executor: helm
     steps:
@@ -233,12 +180,7 @@ jobs:
     executor: helm
     steps:
       - helm_package:
-          path: izettle-products/charts/izettle-products/
-  # package-auth:
-  #   executor: helm
-  #   steps:
-  #     - helm_package:
-  #         path: auth/charts/auth/
+          path: products/charts/izettle-products/
   package-backend:
     executor: helm
     steps:
@@ -248,11 +190,18 @@ jobs:
     executor: helm
     steps:
       - generate_index
-  commit_if_different:
+  git-commit-repo:
     executor: git
     steps:
       - commit_if_workspace_different:
           message: "Update helm repo"
+  git-commit-packages:
+    executor: git
+    steps:
+      - commit_if_workspace_different:
+          message: "Update packages"
+          workspace_dir: packages
+          src_dir: packages/node
 
 commands:
   docker_package:
@@ -287,6 +236,22 @@ commands:
           command: |
             docker push "${GCP_REGISTRY_PREFIX}/${GCP_PROJECT_ID}/<< parameters.image >>:$(cat /tmp/image_version)"
             docker push "${GCP_REGISTRY_PREFIX}/${GCP_PROJECT_ID}/<< parameters.image >>:latest"
+  npm_package:
+    parameters:
+      path:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: "package"
+          command: |
+            mkdir --parents /tmp/packages
+            cd /tmp/packages
+            npm pack << parameters.path >>
+      - persist_to_workspace:
+          root: /tmp/
+          paths:
+            - "packages"
   helm_package:
     parameters:
       path:
@@ -340,7 +305,9 @@ commands:
             git config user.email "${GIT_USER_EMAIL}"
       - run:
           name: replace files
-          command: cp -r /tmp/workspace/<< parameters.workspace_dir >>/* << parameters.src_dir >>
+          command: |
+            mkdir -p << parameters.src_dir >>
+            cp -r /tmp/workspace/<< parameters.workspace_dir >>/. << parameters.src_dir >>
       - run:
           name: possibly commit diff
           command: |
