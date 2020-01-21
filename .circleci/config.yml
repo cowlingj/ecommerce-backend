@@ -329,4 +329,5 @@ commands:
                   exit 1
                 fi
                 PUSH_FAILS="$(expr "$PUSH_FAILS" + 1)"
+              done
             fi
