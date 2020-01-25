@@ -121,7 +121,7 @@ izettle-products:
       protocol: http
 
 nginx-ingress:
-  enabled: false
+  enabled: true
 
 istio-ingress:
-  enabled: true
+  enabled: false
