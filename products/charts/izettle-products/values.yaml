@@ -5,8 +5,7 @@ name: izettle-products
 group: backend
 version: "0.0.1"
 image: gcr.io/gke-test-253221/izettle-products.backend
-imagePullSecret: gcr
-serviceName: products
+imagePullSecret: null
 existingCredentialsSecret: false
 credentialsSecretName: izettle-credentials-secret
 izettleCredentials:
@@ -18,6 +17,10 @@ izettleCredentials:
 izettleEndpoints:
   auth: https://oauth.izettle.com
   products: https://products.izettle.com
+
+service:
+  name: products
+  # type: ClusterIP
 ports:
   main:
     name: main

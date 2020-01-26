@@ -84,13 +84,13 @@ data:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.serviceName }}
+  name: {{ .Values.service.name }}
   labels:
     app: {{ .Values.name }}
     group: {{ .Values.group }}
     version: {{ .Values.version }}
 spec:
-  type: {{ template "helpers.service.type" .Values.env }}
+  type: {{ .Values.service.type | default "ClusterIP" }}
   selector:
     app: {{ .Values.name }}
     group: {{ .Values.group }}

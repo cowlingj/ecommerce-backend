@@ -3,7 +3,7 @@ env: production
 name: cms
 group: admin
 image: "gcr.io/gke-test-253221/cms.admin"
-imagePullSecret: gcr
+imagePullSecret: null
 version: "0.0.2"
 cookieSecret: null
 mongodb:
@@ -28,15 +28,14 @@ users:
       - username: admin
         password: password
         isAdmin: true
+service:
+  name: cms-svc
+  # type: ClusterIP
 ports:
   ui:
     port: 80
     protocol: http
     name: ui
-  api:
-    port: 8080
-    protocol: http
-    name: api
 init:
   mongodb:
     image: "gcr.io/gke-test-253221/init.cms.admin"

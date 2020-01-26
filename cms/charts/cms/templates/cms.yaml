@@ -72,7 +72,6 @@ spec:
               memory: 128Mi
           ports:
             - containerPort: 80
-            - containerPort: 8080
           readinessProbe:
             tcpSocket:
               port: 80
@@ -121,13 +120,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.name }}
+  name: {{ .Values.service.name }}
   labels:
     app: {{ .Values.name }}
     group: {{ .Values.group }}
     version: {{ .Values.version }}
 spec:
-  type: {{ template "helpers.service.type" .Values.env }}
+  type: {{ .Values.service.type | default "ClusterIP" }}
   selector:
     app: {{ .Values.name }}
     group: {{ .Values.group }}
@@ -138,11 +137,5 @@ spec:
       port: {{ .port }}
       protocol: TCP
       targetPort: 80
-    {{- end }}
-    {{- with .Values.ports.api }}
-    - name: {{ printf "\"http-%s\"" .name }}
-      port: {{ .port }}
-      protocol: TCP
-      targetPort: 8080
     {{- end }}
 {{- end }}

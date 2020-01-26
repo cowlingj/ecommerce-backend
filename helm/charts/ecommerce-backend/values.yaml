@@ -57,9 +57,12 @@ cms:
   name: cms
   group: frontend
   image: "gcr.io/gke-test-253221/cms.admin"
-  imagePullSecret: gcr
+  imagePullSecret: null
   version: "0.0.2"
   cookieSecret: null
+  service:
+    name: cms
+    type: NodePort
   mongodb:
     host: null
     port: 8080
@@ -102,8 +105,7 @@ izettle-products:
   group: backend
   version: "0.0.1"
   image: gcr.io/gke-test-253221/izettle-products.backend
-  imagePullSecret: gcr
-  serviceName: products
+  imagePullSecret: null
   existingCredentialsSecret: false
   credentialsSecretName: izettle-credentials-secret
   izettleCredentials:
@@ -114,6 +116,9 @@ izettle-products:
   izettleEndpoints:
     auth: https://oauth.izettle.com
     products: https://products.izettle.com
+  service:
+    type: NodePort
+    name: products
   ports:
     main:
       name: main
