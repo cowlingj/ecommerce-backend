@@ -1,6 +1,7 @@
 type Product {
   id: ID!
   name: String!
+  imageUrl: URL
 }
 
 extend type Query {
