@@ -318,7 +318,7 @@ commands:
             if << parameters.overwrite >>; then
               cp -r /tmp/workspace/<< parameters.workspace_dir >>/. << parameters.src_dir >>
             else
-              cp -n -r /tmp/workspace/<< parameters.workspace_dir >>/. << parameters.src_dir >>
+              false | cp -i -r /tmp/workspace/<< parameters.workspace_dir >>/. << parameters.src_dir >>
             fi
       - run:
           name: possibly commit diff
