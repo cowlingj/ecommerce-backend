@@ -2,7 +2,6 @@ useIstio: true
 useHtttps: true
 domainName: null
 certIssuer: letsencrypt
-ipAddressName: ""
 cms:
   name: cms
   port: 80
