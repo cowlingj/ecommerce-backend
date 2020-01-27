@@ -196,6 +196,7 @@ jobs:
     steps:
       - commit_if_workspace_different:
           message: "Update helm repo"
+          overwrite: true
   git-commit-packages:
     executor: git
     steps:
@@ -298,6 +299,9 @@ commands:
       attempts:
         type: integer
         default: 3
+      overwrite:
+        type: boolean
+        default: false
     steps:
       - checkout
       - attach_workspace:
@@ -311,7 +315,11 @@ commands:
           name: replace files
           command: |
             mkdir -p << parameters.src_dir >>
-            cp -r /tmp/workspace/<< parameters.workspace_dir >>/. << parameters.src_dir >>
+            if << parameters.overwrite >>; then
+              cp -r /tmp/workspace/<< parameters.workspace_dir >>/. << parameters.src_dir >>
+            else
+              cp -n -r /tmp/workspace/<< parameters.workspace_dir >>/. << parameters.src_dir >>
+            fi
       - run:
           name: possibly commit diff
           command: |
