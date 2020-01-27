@@ -328,6 +328,7 @@ commands:
                 if [ "$PUSH_FAILS" -ge "<< parameters.attempts >>" ]; then
                   exit 1
                 fi
+                git pull --rebase
                 PUSH_FAILS="$(expr "$PUSH_FAILS" + 1)"
               done
             fi
