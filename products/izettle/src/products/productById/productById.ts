@@ -1,9 +1,6 @@
 import fetch from "node-fetch";
-
-type Product = {
-  id: string;
-  name: string;
-}
+import transform from '@/products/transform'
+import { Product } from "../product";
 
 export default async function(
   _parent: unknown,
@@ -26,10 +23,5 @@ export default async function(
     throw new Error(`get all products failed (status: ${res.status})`);
   }
 
-  const izettleProduct = await res.json()
-
-  return {
-    id: izettleProduct.uuid,
-    name: izettleProduct.name
-  }
+  return transform(await res.json())
 }

@@ -77,6 +77,9 @@ describe("Server", () => {
         uuid: "uuid-1",
         name: "name-1",
         description: "",
+        presentation: {
+          imageUrl: "protocol://url-1"
+        },
         variants: [
           {
             uuid: "uuid",
@@ -188,6 +191,7 @@ describe("Server", () => {
           allProducts {
             id
             name
+            imageUrl
           }
         }
       `
@@ -198,7 +202,7 @@ describe("Server", () => {
       { contentType: "application/x-www-form-urlencoded" }
     ]);
     expect(res.data).toMatchObject({
-      allProducts: [{ id: "uuid-1", name: "name-1" }]
+      allProducts: [{ id: "uuid-1", name: "name-1", imageUrl: "protocol://url-1" }]
     });
   });
 });

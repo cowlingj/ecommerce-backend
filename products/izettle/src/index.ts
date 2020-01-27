@@ -4,11 +4,13 @@ import schema from "@cowlingj/products-api/schema.gql";
 import products from "@cowlingj/products-api/product.gql";
 import { config } from "dotenv";
 import allProducts from '@/products/allProducts/allProducts'
-import productById from './products/productById/productById'
+import productById from '@/products/productById/productById'
 import auth from "@/auth/auth"
 import fetch from 'node-fetch'
 import fs from 'fs'
 import path from 'path'
+import { URLResolver, URLTypeDefinition } from 'graphql-scalars'
+import gql from 'graphql-tag'
 
 config()
 
@@ -36,12 +38,17 @@ const credentials: {
 const resolvers = {
   Query: {
     allProducts,
-    productById
-  }
+    productById,
+  },
+  URL: URLResolver
 };
 
 const apollo = new ApolloServer({
-  typeDefs: [schema, products],
+  typeDefs: [
+    schema,
+    products,
+    gql(URLTypeDefinition)
+  ],
   resolvers,
   playground: process.env.NODE_ENV === "development",
   context: ({req}) => req
