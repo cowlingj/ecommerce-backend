@@ -13,6 +13,10 @@ spec:
         backend:
           serviceName: {{ .Values.cms.name }}
           servicePort: {{ .Values.cms.port }}
+      - path: /products
+        backend:
+          serviceName: {{ .Values.products.name }}
+          servicePort: {{ .Values.products.port }}
       - path: /store
         backend:
           serviceName: {{ .Values.store.name }}

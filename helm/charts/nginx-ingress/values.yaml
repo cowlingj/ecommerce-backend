@@ -8,3 +8,6 @@ cms:
 store:
   name: store
   port: 80
+products:
+  name: products
+  port: 80
