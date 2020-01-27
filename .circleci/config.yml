@@ -113,15 +113,15 @@ executors:
     docker:
       - image: google/cloud-sdk
   alpine:
-    shell: /bin/sh -leo pipefail
+    shell: /bin/sh -le
     docker:
       - image: alpine:latest
   git:
-    shell: /bin/sh -leo pipefail
+    shell: /bin/sh -le
     docker:
       - image: alpine/git:1.0.7
   helm:
-    shell: /bin/sh -leo pipefail
+    shell: /bin/sh -le
     docker:
       - image: praqma/helmsman:v1.12.0
 
