@@ -13,6 +13,10 @@ export default function (izettleProduct: IzettleProduct): Product {
   return {
     id: izettleProduct.uuid,
     name: izettleProduct.name,
-    imageUrl: imageUrl
+    imageUrl: imageUrl,
+    price: {
+      value: izettleProduct.variants[0].price.amount,
+      currency: izettleProduct.variants[0].price.currencyId
+    }
   }
 }

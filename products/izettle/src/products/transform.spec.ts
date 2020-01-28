@@ -8,12 +8,24 @@ describe("transform function", () => {
         name: "name",
         presentation: {
           imageUrl: "imageUrl"
-        }
+        },
+        variants: [
+          {
+            price: {
+              amount: 0,
+              currencyId: 'gbp'
+            }
+          }
+        ],
       })
     ).toEqual({
       id: "id",
       name: "name",
-      imageUrl: "imageUrl"
+      imageUrl: "imageUrl",
+      price: {
+        value: 0,
+        currency: 'gbp'
+      }
     })
   })
 
@@ -22,12 +34,24 @@ describe("transform function", () => {
       transform({
         uuid: "id",
         name: "name",
-        presentation: null
+        presentation: null,
+        variants: [
+          {
+            price: {
+              amount: 0,
+              currencyId: 'gbp'
+            }
+          }
+        ],
       })
     ).toEqual({
       id: "id",
       name: "name",
-      imageUrl: null
+      imageUrl: null,
+      price: {
+        value: 0,
+        currency: 'gbp'
+      }
     })
   })
 })
