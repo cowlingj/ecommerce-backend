@@ -6,7 +6,7 @@ type Product {
 }
 
 type ProductPrice {
-  value: Number!
+  value: Int!
   currency: String!
 }
 
