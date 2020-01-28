@@ -2,6 +2,12 @@ type Product {
   id: ID!
   name: String!
   imageUrl: URL
+  price: ProductPrice!
+}
+
+type ProductPrice {
+  value: Number!
+  currency: String!
 }
 
 extend type Query {
