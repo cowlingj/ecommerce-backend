@@ -3,8 +3,8 @@ entries:
   cms:
   - apiVersion: v1
     appVersion: 0.0.2
-    created: 2020-01-27T18:30:50.880073722Z
-    digest: 5eca4b2e46b50825d4b25a7289fb3ea0b53439a189f27f41f051a3dd72801f70
+    created: 2020-01-28T01:16:52.163213887Z
+    digest: c967ad1ea45709788b545275d7d7245019cebff134c4aa794f5033c24a1d10fe
     name: cms
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/cms-0.0.1.tgz
@@ -12,9 +12,9 @@ entries:
   ecommerce-backend:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: 2020-01-27T18:30:50.883235668Z
+    created: 2020-01-28T01:16:52.165136518Z
     description: umberella package for ecommerce-backend
-    digest: 2f71440290c36c2fcb6b906e7aa688d95130f7b726fd21f6084b2659ef542dae
+    digest: 18a047fb1f031947200a5f4267c9a088b33846732130a9c7a1094f2a099d61ce
     name: ecommerce-backend
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/ecommerce-backend-0.0.1.tgz
@@ -22,17 +22,17 @@ entries:
   helpers:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: 2020-01-27T18:30:50.883469753Z
+    created: 2020-01-28T01:16:52.165283085Z
     description: utility template functions
-    digest: 7ba83f6ea66a9ae26ee818e97f700d43a29785a1097e271d3fbaccb7200cd34d
+    digest: 20c7e3b2547937640b9310e5d674c1293fce6cdd1a8823365a3cefb972c4521d
     name: helpers
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/helpers-0.0.1.tgz
     version: 0.0.1
   istio-ingress:
   - apiVersion: v1
-    created: 2020-01-27T18:30:50.883770924Z
-    digest: 7e8f5fc71a3a5b8e9615905d9d3ced2b0f3055ff48c3d9910ce37751deb42996
+    created: 2020-01-28T01:16:52.165436043Z
+    digest: 6be0ecaf2fb8b97393fe8e316093192b72585ec781e108e2549a273a122b62f7
     name: istio-ingress
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/istio-ingress-0.0.1.tgz
@@ -40,26 +40,26 @@ entries:
   izettle-products:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: 2020-01-27T18:30:50.884042297Z
-    digest: 96300bb71f287bb8ce65c8a258f2f7eac389d521d1fec545096828edc8fb7ca4
+    created: 2020-01-28T01:16:52.165596266Z
+    digest: e98be9a670aba31fba414261a6be876b5041be18a145d88f131195ea9207fa8b
     name: izettle-products
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/izettle-products-0.0.1.tgz
     version: 0.0.1
   mongodb-config:
   - apiVersion: v1
-    created: 2020-01-27T18:30:50.884236212Z
-    digest: 6180bb27e59a441145c66a3867e2d97281c75900cbe22c21ea0256b508f426b1
+    created: 2020-01-28T01:16:52.165708435Z
+    digest: 61e5b55c90f88e190c469d50d2a07e3206cf6f4ed0f7c9d550ce4033ce994a34
     name: mongodb-config
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/mongodb-config-0.0.1.tgz
     version: 0.0.1
   nginx-ingress:
   - apiVersion: v1
-    created: 2020-01-27T18:30:50.884458045Z
-    digest: 8cfc0d9f2e920e0a514f55bc85b8b608f5351b7fdf3fc03f56a2fc7b2c31323e
+    created: 2020-01-28T01:16:52.165838062Z
+    digest: 4ac4338f65cde72d59d9d0ec3ff6fb3b2cae90a0b4d87c19cb004d178c2e4321
     name: nginx-ingress
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/nginx-ingress-0.0.1.tgz
     version: 0.0.1
-generated: 2020-01-27T18:30:50.879635994Z
+generated: 2020-01-28T01:16:52.162892499Z
