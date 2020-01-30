@@ -248,6 +248,7 @@ commands:
           name: "build"
           command: |
             cd << parameters.path >>
+            npm install
             npm run build
       - run:
           name: "package"
