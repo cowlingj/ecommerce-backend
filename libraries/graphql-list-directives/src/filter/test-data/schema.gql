@@ -1,0 +1,16 @@
+type Person {
+  name: String!
+  age: Int!
+  friends(like: [PersonInput]): [Person] @filter(likeKey: "like")
+}
+
+input PersonInput {
+  name: String
+  age: Int
+}
+
+type Query {
+  peopleLike(like: [PersonInput]): [Person] @filter(likeKey: "like")
+  peopleLikeSingle(like: PersonInput): [Person] @filter(likeKey: "like")
+  personLike(like: PersonInput): Person @filter(likeKey: "like")
+}

@@ -1,0 +1,25 @@
+query peopleLike($like: [PersonInput]) {
+  peopleLike(like: $like) {
+    name, age
+  }
+}
+
+query peopleLikeNested($outerLike: [PersonInput], $innerLike: [PersonInput]) {
+  peopleLike(like: $outerLike) {
+    name, age, friends(like: $innerLike) {
+      name, age
+    }
+  }
+}
+
+query peopleLikeSingle($like: PersonInput) {
+  peopleLikeSingle(like: $like) {
+    name, age
+  }
+}
+
+query personLike($like: PersonInput) {
+  personLike(like: $like) {
+    name, age
+  }
+}

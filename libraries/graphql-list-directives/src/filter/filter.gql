@@ -1,0 +1,3 @@
+directive @filter(
+  likeKey: String
+) on FIELD_DEFINITION

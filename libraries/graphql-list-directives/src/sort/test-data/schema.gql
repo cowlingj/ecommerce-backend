@@ -1,0 +1,17 @@
+type Person {
+  name: String!
+  age: Int!
+  friends(by: [String]): [Person] @sort(pathKey: "by")
+  address: Address
+}
+
+type Address {
+  houseNumber: Int
+  postcode: String!
+}
+
+type Query {
+  peopleBy(by: [String]): [Person] @sort(pathKey: "by")
+  peopleBySingle(by: String): [Person] @sort(pathKey: "by")
+  personBy(by: [String]): Person @sort(pathKey: "by")
+}

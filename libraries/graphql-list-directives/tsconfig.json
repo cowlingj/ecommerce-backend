@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmitOnError": true,
+    "esModuleInterop": true,
+    "paths": {
+      "*.graphql": [ "types/graphql" ],
+      "*.gql": [ "types/graphql" ]
+    },
+    "typeRoots" : [
+      "./node_modules/@types",
+      "./types"
+    ]
+  }
+}

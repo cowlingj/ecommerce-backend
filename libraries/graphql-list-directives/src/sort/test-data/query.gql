@@ -1,0 +1,25 @@
+query peopleByNested($outerBy: [String], $innerBy: [String]) {
+  peopleBy(by: $outerBy) {
+    name, age, friends(by: $innerBy) {
+      name, age
+    }
+  }
+}
+
+query peopleBy($by: [String]) {
+  peopleBy(by: $by) {
+    name, age
+  }
+}
+
+query peopleBySingle($by: String) {
+  peopleBySingle(by: $by) {
+    name, age
+  }
+}
+
+query personBy($by: [String]) {
+  personBy(by: $by) {
+    name, age
+  }
+}
