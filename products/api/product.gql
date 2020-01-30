@@ -11,6 +11,6 @@ type ProductPrice {
 }
 
 extend type Query {
-  products(): [Product!]!
+  products: [Product!]!
   product(id: ID!): Product
 }
