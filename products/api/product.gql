@@ -11,6 +11,6 @@ type ProductPrice {
 }
 
 extend type Query {
-  allProducts: [Product]
-  productById(id: ID!): Product
+  products(): [Product!]!
+  product(id: ID!): Product
 }
