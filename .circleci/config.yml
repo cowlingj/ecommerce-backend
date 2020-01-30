@@ -245,6 +245,11 @@ commands:
     steps:
       - checkout
       - run:
+          name: "build"
+          command: |
+            cd << parameters.path >>
+            npm run build
+      - run:
           name: "package"
           command: |
             mkdir --parents /tmp/packages
