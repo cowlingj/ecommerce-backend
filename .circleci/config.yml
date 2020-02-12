@@ -277,7 +277,7 @@ commands:
       - run:
           name: "generate schema"
           command: |
-            cd "~/project/cms/main"
+            cd ~/project/cms/main
             npm install
             npm run schema
       - run:
