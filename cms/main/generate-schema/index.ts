@@ -1,5 +1,5 @@
 import { keystone, apps } from '../src/index'
-import { getIntrospectionQuery, buildClientSchema, printSchema } from 'graphql'
+import { getIntrospectionQuery, buildSchema } from 'graphql'
 import { writeFileSync } from 'fs';
 import { resolve } from 'path';
 
@@ -18,7 +18,7 @@ import { resolve } from 'path';
     }
 
     const schema = `module.exports = ${
-      JSON.stringify(buildClientSchema(data))
+      JSON.stringify(data)
     }`
 
     writeFileSync(resolve(process.cwd(), 'cms-api-template', 'index.js'), schema)
