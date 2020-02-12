@@ -28,6 +28,10 @@ workflows:
           filters:
             branches:
               only: master
+      - build-cms-api:
+          filters:
+            branches:
+              only: master
       - build-izettle-products:
           filters:
             branches:
@@ -44,6 +48,7 @@ workflows:
               only: master
           requires:
             - build-products-api
+            - build-cms-api
 
   update_helm_charts:
     jobs:
@@ -262,6 +267,10 @@ commands:
             mkdir --parents /tmp/packages
             cd /tmp/packages
             npm pack << parameters.path >>
+      - persist_to_workspace:
+          root: /tmp/
+          paths:
+            - "packages"
   npm_package_schema:
     steps:
       - checkout
