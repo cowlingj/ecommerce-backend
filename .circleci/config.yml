@@ -151,6 +151,12 @@ jobs:
     steps:
       - npm_package:
           path: "~/project/products/api"
+  build-cms-api:
+    executor:
+      name: node/default
+      tag: '12.14.1'
+    steps:
+      - npm_package_schema
 
   package-helpers:
     executor: helm
@@ -256,6 +262,21 @@ commands:
             mkdir --parents /tmp/packages
             cd /tmp/packages
             npm pack << parameters.path >>
+  npm_package_schema:
+    steps:
+      - checkout
+      - run:
+          name: "generate schema"
+          command: |
+            cd "~/project/cms/main"
+            npm install
+            npm run schema
+      - run:
+          name: "package"
+          command: |
+            mkdir --parents /tmp/packages
+            cd /tmp/packages
+            npm pack "~/project/cms/main/cms-api-template"
       - persist_to_workspace:
           root: /tmp/
           paths:

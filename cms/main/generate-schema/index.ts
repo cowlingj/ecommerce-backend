@@ -1,5 +1,7 @@
 import { keystone, apps } from '../src/index'
 import { getIntrospectionQuery, buildClientSchema, printSchema } from 'graphql'
+import { writeFileSync } from 'fs';
+import { resolve } from 'path';
 
 (async function () {
   try {
@@ -15,7 +17,11 @@ import { getIntrospectionQuery, buildClientSchema, printSchema } from 'graphql'
       throw new Error(errors)
     }
 
-    console.log(printSchema(buildClientSchema(data)))
+    const schema = `module.exports = ${
+      JSON.stringify(buildClientSchema(data))
+    }`
+
+    writeFileSync(resolve(process.cwd(), 'cms-api-template', 'index.js'), schema)
 
     // FIXME: process must be terminated manually,
     // this is apparently due of a filewatcher somewhere

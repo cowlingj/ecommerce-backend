@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-          "name": "Launch Bundle",
+          "name": "izp prod",
           "type": "node",
           "request": "launch",
           "sourceMaps": true,
           "runtimeArgs": [ "--inspect-brk" ],
-          "program": "${workspaceFolder}/izettle-products/main/dist/index.js",
+          "program": "${workspaceFolder}/products/izettle/dist/index.js",
           "port": 9229,
           "outFiles": [
-            "${workspaceFolder}/izettle-products/main/dist/*.js"
+            "${workspaceFolder}/products/izettle/dist/*.js"
           ],
-          "envFile": "${workspaceFolder}/izettle-products/main/.env",
-          "cwd": "${workspaceFolder}/izettle-products/main/"
+          "envFile": "${workspaceFolder}/products/izettle/.env",
+          "cwd": "${workspaceFolder}/products/izettle/"
         }
     ]
 }
