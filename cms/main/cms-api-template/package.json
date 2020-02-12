@@ -1,6 +1,6 @@
 {
   "name": "@cowlingj/cms-api",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Graphql api for ecommerce-backend cms",
   "main": "index.js",
   "scripts": {
