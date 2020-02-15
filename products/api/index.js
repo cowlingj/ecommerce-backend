@@ -1,4 +1,7 @@
-import product from './product.gql'
-import schema from './schema.gql'
+import productSchema from './product.gql'
+import rootSchema from './schema.gql'
+import { buildClientSchema, printSchema } from 'graphql'
 
-export { product, schema }
+export const schema = printSchema(
+  buildClientSchema([productSchema, rootSchema])
+)
