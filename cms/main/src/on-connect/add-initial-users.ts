@@ -6,7 +6,7 @@ export default async function createInitialUsersIfNotExisting(
   keystone: Keystone
 ) {
 
-  if (process.env.USERS_FILE === undefined && process.env.USERS === undefined) {
+  if (process.env.USERS_FILE === undefined) {
     return
   }
 
@@ -21,17 +21,13 @@ export default async function createInitialUsersIfNotExisting(
   }
 
   const initialUsersData: InitialUersData = await new Promise((resolve, reject) => {
-    if (process.env.USERS !== undefined) { // process.env.USERS is depricated
-      resolve(JSON.parse(process.env.USERS))
-    } else {
-      fs.readFile(process.env.USERS_FILE!, "utf8", (err, data) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(JSON.parse(data))
-        }
-      })
-    }
+    fs.readFile(process.env.USERS_FILE!, "utf8", (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(JSON.parse(data))
+      }
+    })
   })
 
   const currentUsernames: String[] = (
@@ -58,12 +54,12 @@ export default async function createInitialUsersIfNotExisting(
     .filter(initialUser => !currentUsernames.includes(initialUser.username))
     .map(user => ({ data: user }));
 
-  logger("default").info(`creating ${usersToCreate.length} new users`)
+  logger("default").info(`creating ${usersToCreate.length} new user(s)`)
 
   await keystone.executeQuery(
     `mutation ($create: [UsersCreateInput!]!) {
       createUsers(data: $create) {
-        username
+        id
       }
     }`,
     {

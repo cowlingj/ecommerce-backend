@@ -100,22 +100,42 @@ spec:
             - name: IP
               value: "0.0.0.0"
             - name: USERS_FILE
-              value: /etc/secrets/users.json
-          {{ if .Values.users.secretName -}}
+              value: /etc/secrets/users/users.json
+            - name: STRINGS_FILE
+              value: /etc/secrets/strings/strings.json
           volumeMounts:
+            {{ if .Values.users.secretName -}}
             - name: user-data-volume
-              mountPath: /etc/secrets
+              mountPath: /etc/secrets/users/
               readOnly: true
-          {{- end }}
-      {{ if .Values.users.secretName -}}
+            {{- end }}
+            {{ if .Values.strings.secretName -}}
+            - name: string-data-volume
+              mountPath: /etc/secrets/strings/
+              readOnly: true
+            {{ if or (not .Values.users.secretName) (not .Values.strings.secretName) -}}
+            []
+            {{- end }}
       volumes:
+        {{ if .Values.users.secretName -}}
         - name: user-data-volume
           secret:
             secretName: {{ .Values.users.secretName }}
             items:
               - key: users
                 path: users.json
-      {{- end }}
+        {{- end }}
+        {{ if .Values.strings.secretName -}}
+        - name: string-data-volume
+          secret:
+            secretName: {{ .Values.strings.secretName }}
+            items:
+              - key: strings
+                path: strings.json
+        {{- end }}
+        {{ if or (not .Values.users.secretName) (not .Values.strings.secretName) -}}
+        []
+        {{- end }}
 ---
 apiVersion: v1
 kind: Service

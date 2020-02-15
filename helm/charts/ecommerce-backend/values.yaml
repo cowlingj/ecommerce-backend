@@ -85,6 +85,11 @@ cms:
         - username: admin
           password: password
           isAdmin: true
+  strings:
+    secretName: cms-strings
+    existingSecret: false
+    data:
+      strings: []
   ports:
     ui:
       port: 80

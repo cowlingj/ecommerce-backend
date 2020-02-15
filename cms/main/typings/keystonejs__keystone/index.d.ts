@@ -1,5 +1,5 @@
 import * as keystone from "@keystonejs/keystone";
-import { type } from "os";
+import { FieldType } from "@keystonejs/fields";
 
 declare module "@keystonejs/keystone" {
   type Operation = "create" | "read" | "update" | "delete" | "auth";
@@ -8,11 +8,24 @@ declare module "@keystonejs/keystone" {
     operation: Operation;
   }
 
+  interface BaseFieldOptions {
+    label?: string
+    type: FieldType
+    isRequired?: boolean
+    isUnique?: boolean
+    hooks?: Hooks
+    access?: Access
+}
+
   interface TextFieldOptions extends BaseFieldOptions {
     isMultiline?: boolean;
   }
 
   interface _ListSchema<Fields extends string = string> {
+    listQueryName?: string
+    label?: string
+    plural?: string
+    labelField?: Fields[keyof Fields]
     fields: { [fieldName in Fields]: AllFieldsOptions | TextFieldOptions };
     listAdapterClass?: any;
     access?: Access;

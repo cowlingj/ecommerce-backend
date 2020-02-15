@@ -1,30 +1,23 @@
-import { Text, Url, DateTime } from "@keystonejs/fields";
+import { Text } from "@keystonejs/fields";
 import { Keystone } from "@keystonejs/keystone";
 
 export default function(keystone: Keystone) {
-  keystone.createList("Event", {
+  keystone.createList("StringValue", {
+    label: 'Text',
+    plural: 'Text',
+    labelField: 'key',
     fields: {
-      start: {
-        type: DateTime
-      },
-      end: {
-        type: DateTime
-      },
-      title: {
+      key: {
         type: Text,
+        isRequired: true,
+        isUnique: true
       },
-      description: {
-          type: Text,
-          isMultiline: true
-      },
-      location: {
-        type: Text
-      },
-      ical: {
-        type: Url
+      value: {
+        label: 'Content',
+        type: Text,
+        isMultiline: true
       }
     },
-    labelResolver: (item) => `${item.title} (${item.start} - ${item.end})`,
     access: {
       create: ({ authentication: { item: user } }) =>
         Boolean(user && user.isAdmin),
