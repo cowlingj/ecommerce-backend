@@ -113,6 +113,7 @@ spec:
             - name: string-data-volume
               mountPath: /etc/secrets/strings/
               readOnly: true
+            {{- end }}
             {{ if or (not .Values.users.secretName) (not .Values.strings.secretName) -}}
             []
             {{- end }}
