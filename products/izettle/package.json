@@ -1,13 +1,13 @@
 {
   "name": "izettle-product-service",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "scripts": {
     "dev": "nodemon",
     "build": "webpack",
     "start": "node dist/index.js",
     "lint": "eslint *.ts src/**.ts",
-    "test": "npm run-script test:unit && npm run-script test:integration",
+    "test": "npm run-script test:unit ; npm run-script test:integration",
     "test:unit": "jest --config test/jest.unit.config.json",
     "test:integration": "jest --config test/jest.integration.config.json",
     "tsc": "tsc"

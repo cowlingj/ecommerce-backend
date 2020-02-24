@@ -9,5 +9,5 @@ export type IzettleVariant = {
   price: {
     amount: number,
     currencyId: string
-  }
+  } | null
 }

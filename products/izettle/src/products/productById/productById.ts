@@ -7,7 +7,7 @@ export default async function(
   args: { id: string },
   context: Request & { token: string },
   _info: any
-): Promise<Product> {
+): Promise<Product | null> {
 
   const token = context.token
 

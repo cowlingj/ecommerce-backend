@@ -15,6 +15,12 @@ describe("transform function", () => {
               amount: 0,
               currencyId: 'gbp'
             }
+          },
+          {
+            price: {
+              amount: 1,
+              currencyId: 'gbp'
+            }
           }
         ],
       })
@@ -27,6 +33,23 @@ describe("transform function", () => {
         currency: 'gbp'
       }
     })
+  })
+
+  it("correctly transforms a product with null price", () => {
+    expect(
+      transform({
+        uuid: "id",
+        name: "name",
+        presentation: {
+          imageUrl: "imageUrl"
+        },
+        variants: [
+          {
+            price: null
+          }
+        ],
+      })
+    ).toEqual(null)
   })
 
   it("correctly transforms a product with null presentation", () => {

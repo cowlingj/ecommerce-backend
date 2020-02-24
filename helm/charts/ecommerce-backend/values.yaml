@@ -108,7 +108,7 @@ izettle-products:
   <<: *all
   name: izettle-products
   group: backend
-  version: "0.0.1"
+  version: "0.0.2"
   image: gcr.io/gke-test-253221/izettle-products.backend
   imagePullSecret: null
   existingCredentialsSecret: false

@@ -53,8 +53,6 @@ export default async function createInitialUsersIfNotExisting(
     .filter(initialUser => !currentStringValueKeys.includes(initialUser.key))
     .map(string => ({ data: string }));
 
-    console.log(stringsToCreate)
-
   logger("default").info(`creating ${stringsToCreate.length} new string(s)`)
 
   await keystone.executeQuery(

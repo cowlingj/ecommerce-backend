@@ -1,13 +1,17 @@
 import { IzettleProduct } from '@/products/izettle-product'
 import { Product } from '@/products/product'
 
-export default function (izettleProduct: IzettleProduct): Product {
+export default function (izettleProduct: IzettleProduct): Product | null {
   let imageUrl: string | null
 
   if (!izettleProduct.presentation) {
     imageUrl = null
   } else {
     imageUrl = izettleProduct.presentation.imageUrl
+  }
+
+  if (!izettleProduct.variants[0].price) {
+    return null
   }
 
   return {
