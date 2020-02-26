@@ -18,7 +18,7 @@
     "@keystonejs/app-graphql": "^5.0.2",
     "@keystonejs/auth-password": "^5.0.1",
     "@keystonejs/fields": "^5.0.0",
-    "@keystonejs/keystone": "^5.4.1",
+    "@keystonejs/keystone": "^5.4.3",
     "@keystonejs/logger": "^5.0.0",
     "dotenv": "^8.2.0"
   },
