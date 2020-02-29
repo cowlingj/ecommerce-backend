@@ -1,6 +1,6 @@
-import allProducts from "./allProducts";
+import { resolver as allProducts } from "./products";
 import fetch from "node-fetch";
-import { IzettleProduct } from "../izettle-product";
+import { IzettleProduct } from '@/index';
 
 jest.mock("node-fetch", () => {
   return jest.fn();

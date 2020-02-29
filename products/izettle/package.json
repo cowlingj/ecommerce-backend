@@ -1,6 +1,6 @@
 {
   "name": "izettle-product-service",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "scripts": {
     "dev": "nodemon",
@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/cowlingj/ecommerce-backend#readme",
   "dependencies": {
-    "@cowlingj/products-api": "https://github.com/cowlingj/ecommerce-backend/raw/master/packages/node/cowlingj-products-api-0.0.3.tgz",
+    "@cowlingj/products-api": "https://github.com/cowlingj/ecommerce-backend/raw/master/packages/node/cowlingj-products-api-0.0.6.tgz",
     "apollo-server": "^2.9.14",
     "apollo-server-express": "^2.9.16",
     "dotenv": "^8.2.0",

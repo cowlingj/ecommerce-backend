@@ -1,24 +1,45 @@
 import { ApolloServer } from "apollo-server-express";
 import express from "express"
-import schema from "@cowlingj/products-api/schema.gql";
-import products from "@cowlingj/products-api/product.gql";
+import { schema as productSchema } from "@cowlingj/products-api";
 import { config } from "dotenv";
-import allProducts from '@/products/allProducts/allProducts'
-import productById from '@/products/productById/productById'
+import { resolver as productsResolver } from '@/resolvers/products'
+import { resolver as productResolver } from '@/resolvers/product'
 import auth from "@/auth/auth"
 import fetch from 'node-fetch'
 import fs from 'fs'
-import path from 'path'
-import { URLResolver, URLTypeDefinition } from 'graphql-scalars'
-import gql from 'graphql-tag'
+import { mergeSchemas } from "apollo-server";
+import { buildClientSchema } from "graphql";
+
+export type IzettleProduct = {
+  uuid: string,
+  name: string,
+  presentation: { imageUrl: string | null } | null,
+  variants: IzettleVariant[]
+}
+
+export type IzettleVariant = {
+  price: {
+    amount: number,
+    currencyId: string
+  } | null
+}
+
+export type Product = {
+  id: string;
+  name: string;
+  imageUrl: string | null
+  price: {
+    value: number,
+    currency: string
+  }
+}
 
 config()
 
 if (
   process.env.IZETTLE_AUTH_URI === undefined ||
   process.env.IZETTLE_PRODUCTS_URI === undefined ||
-  process.env.IZETTLE_CREDENTIALS_FILE === undefined ||
-  process.env.SECRETS_DIR === undefined
+  process.env.IZETTLE_CREDENTIALS_FILE === undefined
 ) {
   throw new Error("environment variables not set up");
 }
@@ -29,27 +50,19 @@ const credentials: {
   client_id: string;
   client_secret: string;
 } = JSON.parse(
-  fs.readFileSync(
-    path.resolve(process.env.SECRETS_DIR, process.env.IZETTLE_CREDENTIALS_FILE),
-    "utf8"
-  )
+  fs.readFileSync(process.env.IZETTLE_CREDENTIALS_FILE, "utf8")
 );
 
-const resolvers = {
-  Query: {
-    allProducts,
-    productById,
-  },
-  URL: URLResolver
-};
-
 const apollo = new ApolloServer({
-  typeDefs: [
-    schema,
-    products,
-    gql(URLTypeDefinition)
-  ],
-  resolvers,
+  schema: mergeSchemas({
+    schemas: [buildClientSchema(productSchema)],
+    resolvers: {
+      Query: {
+        product: productResolver,
+        products: productsResolver,
+      }
+    }
+  }),
   playground: process.env.NODE_ENV === "development",
   context: ({req}) => req
 });

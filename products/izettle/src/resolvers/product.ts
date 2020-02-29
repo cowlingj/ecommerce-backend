@@ -1,8 +1,8 @@
 import fetch from "node-fetch";
-import transform from '@/products/transform'
-import { Product } from "../product";
+import transform from '@/resolvers/transform'
+import { Product, IzettleProduct } from '@/index'
 
-export default async function(
+export async function resolver(
   _parent: unknown,
   args: { id: string },
   context: Request & { token: string },
@@ -23,5 +23,5 @@ export default async function(
     throw new Error(`get all products failed (status: ${res.status})`);
   }
 
-  return transform(await res.json())
+  return transform(await res.json() as IzettleProduct)
 }

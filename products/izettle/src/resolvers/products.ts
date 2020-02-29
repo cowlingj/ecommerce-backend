@@ -1,9 +1,8 @@
 import fetch from "node-fetch";
-import transform from '@/products/transform'
-import { Product } from "../product";
-import { IzettleProduct } from "../izettle-product";
+import transform from '@/resolvers/transform'
+import { IzettleProduct, Product } from '@/index';
 
-export default async function(
+export async function resolver(
   _parent: unknown,
   _args: {},
   context: Request & { token: string },

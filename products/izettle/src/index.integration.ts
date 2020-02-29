@@ -29,15 +29,16 @@ describe("Server", () => {
     process.env.HOST = "localhost";
     process.env.IZETTLE_PRODUCTS_URI = "http://localhost:3001";
     process.env.IZETTLE_AUTH_URI = "http://localhost:3002/token";
-    process.env.SECRETS_DIR = path.resolve(process.cwd(), "test", "secrets");
-    process.env.IZETTLE_CREDENTIALS_FILE = "izettle_credentials.json";
+    process.env.IZETTLE_CREDENTIALS_FILE = path.resolve(
+      process.cwd(),
+      "test",
+      "secrets",
+      "izettle_credentials.json"
+    );
 
     testCredentials = JSON.parse(
       fs.readFileSync(
-        path.resolve(
-          process.env.SECRETS_DIR,
-          process.env.IZETTLE_CREDENTIALS_FILE
-        ),
+        path.resolve(process.env.IZETTLE_CREDENTIALS_FILE),
         "utf-8"
       )
     );
@@ -159,7 +160,7 @@ describe("Server", () => {
         .listen(3002)
     );
 
-    const allProductsCalls: unknown[] = [];
+    const productsCalls: unknown[] = [];
     serversToCloseAfterEachTest.push(
       connect()
         .use(
@@ -173,7 +174,7 @@ describe("Server", () => {
               return next();
             }
 
-            allProductsCalls.push(null);
+            productsCalls.push(null);
             if (req.headers.authorization !== `Bearer ${token}`) {
               throw new Error(
                 "no valid bearer token used for get all products"
@@ -188,7 +189,7 @@ describe("Server", () => {
     const res = await client.query({
       query: gql`
         {
-          allProducts {
+          products {
             id
             name
             imageUrl
@@ -197,12 +198,12 @@ describe("Server", () => {
       `
     });
 
-    expect(allProductsCalls).toEqual([null]);
+    expect(productsCalls).toEqual([null]);
     expect(getTokenCalls).toEqual([
       { contentType: "application/x-www-form-urlencoded" }
     ]);
     expect(res.data).toMatchObject({
-      allProducts: [{ id: "uuid-1", name: "name-1", imageUrl: "protocol://url-1" }]
+      products: [{ id: "uuid-1", name: "name-1", imageUrl: "protocol://url-1" }]
     });
   });
 });

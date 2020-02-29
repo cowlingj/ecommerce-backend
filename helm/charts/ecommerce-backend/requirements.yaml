@@ -22,7 +22,7 @@ dependencies:
     version: 0.0.1
   - name: izettle-products
     repository: file://../../../products/charts/izettle-products
-    version: 0.0.1
+    version: 0.0.2
   - name: json-products
     repository: file://../../../products/charts/json-products
     version: 0.0.1

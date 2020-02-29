@@ -1,5 +1,4 @@
-import { IzettleProduct } from '@/products/izettle-product'
-import { Product } from '@/products/product'
+import { IzettleProduct, Product } from '@/index'
 
 export default function (izettleProduct: IzettleProduct): Product | null {
   let imageUrl: string | null

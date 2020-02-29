@@ -1,49 +1,55 @@
-{{- if .Values.enabled }}
+{{- define "izettle-products.name" -}}
+  {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{- define "izettle-products.chart" -}}
+  {{- printf "%s-%s" .Chart.Name (.Chart.Version | replace "+" "_" ) -}}
+{{- end -}}
+
+{{- define "izettle-products.image" -}}
+  {{- printf "%s:%s" .repository .tag -}}
+{{- end -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.name }}
+  name: {{ include "izettle-products.name" . }}
   labels:
-    app: {{ .Values.name }}
-    group: {{ .Values.group }}
-    version: {{ .Values.version }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/name: {{ include "izettle-products.name" . }}
+    app.kubernetes.io/component: {{ .Values.group }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "izettle-products.chart" . }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
-      app: {{ .Values.name }}
-      group: {{ .Values.group }}
-      version: {{ .Values.version }}
+      app.kubernetes.io/name: {{ include "izettle-products.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/version: {{ .Chart.AppVersion }}
   template:
     metadata:
       labels:
-        app: {{ .Values.name }}
-        group: {{ .Values.group }}
-        version: {{ .Values.version }}
+        app.kubernetes.io/name: {{ include "izettle-products.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion }}
     spec:
-      {{ if .Values.imagePullSecret -}}
-        imagePullSecrets:
-          - name: {{ .Values.imagePullSecret }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{ toYaml .Values.imagePullSecrets }}
       {{- end }}
       containers:
         - name: main
-          image: {{ printf "\"%s:%s\"" .Values.image .Values.version }}
-          resources:
-            limits:
-              cpu: 100m
-              memory: 128Mi
-            requests:
-              cpu: 100m
-              memory: 64Mi
+          image: {{ include "izettle-products.image" .Values.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: PORT
               value: "80"
             - name: HOST
               value: "0.0.0.0"
-            - name: SECRETS_DIR
-              value: /etc/secrets
             - name: IZETTLE_CREDENTIALS_FILE
-              value: izettle/credentials.json
+              value: /etc/secrets/izettle/credentials.json
             - name: IZETTLE_AUTH_URI
               value: {{ .Values.izettleEndpoints.auth }}
             - name: IZETTLE_PRODUCTS_URI
@@ -52,54 +58,68 @@ spec:
             - name: izettle-credentials-volume
               mountPath: /etc/secrets/izettle
               readOnly: true
+      {{- if .Values.resources }}
+      resources:
+        {{ toYaml .Values.resources }}
+      {{- end }}
+      ports:
+        - containerPort: 80
       volumes:
         - name: izettle-credentials-volume
           secret:
-            secretName: {{ .Values.credentialsSecretName }}
+            secretName: {{ .Values.secrets.credentials.name }}
             items:
               - key: credentials
                 path: credentials.json
-          ports:
-            - containerPort: 80
-          readinessProbe:
-            tcpSocket:
-              port: 80
-{{- end }}
+      {{- if .Values.readinessProbe }}
+      readinessProbe:
+          {{ toYaml .Values.readinessProbe }}
+      {{- end }}
+      {{- if .Values.livelinessProbe }}
+      livelinessProbe:
+          {{ toYaml .Values.livelinessProbe }}
+      {{- end }}
+      {{- if and (empty .Values.startupProbe) (ge (atoi .Capabilities.KubeVersion.Major) 1) (ge (atoi .Capabilities.KubeVersion.Minor) 16) }}
+      startupProbe:
+          {{ toYaml .Values.startupProbe }}
+      {{- end }}
 ---
-{{- if and .Values.enabled (not .Values.existingSecret) }}
+{{- if not .Values.secrets.credentials.exists }}
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ .Values.credentialsSecretName }}
+  name: {{ include "izettle-products.name" (merge (dict "Values" (dict "nameOverride" .Values.secrets.credentials.nameOverride)) .) }}
   labels:
-    app: {{ .Values.name }}
-    group: {{ .Values.group }}
-    version: {{ .Values.version }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/name: {{ include "izettle-products.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "izettle-products.chart" . }}
 type: Opaque
 data:
-  credentials: {{ .Values.izettleCredentials | toJson | b64enc | quote }}
-{{- end }}
+  {{ range $key, $value := .Values.secrets.credentials.data -}}
+      {{ $key }}: {{ $value | toJson | b64enc | quote }}
+  {{- end }}
+{{ end -}}
 ---
-{{ if .Values.enabled }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.service.name }}
+  name: {{ include "izettle-products.name" (merge (dict "Values" (dict "nameOverride" .Values.service.nameOverride)) .) }}
   labels:
-    app: {{ .Values.name }}
-    group: {{ .Values.group }}
-    version: {{ .Values.version }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    app.kubernetes.io/name: {{ include "izettle-products.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "izettle-products.chart" . }}
 spec:
-  type: {{ .Values.service.type | default "ClusterIP" }}
+  type: {{ .Values.service.type }}
   selector:
-    app: {{ .Values.name }}
-    group: {{ .Values.group }}
-    version: {{ .Values.version }}
+    app.kubernetes.io/name: {{ include "izettle-products.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
   ports:
-    {{- with .Values.ports.main }}
-    - name: {{ printf "\"%s-%s\"" .protocol .name }}
-      port: {{ .port }}
-      protocol: TCP
+    - name: http
+      port: {{ .Values.service.ports.main.port }}
       targetPort: 80
-    {{- end }}
-{{- end }}
+      protocol: TCP

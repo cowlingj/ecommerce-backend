@@ -1,29 +1,30 @@
-# namespace: default {{ .Release.Namespace }}
-enabled: true
-env: production
 name: izettle-products
 group: backend
-version: "0.0.3"
-image: gcr.io/gke-test-253221/izettle-products.backend
-imagePullSecret: null
-existingCredentialsSecret: false
-credentialsSecretName: izettle-credentials-secret
-izettleCredentials:
-  username: null
-  password: null
-  client_id: null
-  client_secret: null
+
+image:
+  repository: gcr.io/gke-test-253221/izettle-products.backend
+  tag: "0.0.4"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+secrets:
+  credentials:
+    exists: false
+    data:
+      credentials:
+        username: null
+        password: null
+        client_id: null
+        client_secret: null
 
 izettleEndpoints:
   auth: https://oauth.izettle.com
   products: https://products.izettle.com
 
 service:
-  name: products
-  # type: ClusterIP
-ports:
-  main:
-    name: main
-    port: 80
-    protocol: http
-
+  nameOverride: products
+  type: ClusterIP
+  ports:
+    main:
+      port: 80
