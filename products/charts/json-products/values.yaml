@@ -8,8 +8,9 @@ secrets:
   products:
     exists: false
     name: json-products-secret
-    data: 
-      products: []
+    data:
+      products:
+        products: []
 service:
   type: ClusterIP
   ports:
