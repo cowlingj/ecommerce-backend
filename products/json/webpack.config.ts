@@ -14,9 +14,14 @@ const config: webpack.Configuration = {
   module: {
     rules: [
       {
-        test: /(\.ts)|(\.m?js)|(\.json)$/,
+        test: /(\.ts)|(js)|(\.json)$/,
         exclude: /node_modules/,
         loader: "babel-loader"
+      },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
       }
     ]
   },
