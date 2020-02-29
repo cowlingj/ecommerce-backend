@@ -35,14 +35,14 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/version: {{ .Chart.AppVersion }}
     spec:
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{ toYaml .Values.imagePullSecrets }}
+      {{- end }}
       containers:
         - name: main
           image: {{ include "json-products.image" .Values.image }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.imagePullSecrets }}
-          imagePullSecrets:
-            {{ toYaml .Values.imagePullSecrets }}
-          {{- end }}
           env:
             - name: PRODUCTS_FILE
               value: /etc/secrets/products/products.json
