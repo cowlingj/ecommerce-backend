@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/cowlingj/ecommerce-backend#readme",
   "dependencies": {
-    "@cowlingj/products-api": "file://../api/",
+    "@cowlingj/products-api": "https://github.com/cowlingj/ecommerce-backend/raw/master/packages/node/cowlingj-products-api-0.0.6.tgz",
     "apollo-server": "^2.10.1",
     "dotenv": "^8.2.0",
     "graphql-scalars": "^1.0.6"
