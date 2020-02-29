@@ -36,7 +36,8 @@ spec:
         app.kubernetes.io/version: {{ .Chart.AppVersion }}
     spec:
       containers:
-        - image: {{ include "json-products.image" .Values.image }}
+        - name: main
+          image: {{ include "json-products.image" .Values.image }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if .Values.imagePullSecrets }}
           imagePullSecrets:
