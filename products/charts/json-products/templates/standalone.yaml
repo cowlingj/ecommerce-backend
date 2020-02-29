@@ -91,9 +91,13 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     helm.sh/chart: {{ include "json-products.chart" . }}
-  spec:
-    type: {{ .Values.service.type }}
-    ports:
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app.kubernetes.io/name: {{ include "json-products.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+  ports:
     - name: http
       port: {{ .Values.service.ports.main.port }}
       targetPort: 80
