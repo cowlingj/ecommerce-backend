@@ -1,0 +1,13 @@
+{
+  "products": [
+    {
+      "id": "0",
+      "name": "my-product",
+      "image_url": null,
+      "price": {
+        "value": 100,
+        "currency": "gbp"
+      }
+    }
+  ]
+}

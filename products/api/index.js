@@ -1,7 +1,19 @@
 import productSchema from './product.gql'
 import rootSchema from './schema.gql'
-import { buildClientSchema, printSchema } from 'graphql'
+import { makeExecutableSchema } from 'graphql-tools';
+import { URLResolver, URLTypeDefinition } from 'graphql-scalars';
+import { graphqlSync, introspectionQuery  } from 'graphql';
 
-export const schema = printSchema(
-  buildClientSchema([productSchema, rootSchema])
-)
+const executableSchema = makeExecutableSchema({
+  typeDefs: [
+    rootSchema,
+    productSchema,
+    URLTypeDefinition
+  ],
+  resolvers: {
+    URL: URLResolver
+  }
+})
+
+export const schema = graphqlSync(executableSchema, introspectionQuery).data
+export const resolvers = [ URLResolver ]

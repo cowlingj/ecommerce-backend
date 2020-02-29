@@ -1,0 +1,11 @@
+{
+  "testRegex": "(?:\\.|\\/)integration\\.(j|t)s$",
+  "moduleNameMapper":{
+    "^@/(.*)$":"<rootDir>/src/$1"
+  },
+  "moduleFileExtensions":["js","ts","json"],
+  "transform":{
+    "^.+\\.(j|t)s$":"babel-jest"
+  },
+  "collectCoverage": true
+}

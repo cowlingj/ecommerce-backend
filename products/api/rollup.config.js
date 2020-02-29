@@ -13,5 +13,6 @@ export default {
     copy({ targets: [{ src: './index.d.ts', dest: './dist/' }] }),
     graphql(),
   ],
+  external: [ 'graphql', 'graphql-tools', 'graphql-scalars' ]
 }
 

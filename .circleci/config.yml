@@ -38,6 +38,12 @@ workflows:
               only: master
           requires:
             - build-products-api
+      - build-json-products:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build-products-api
       - build-cms-init:
           filters:
             branches:
@@ -82,6 +88,10 @@ workflows:
               only: master
           requires:
             - package-helpers
+      - package-json-products:
+          filters:
+            branches:
+              only: master
       - package-backend:
           filters:
             branches:
@@ -93,6 +103,7 @@ workflows:
             - package-izettle-products
             - package-helpers
             - package-mongodb-config
+            - package-json-products
       - generate-index:
           filters:
             branches:
@@ -104,6 +115,7 @@ workflows:
             - package-izettle-products
             - package-helpers
             - package-mongodb-config
+            - package-json-products
             - package-backend
       - git-commit-repo:
           filters:
@@ -149,6 +161,12 @@ jobs:
       - docker_package:
           image: "izettle-products.backend"
           path: "products/izettle"
+  build-json-products:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "json-products.backend"
+          path: "products/json"
   build-products-api:
     executor:
       name: node/default
@@ -193,6 +211,11 @@ jobs:
     steps:
       - helm_package:
           path: products/charts/izettle-products/
+  package-json-products:
+    executor: helm
+    steps:
+      - helm_package:
+          path: products/charts/json-products/
   package-backend:
     executor: helm
     steps:

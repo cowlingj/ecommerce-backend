@@ -130,6 +130,9 @@ izettle-products:
       port: 80
       protocol: http
 
+json-products:
+  enabled: false
+
 nginx-ingress:
   enabled: true
 
