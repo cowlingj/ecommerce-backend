@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@keystonejs/adapter-mongoose": "^5.1.5",
-    "@keystonejs/app-admin-ui": "^5.7.1",
+    "@keystonejs/app-admin-ui": "^5.7.2",
     "@keystonejs/app-graphql": "^5.0.3",
     "@keystonejs/auth-password": "^5.0.2",
     "@keystonejs/fields": "^5.0.0",
