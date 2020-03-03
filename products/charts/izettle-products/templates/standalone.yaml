@@ -58,12 +58,12 @@ spec:
             - name: izettle-credentials-volume
               mountPath: /etc/secrets/izettle
               readOnly: true
-      {{- if .Values.resources }}
-      resources:
-        {{ toYaml .Values.resources }}
-      {{- end }}
-      ports:
-        - containerPort: 80
+          {{- if .Values.resources }}
+          resources:
+            {{ toYaml .Values.resources }}
+          {{- end }}
+          ports:
+            - containerPort: 80
       volumes:
         - name: izettle-credentials-volume
           secret:
