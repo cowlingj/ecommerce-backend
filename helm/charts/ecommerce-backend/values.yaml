@@ -104,17 +104,9 @@ cms:
       image: "gcr.io/gke-test-253221/init.cms.admin"
       version: "0.0.1"
 
-izettle-products:
-  enabled: true
-
-json-products:
-  enabled: false
-
-nginx-ingress:
-  enabled: true
-
-istio-ingress:
-  enabled: false
-
-simple-example:
-  enabled: false
+tags:
+  izettle-products: true
+  json-products: false
+  simple-example: false
+  istio-ingress: false
+  nginx-ingress: true

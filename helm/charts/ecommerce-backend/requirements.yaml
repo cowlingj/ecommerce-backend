@@ -23,16 +23,26 @@ dependencies:
   - name: izettle-products
     repository: file://../../../products/charts/izettle-products
     version: 0.0.2
+    tags:
+      - izettle-products
   - name: json-products
     repository: file://../../../products/charts/json-products
     version: 0.0.1
+    tags:
+      - json-products
   - name: nginx-ingress
     repository: file://../../../helm/charts/nginx-ingress/
     version: 0.0.1
+    tags:
+      - nginx-ingress
   - name: istio-ingress
     repository: file://../../../helm/charts/istio-ingress/
     version: 0.0.1
+    tags:
+      - istio-ingress
   - name: simple-example
     repository: file://../../../examples/simple/chart/simple-example
     version: 0.0.1
+    tags:
+      - simple-example
 
