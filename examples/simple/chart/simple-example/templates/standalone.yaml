@@ -27,6 +27,8 @@ spec:
           env:
             - name: PORT
               value: "80"
+            - name: STATUS_PORT
+              value: "8080"
             - name: HOST
               value: "0.0.0.0"
             - name: BASE_PATH
@@ -40,17 +42,20 @@ spec:
             - name: RESOURCES_URI
               value: {{ .Values.network.resources }}
           ports:
-            - name: http
+            - name: http-main
               containerPort: 80
+              protocol: TCP
+            - name: http-status
+              containerPort: 8080
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /status
+              port: http-status
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /status
+              port: http-status
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -69,14 +74,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "simple-example.fullname" . }} # TODO change context of .Values
+  name: {{ include "simple-example.fullname" (merge (dict "Values" (dict "nameOverride" .Values.service.nameOverride)) .) }}
   labels:
 {{ include "simple-example.labels" . | indent 4 }}
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: {{ .Values.service.ports.main }}
+      targetPort: http-main
+      protocol: TCP
+      name: http
+    - port: {{ .Values.service.ports.status }}
+      targetPort: http-main
       protocol: TCP
       name: http
   selector:

@@ -15,7 +15,9 @@ fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 80
+  ports:
+    main: 80
+    status: 8080
 
 resources: {}
 
