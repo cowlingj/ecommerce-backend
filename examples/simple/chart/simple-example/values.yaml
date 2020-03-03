@@ -25,6 +25,8 @@ tolerations: []
 
 affinity: {}
 
+basePath: /
+
 network:
   products: products.localhost
   events: events.localhost

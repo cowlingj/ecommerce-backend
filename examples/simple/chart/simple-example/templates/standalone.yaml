@@ -29,6 +29,8 @@ spec:
               value: "80"
             - name: HOST
               value: "0.0.0.0"
+            - name: BASE_PATH
+              value: {{ .Values.basePath }}
             - name: ADMIN_EMAIL
               value: {{ .Values.admin.email }}
             - name: PRODUCTS_URI
@@ -67,7 +69,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "simple-example.fullname" . }}
+  name: {{ include "simple-example.fullname" . }} # TODO change context of .Values
   labels:
 {{ include "simple-example.labels" . | indent 4 }}
 spec:
