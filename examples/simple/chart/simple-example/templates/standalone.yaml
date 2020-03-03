@@ -83,11 +83,11 @@ spec:
     - port: {{ .Values.service.ports.main }}
       targetPort: http-main
       protocol: TCP
-      name: http
+      name: http-main
     - port: {{ .Values.service.ports.status }}
       targetPort: http-status
       protocol: TCP
-      name: http
+      name: http-status
   selector:
     app.kubernetes.io/name: {{ include "simple-example.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
