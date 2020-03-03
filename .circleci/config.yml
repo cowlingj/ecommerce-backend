@@ -48,6 +48,10 @@ workflows:
           filters:
             branches:
               only: master
+      - build-simple-example:
+          filters:
+            branches:
+              only: master
       - git-commit-packages:
           filters:
             branches:
@@ -92,11 +96,16 @@ workflows:
           filters:
             branches:
               only: master
+      - package-simple-example:
+          filters:
+            branches:
+              only: master
       - package-backend:
           filters:
             branches:
               only: master
           requires:
+            - package-simple-example
             - package-nginx-ingress
             - package-istio-ingress
             - package-cms
@@ -109,6 +118,7 @@ workflows:
             branches:
               only: master
           requires:
+            - package-simple-example
             - package-nginx-ingress
             - package-istio-ingress
             - package-cms
@@ -167,6 +177,12 @@ jobs:
       - docker_package:
           image: "json-products.backend"
           path: "products/json"
+  build-simple-example:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "simple.example"
+          path: "examples/simple/app"
   build-products-api:
     executor:
       name: node/default
@@ -216,6 +232,11 @@ jobs:
     steps:
       - helm_package:
           path: products/charts/json-products/
+  package-simple-example:
+    executor: helm
+    steps:
+      - helm_package:
+          path: examples/simple/chart/simple-example/
   package-backend:
     executor: helm
     steps:

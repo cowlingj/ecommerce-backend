@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="text/javascript" src="/env.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Example</title>
+</head>
+<body>
+  <article>
+    <section>
+      <h1>Events</h1>
+      <ul id="events-list"></ul>
+      <template id="event-template">
+        <li>
+          <h2 class="title">UNKNOWN TITLE</h2>
+          <p class="description">UNKNOWN DESCRIPTION</p>
+          <p class="start">UNKNOWN START</p>
+          <p class="end">UNKNOWN END</p>
+          <p class="location">UNKNOWN LOCATION</p>
+          <a href="" class="ical">Open in Calendar</a>
+        </li>
+      </template>
+    </section>
+    <section>
+      <h1>Products</h1>
+      <ul id="products-list"></ul>
+      <template id="product-template">
+        <li>
+          <h2 class="name">UNKNOWN NAME</h2>
+          <img src="" alt="broken image">
+          <p><span class="price">UNKNOWN PRICE</span> (<span class="currency">UNKNOWN CURRENCY</span>)</p>
+        </li>
+      </template>
+    </section>
+    <section>
+      <h1>About</h1>
+      <pre id="about"></pre>
+      <pre id="privacy-policy"></pre>
+    </section>
+  </article>
+  <template id="error-template">
+    <h2>Error</h2>
+    <p>failed to reach <span class="url">UNKNOWN URL</span></p>
+    <pre class="details">UNKNOWN ERROR</pre>
+  </template>
+
+  <script type="text/javascript">
+    function replaceNode(querySelector, newNode) {
+      const target = document.querySelector(querySelector)
+      const parent = target.parentNode
+      parent.removeChild(target)
+      parent.appendChild(newNode)
+    }
+
+    function requestFailed(event) {
+      const node = document
+        .querySelector('template#error-template')
+        .content
+        .cloneNode(true)
+      node.querySelector('.url').innerHTML = eventsEndpoint
+      node.querySelector('.details').innerHTML = this.responseText
+      return node
+    }
+
+    function hydrateEvents(){
+
+      const eventsEndpoint = env.EVENTS_URI
+
+      const req = new XMLHttpRequest()
+      req.overrideMimeType("application/json")
+
+      req.onerror(function(event) {
+        replaceNode('#events-list', requestFailed.bind(this)(event))
+      })
+
+      req.ontimeout(function(event) {
+        replaceNode('#events-list', requestFailed.bind(this)(event))
+      })
+
+      req.onload(function(event) {
+        const result = JSON.parse(this.responseText)
+        if (this.status >= 300 || result.errors) {
+          replaceNode('#events-list', requestFailed.bind(this)(event))
+        }
+
+        const list = document.querySelector('#events-list')
+        for (const event of result.data.events) {
+          const node = document
+            .querySelector('#event-template')
+            .content
+            .cloneNode(true)
+        
+          node.querySelector('.title').innerHTML = event.title
+          node.querySelector('.description').innerHTML = event.description
+          node.querySelector('.location').innerHTML = event.location
+          node.querySelector('.start').innerHTML = event.start
+          node.querySelector('.end').innerHTML = event.end
+          node.querySelector('.ical').setAttribute('href', event.ical)
+
+          list.appendChild(node)
+        }
+      })
+
+      req.open('POST', eventsEndpoint)
+      req.send(JSON.stringify({
+        query: "query { events { title description location start end ical } }",
+        variables: {}
+      }))
+    }
+
+    function hydrateProducts(){
+
+      const productsEndpoint = env.PRODUCTS_URI
+
+      const req = new XMLHttpRequest()
+      req.overrideMimeType("application/json")
+
+      req.onerror(function(event) {
+        replaceNode('#products-list', requestFailed.bind(this)(event))
+      })
+
+      req.ontimeout(function(event) {
+        replaceNode('#products-list', requestFailed.bind(this)(event))
+      })
+
+      req.onload(function(event) {
+        const result = JSON.parse(this.responseText)
+        if (this.status >= 300 || result.errors) {
+          replaceNode('#products-list', requestFailed.bind(this)(event))
+        }
+
+        const list = document.querySelector('#products-list')
+        for (const product of result.data.products) {
+          const node = document
+            .querySelector('#product-template')
+            .content
+            .cloneNode(true)
+        
+          node.querySelector('.name').innerHTML = product.name
+          const img = node.querySelector('.imageUrl')
+          img.setAttribute('src', product.imageUrl)
+          img.setAttribute('alt', 'picture of ' + product.name)
+          node.querySelector('.price').innerHTML = product.price.ammount
+          node.querySelector('.currency').innerHTML = product.price.currency
+
+          list.appendChild(node)
+        }
+      })
+
+      req.open('POST', eventsEndpoint)
+      req.send(JSON.stringify({
+        query: "query { products { name imageUrl price { value currency } } }",
+        variables: {}
+      }))
+    }
+
+    function start() {
+      hydrateProducts()
+      hydrateEvents()
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start);
+    } else { 
+      start();
+    }
+  </script>
+</body>
+</html>

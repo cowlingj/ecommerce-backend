@@ -32,4 +32,7 @@ dependencies:
   - name: istio-ingress
     repository: file://../../../helm/charts/istio-ingress/
     version: 0.0.1
+  - name: simple-example
+    repository: file://../../../examples/simple/chart/simple-example
+    version: 0.0.1
 

@@ -115,3 +115,6 @@ nginx-ingress:
 
 istio-ingress:
   enabled: false
+
+simple-example:
+  enabled: false
