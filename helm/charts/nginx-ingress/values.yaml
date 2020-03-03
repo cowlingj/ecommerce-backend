@@ -2,12 +2,16 @@ useIstio: true
 useHtttps: true
 domainName: null
 certIssuer: letsencrypt
-cms:
-  name: cms
-  port: 80
-store:
-  name: store
-  port: 80
-products:
-  name: products
-  port: 80
+paths:
+  - path: /cms
+    service:
+      name: cms
+      port: 80
+  - path: /store
+    service:
+      name: cms
+      port: 80
+  - path: /products
+    service:
+      name: cms
+      port: 80
