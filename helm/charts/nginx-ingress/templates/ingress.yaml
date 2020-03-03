@@ -9,7 +9,7 @@ spec:
   rules:
   - http:
       paths:
-      {{- with .Values.paths }}
+      {{- range .Values.paths }}
       - path: {{ .path }}
         backend:
           serviceName: {{ .service.name }}
