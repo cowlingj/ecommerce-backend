@@ -56,8 +56,8 @@ spec:
             - name: products-volume
               mountPath: /etc/secrets/products
               readOnly: true
-      ports:
-        - containerPort: 80
+          ports:
+            - containerPort: 80
       volumes:
         - name: products-volume
           secret:
