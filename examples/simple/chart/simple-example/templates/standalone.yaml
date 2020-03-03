@@ -85,7 +85,7 @@ spec:
       protocol: TCP
       name: http
     - port: {{ .Values.service.ports.status }}
-      targetPort: http-main
+      targetPort: http-status
       protocol: TCP
       name: http
   selector:
