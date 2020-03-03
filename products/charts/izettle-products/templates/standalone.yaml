@@ -67,7 +67,7 @@ spec:
       volumes:
         - name: izettle-credentials-volume
           secret:
-            secretName: {{ .Values.secrets.credentials.name }}
+            secretName: {{ include "izettle-products.name" (merge (dict "Values" (dict "nameOverride" .Values.secrets.credentials.nameOverride)) .) }}
             items:
               - key: credentials
                 path: credentials.json
