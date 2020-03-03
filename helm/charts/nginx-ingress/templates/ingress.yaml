@@ -13,6 +13,6 @@ spec:
       - path: {{ .path }}
         backend:
           serviceName: {{ .service.name }}
-          port: {{ .service.port }}
+          servicePort: {{ .service.port }}
       {{end -}}
 {{- end }}
