@@ -93,6 +93,7 @@
           }
         } catch (e) {
           replaceNode('#events-list', requestFailed.bind(this)(event, eventsEndpoint))
+          return
         }
 
         const list = document.querySelector('#events-list')
@@ -145,6 +146,7 @@
           }
         } catch (e) {
           replaceNode('#events-list', requestFailed.bind(this)(event, productsEndpoint))
+          return
         }
 
         const list = document.querySelector('#products-list')
