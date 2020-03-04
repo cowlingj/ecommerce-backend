@@ -155,7 +155,7 @@
         }
       }
 
-      req.open('POST', eventsEndpoint)
+      req.open('POST', productsEndpoint)
       req.send(JSON.stringify({
         query: "query { products { name imageUrl price { value currency } } }",
         variables: {}
