@@ -48,14 +48,18 @@ spec:
             - name: http-status
               containerPort: 8080
               protocol: TCP
+          {{- if .Values.livenessProbe }}
           livenessProbe:
-            httpGet:
-              path: /status
-              port: http-status
+            {{ tpl .Values.livenessProbe }}
+          {{- end }}
+          {{- if .Values.readinessProbe }}
           readinessProbe:
-            httpGet:
-              path: /status
-              port: http-status
+            {{ tpl .Values.readinessProbe }}
+          {{- end }}
+          {{- if and .Values.startupProbe (ge (atoi .Capabilities.KubeVersion.Major) 1) (ge (atoi .Capabilities.KubeVersion.Minor) 16) }}
+          startupProbe:
+              {{ tpl .Values.startupProbe }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
