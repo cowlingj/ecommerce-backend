@@ -74,7 +74,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "simple-example.fullname" (merge (dict "Values" (dict "nameOverride" .Values.service.nameOverride)) .) }}
+  name: {{ include "simple-example.fullname" (merge (dict "Values" (dict "fullnameOverride" .Values.service.fullnameOverride "nameOverride" .Values.service.nameOverride)) .) }}
   labels:
 {{ include "simple-example.labels" . | indent 4 }}
 spec:

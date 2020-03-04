@@ -77,15 +77,15 @@
       const req = new XMLHttpRequest()
       req.overrideMimeType("application/json")
 
-      req.onerror(function(event) {
+      req.onerror = function(event) {
         replaceNode('#events-list', requestFailed.bind(this)(event))
-      })
+      }
 
-      req.ontimeout(function(event) {
+      req.ontimeout = function(event) {
         replaceNode('#events-list', requestFailed.bind(this)(event))
-      })
+      }
 
-      req.onload(function(event) {
+      req.onload = function(event) {
         const result = JSON.parse(this.responseText)
         if (this.status >= 300 || result.errors) {
           replaceNode('#events-list', requestFailed.bind(this)(event))
@@ -107,7 +107,7 @@
 
           list.appendChild(node)
         }
-      })
+      }
 
       req.open('POST', eventsEndpoint)
       req.send(JSON.stringify({
@@ -123,15 +123,15 @@
       const req = new XMLHttpRequest()
       req.overrideMimeType("application/json")
 
-      req.onerror(function(event) {
+      req.onerror = function(event) {
         replaceNode('#products-list', requestFailed.bind(this)(event))
-      })
+      }
 
-      req.ontimeout(function(event) {
+      req.ontimeout = function(event) {
         replaceNode('#products-list', requestFailed.bind(this)(event))
-      })
+      }
 
-      req.onload(function(event) {
+      req.onload = function(event) {
         const result = JSON.parse(this.responseText)
         if (this.status >= 300 || result.errors) {
           replaceNode('#products-list', requestFailed.bind(this)(event))
@@ -153,7 +153,7 @@
 
           list.appendChild(node)
         }
-      })
+      }
 
       req.open('POST', eventsEndpoint)
       req.send(JSON.stringify({
