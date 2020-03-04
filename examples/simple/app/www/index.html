@@ -60,12 +60,12 @@
       parent.appendChild(newNode)
     }
 
-    function requestFailed(event) {
+    function requestFailed(event, url) {
       const node = document
         .querySelector('template#error-template')
         .content
         .cloneNode(true)
-      node.querySelector('.url').innerHTML = eventsEndpoint
+      node.querySelector('.url').innerHTML = url
       node.querySelector('.details').innerHTML = this.responseText
       return node
     }
@@ -75,14 +75,13 @@
       const eventsEndpoint = env.EVENTS_URI
 
       const req = new XMLHttpRequest()
-      req.overrideMimeType("application/json")
 
       req.onerror = function(event) {
-        replaceNode('#events-list', requestFailed.bind(this)(event))
+        replaceNode('#events-list', requestFailed.bind(this)(event, eventsEndpoint))
       }
 
       req.ontimeout = function(event) {
-        replaceNode('#events-list', requestFailed.bind(this)(event))
+        replaceNode('#events-list', requestFailed.bind(this)(event, eventsEndpoint))
       }
 
       req.onload = function(event) {
@@ -93,7 +92,7 @@
             throw new Error("request failed")
           }
         } catch (e) {
-          replaceNode('#events-list', requestFailed.bind(this)(event))
+          replaceNode('#events-list', requestFailed.bind(this)(event, eventsEndpoint))
         }
 
         const list = document.querySelector('#events-list')
@@ -130,11 +129,11 @@
       req.overrideMimeType("application/json")
 
       req.onerror = function(event) {
-        replaceNode('#products-list', requestFailed.bind(this)(event))
+        replaceNode('#products-list', requestFailed.bind(this)(event, productsEndpoint))
       }
 
       req.ontimeout = function(event) {
-        replaceNode('#products-list', requestFailed.bind(this)(event))
+        replaceNode('#products-list', requestFailed.bind(this)(event, productsEndpoint))
       }
 
       req.onload = function(event) {
@@ -145,7 +144,7 @@
             throw new Error("request failed")
           }
         } catch (e) {
-          replaceNode('#events-list', requestFailed.bind(this)(event))
+          replaceNode('#events-list', requestFailed.bind(this)(event, productsEndpoint))
         }
 
         const list = document.querySelector('#products-list')
