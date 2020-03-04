@@ -157,7 +157,7 @@
             .cloneNode(true)
         
           node.querySelector('.name').innerHTML = product.name
-          const img = node.querySelector('.imageUrl')
+          const img = node.querySelector('img')
           img.setAttribute('src', product.imageUrl)
           img.setAttribute('alt', 'picture of ' + product.name)
           node.querySelector('.price').innerHTML = product.price.ammount
