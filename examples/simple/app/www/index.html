@@ -86,8 +86,13 @@
       }
 
       req.onload = function(event) {
-        const result = JSON.parse(this.responseText)
-        if (this.status >= 300 || result.errors) {
+        let result
+        try {
+          result = JSON.parse(this.responseText)
+          if (this.status >= 300 || result.errors) {
+            throw new Error("request failed")
+          }
+        } catch (e) {
           replaceNode('#events-list', requestFailed.bind(this)(event))
         }
 
@@ -110,6 +115,7 @@
       }
 
       req.open('POST', eventsEndpoint)
+      req.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
       req.send(JSON.stringify({
         query: "query { events { title description location start end ical } }",
         variables: {}
@@ -132,9 +138,14 @@
       }
 
       req.onload = function(event) {
-        const result = JSON.parse(this.responseText)
-        if (this.status >= 300 || result.errors) {
-          replaceNode('#products-list', requestFailed.bind(this)(event))
+        let result
+        try {
+          result = JSON.parse(this.responseText)
+          if (this.status >= 300 || result.errors) {
+            throw new Error("request failed")
+          }
+        } catch (e) {
+          replaceNode('#events-list', requestFailed.bind(this)(event))
         }
 
         const list = document.querySelector('#products-list')
@@ -156,6 +167,7 @@
       }
 
       req.open('POST', productsEndpoint)
+      req.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
       req.send(JSON.stringify({
         query: "query { products { name imageUrl price { value currency } } }",
         variables: {}
