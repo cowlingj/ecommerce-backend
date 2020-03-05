@@ -82,10 +82,6 @@ spec:
       targetPort: http-main
       protocol: TCP
       name: http-main
-    - port: {{ .Values.service.ports.status }}
-      targetPort: http-status
-      protocol: TCP
-      name: http-status
   selector:
     app.kubernetes.io/name: {{ include "prismic-events.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
