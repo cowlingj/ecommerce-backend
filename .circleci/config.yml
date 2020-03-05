@@ -28,7 +28,7 @@ workflows:
           filters:
             branches:
               only: master
-      - build-cms-api:
+      - build-events-api:
           filters:
             branches:
               only: master
@@ -58,7 +58,7 @@ workflows:
               only: master
           requires:
             - build-products-api
-            - build-cms-api
+            - build-events-api
 
   update_helm_charts:
     jobs:
@@ -190,13 +190,13 @@ jobs:
     steps:
       - npm_package:
           path: "~/project/products/api"
-  build-cms-api:
+  build-events-api:
     executor:
       name: node/default
       tag: '12.14.1'
     steps:
-      - npm_package_schema
-
+      - npm_package:
+          path: "~/project/events/api"
   package-helpers:
     executor: helm
     steps:

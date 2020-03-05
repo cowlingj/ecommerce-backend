@@ -1,0 +1,14 @@
+type Event {
+  id: ID!
+  title: String
+  description: String
+  location: String
+  ical: URL
+  start: DateTime
+  end: DateTime
+}
+
+extend type Query {
+  event(id: ID!): Event
+  events: [Event!]!
+}
