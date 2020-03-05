@@ -1,0 +1,49 @@
+replicaCount: 1
+
+image:
+  repository: gcr.io/gke-test-253221/prismic-events.backend
+  tag: 0.0.1
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+prismic:
+  accessToken: null
+  uri:
+    refs: https://my-repo.prismic.io/api/v2
+    graphql: https://my-repo.prismic.io/graphql
+  queries:
+    event: event
+    allEvents: allEvents
+
+service:
+  nameOverride: ""
+  fullnameOverride: ""
+  type: ClusterIP
+  ports:
+    main: 80
+
+resources: {}
+
+livenessProbe: |-
+  httpGet:
+    path: {{ printf "\"%s%s\"" .Values.basePath "/status" }}
+    port: http-status
+
+readinessProbe: |-
+  httpGet:
+    path: {{ printf "\"%s%s\"" .Values.basePath "/status" }}
+    port: http-status
+
+startupProbe: |-
+  httpGet:
+    path: {{ printf "\"%s%s\"" .Values.basePath "/status" }}
+    port: http-status
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

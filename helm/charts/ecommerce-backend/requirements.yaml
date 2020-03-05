@@ -20,6 +20,11 @@ dependencies:
   - name: helpers
     repository: file://../../../helm/charts/helpers/
     version: 0.0.1
+  - name: prismic-events
+    repository: file://../../../events/prismic/chart/prismic-events
+    version: 0.0.1
+    tags:
+      - prismic-events
   - name: izettle-products
     repository: file://../../../products/charts/izettle-products
     version: 0.0.2

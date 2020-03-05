@@ -52,6 +52,12 @@ workflows:
           filters:
             branches:
               only: master
+      - build-prismic-events:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build-events-api
       - git-commit-packages:
           filters:
             branches:
@@ -92,6 +98,10 @@ workflows:
               only: master
           requires:
             - package-helpers
+      - package-prismic-events:
+          filters:
+            branches:
+              only: master
       - package-json-products:
           filters:
             branches:
@@ -113,6 +123,7 @@ workflows:
             - package-helpers
             - package-mongodb-config
             - package-json-products
+            - package-prismic-events
       - generate-index:
           filters:
             branches:
@@ -127,6 +138,7 @@ workflows:
             - package-mongodb-config
             - package-json-products
             - package-backend
+            - package-prismic-events
       - git-commit-repo:
           filters:
             branches:
@@ -183,6 +195,12 @@ jobs:
       - docker_package:
           image: "simple.example"
           path: "examples/simple/app"
+  build-prismic-events:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "prismic-events.backend"
+          path: "events/prismic/app"
   build-products-api:
     executor:
       name: node/default
@@ -227,6 +245,11 @@ jobs:
     steps:
       - helm_package:
           path: products/charts/izettle-products/
+  package-prismic-events:
+    executor: helm
+    steps:
+      - helm_package:
+          path: events/prismic/chart/prismic-events/  
   package-json-products:
     executor: helm
     steps:

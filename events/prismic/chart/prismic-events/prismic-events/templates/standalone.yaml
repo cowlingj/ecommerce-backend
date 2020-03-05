@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "prismic-events.fullname" . }}
+  labels:
+{{ include "prismic-events.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "prismic-events.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "prismic-events.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: PORT
+              value: "80"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: PRISMIC_REFS_URI
+              value: {{ .Values.prismic.uri.refs }}
+            - name: PRISMIC_GRAPHQL_URI
+              value: {{ .Values.prismic.uri.graphql }}
+            - name: PRISMIC_ACCESS_TOKEN
+              value: {{ .Values.prismic.accessToken }}
+            - name: PRISMIC_EVENT_QUERY
+              value: {{ .Values.prismic.queries.event }}
+            - name: PRISMIC_EVENTS_QUERY
+              value: {{ .Values.prismic.queries.events }}
+          ports:
+            - name: http-main
+              containerPort: 80
+              protocol: TCP
+            - name: http-status
+              containerPort: 8080
+              protocol: TCP
+          {{- if .Values.livenessProbe }}
+          livenessProbe: {{ tpl .Values.livenessProbe . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe }}
+          readinessProbe: {{ tpl .Values.readinessProbe . | nindent 12}}
+          {{- end }}
+          {{- if and .Values.startupProbe (ge (atoi .Capabilities.KubeVersion.Major) 1) (ge (atoi .Capabilities.KubeVersion.Minor) 16) }}
+          startupProbe: {{ tpl .Values.startupProbe . | nindent 12 }}
+          {{- end }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "prismic-events.fullname" (merge (dict "Values" (dict "fullnameOverride" .Values.service.fullnameOverride "nameOverride" .Values.service.nameOverride)) .) }}
+  labels:
+{{ include "prismic-events.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.ports.main }}
+      targetPort: http-main
+      protocol: TCP
+      name: http-main
+    - port: {{ .Values.service.ports.status }}
+      targetPort: http-status
+      protocol: TCP
+      name: http-status
+  selector:
+    app.kubernetes.io/name: {{ include "prismic-events.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
