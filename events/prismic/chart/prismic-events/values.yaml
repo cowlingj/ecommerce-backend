@@ -16,7 +16,7 @@ prismic:
     graphql: https://my-repo.prismic.io/graphql
   queries:
     event: event
-    allEvents: allEvents
+    events: allEvents
 
 service:
   nameOverride: ""
@@ -27,20 +27,9 @@ service:
 
 resources: {}
 
-livenessProbe: |-
-  httpGet:
-    path: /
-    port: http-main
-
-readinessProbe: |-
-  httpGet:
-    path: /
-    port: http-main
-
-startupProbe: |-
-  httpGet:
-    path: /
-    port: http-main
+livenessProbe: null
+readinessProbe: null
+startupProbe: null
 
 nodeSelector: {}
 
