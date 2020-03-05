@@ -29,18 +29,18 @@ resources: {}
 
 livenessProbe: |-
   httpGet:
-    path: {{ printf "\"%s%s\"" .Values.basePath "/status" }}
-    port: http-status
+    path: /
+    port: http-main
 
 readinessProbe: |-
   httpGet:
-    path: {{ printf "\"%s%s\"" .Values.basePath "/status" }}
-    port: http-status
+    path: /
+    port: http-main
 
 startupProbe: |-
   httpGet:
-    path: {{ printf "\"%s%s\"" .Values.basePath "/status" }}
-    port: http-status
+    path: /
+    port: http-main
 
 nodeSelector: {}
 
