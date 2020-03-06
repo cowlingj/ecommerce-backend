@@ -29,7 +29,7 @@ spec:
               value: "80"
             - name: HOST
               value: "0.0.0.0"
-            - name: KESTONE_URI
+            - name: KEYSTONE_URI
               value: {{ .Values.keystone.uri }}
             - name: NODE_ENV
               value: {{ .Values.env }}
