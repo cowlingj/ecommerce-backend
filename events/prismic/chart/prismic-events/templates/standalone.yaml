@@ -43,9 +43,6 @@ spec:
             - name: http-main
               containerPort: 80
               protocol: TCP
-            - name: http-status
-              containerPort: 8080
-              protocol: TCP
           {{- if .Values.livenessProbe }}
           livenessProbe: {{ tpl .Values.livenessProbe . | nindent 12 }}
           {{- end }}
