@@ -46,7 +46,10 @@ export { keystone }
 export const apps = [
     new GraphQLApp({
       apiPath: "/cms/graphql",
-      graphiqlPath: "/cms/playground"
+      graphiqlPath: "/cms/playground",
+      apollo: {
+        introspection: true
+      }
     }),
     new AdminUIApp({
       adminPath: "/cms/admin",

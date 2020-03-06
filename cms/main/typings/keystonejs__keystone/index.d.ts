@@ -15,7 +15,7 @@ declare module "@keystonejs/keystone" {
     isUnique?: boolean
     hooks?: Hooks
     access?: Access
-}
+  }
 
   interface TextFieldOptions extends BaseFieldOptions {
     isMultiline?: boolean;
