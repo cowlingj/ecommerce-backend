@@ -1,0 +1,34 @@
+replicaCount: 1
+
+image:
+  repository: gcr.io/gke-test-253221/keystone-events.backend
+  tag: 0.0.1
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+env: "production"
+
+keystone:
+  uri: http://keystone.localhost
+
+service:
+  nameOverride: ""
+  fullnameOverride: ""
+  type: ClusterIP
+  ports:
+    main: 80
+
+resources: {}
+
+livenessProbe: null
+readinessProbe: null
+startupProbe: null
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

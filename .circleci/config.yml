@@ -58,6 +58,12 @@ workflows:
               only: master
           requires:
             - build-events-api
+      - build-keystone-events:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build-events-api
       - git-commit-packages:
           filters:
             branches:
@@ -102,6 +108,10 @@ workflows:
           filters:
             branches:
               only: master
+      - package-keystone-events:
+          filters:
+            branches:
+              only: master
       - package-json-products:
           filters:
             branches:
@@ -124,6 +134,7 @@ workflows:
             - package-mongodb-config
             - package-json-products
             - package-prismic-events
+            - package-keystone-events
       - generate-index:
           filters:
             branches:
@@ -139,6 +150,7 @@ workflows:
             - package-json-products
             - package-backend
             - package-prismic-events
+            - package-keystone-events
       - git-commit-repo:
           filters:
             branches:
@@ -201,6 +213,12 @@ jobs:
       - docker_package:
           image: "prismic-events.backend"
           path: "events/prismic/app"
+  build-keystone-events:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "keystone-events.backend"
+          path: "events/keystone/app"
   build-products-api:
     executor:
       name: node/default
@@ -249,7 +267,12 @@ jobs:
     executor: helm
     steps:
       - helm_package:
-          path: events/prismic/chart/prismic-events/  
+          path: events/prismic/chart/prismic-events/
+  package-keystone-events:
+    executor: helm
+    steps:
+      - helm_package:
+          path: events/keystone/chart/keystone-events/  
   package-json-products:
     executor: helm
     steps:

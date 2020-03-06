@@ -1,0 +1,29 @@
+{
+  "rootDir": "..",
+  "roots": ["<rootDir>/src"],
+  "moduleNameMapper": {
+    "@/(.*)$": "<rootDir>/src/$1"
+  },
+  "transform": {
+    "^.+\\.ts$": "babel-jest",
+    "^.+\\.(gql)|(graphql)$": "@jagi/jest-transform-graphql"
+  },
+  "transformIgnorePatterns": [
+    "<rootDir>/node_modules/(?!@cowlingj/products-api)"
+  ],
+  "testRegex": "(?:\\.|\\/)spec\\.ts$",
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js",
+    "jsx",
+    "json",
+    "node"
+  ],
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "src/**/*.ts",
+    "!src/**/*.integration.ts",
+    "!src/index.ts"
+  ]
+}

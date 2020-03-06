@@ -111,3 +111,4 @@ tags:
   istio-ingress: false
   nginx-ingress: true
   prismic-events: false
+  keystone: true
