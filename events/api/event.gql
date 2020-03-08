@@ -8,7 +8,12 @@ type Event {
   end: DateTime
 }
 
+input EventOrderInput {
+  field: String!
+  reverse: Boolean
+}
+
 extend type Query {
   event(id: ID!): Event
-  events: [Event!]!
+  events(count: Int, order: EventOrderInput): [Event!]!
 }
