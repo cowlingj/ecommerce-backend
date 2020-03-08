@@ -8,9 +8,6 @@ import onConnect from "./on-connect";
 import { config } from "dotenv";
 import path from "path";
 import RedirectApp from './apps/redirect-app'
-import expressSession from 'express-session'
-import connectMongo from 'connect-mongo'
-
 
 if (process.env.NODE_ENV === "development") {
   config({ path: path.resolve(process.cwd(), "config", ".env") });
@@ -25,7 +22,7 @@ const mongoUri = process.env.MONGO_URI
 const keystone = new Keystone({
   name: "Uni-Cycle",
   adapter: new MongooseAdapter({ mongoUri }),
-  sessionStore: new (connectMongo(expressSession))({ url: mongoUri }),
+  secureCookies: false,
   queryLimits: {
     maxTotalResults: 100
   },
