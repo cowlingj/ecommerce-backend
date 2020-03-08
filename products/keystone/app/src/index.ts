@@ -1,14 +1,15 @@
 import { config } from "dotenv";
 import {
   ApolloServer,
+  introspectSchema,
   makeRemoteExecutableSchema
 } from "apollo-server";
 import { mergeSchemas } from "apollo-server";
-import { GraphQLSchema, buildClientSchema } from "graphql";
-import { resolver as eventResolver } from "./resolvers/event";
-import { resolver as eventsResolver } from "./resolvers/events";
-import { schema as clientSchema } from "@cowlingj/events-api";
-import introspectionResult from "./data/introspection-result.json"
+import { GraphQLSchema, buildClientSchema, getIntrospectionQuery } from "graphql";
+import { resolver as productResolver } from "./resolvers/product";
+import { resolver as productsResolver } from "./resolvers/products";
+import { schema as clientSchema } from "@cowlingj/products-api";
+import introspectionQueryResult from "./data/introspection-result.json";
 
 import { createLink } from "./link";
 import { Server } from "http";
@@ -16,30 +17,6 @@ import { Server } from "http";
 config();
 
 const link = createLink();
-
-export type PrismicEvent = {
-  _meta: {
-    uid: string;
-  };
-  title: string;
-  description: string;
-  location: string;
-  start: string;
-  end: string;
-  ical: {
-    url: string;
-  };
-};
-
-export type Event = {
-  id: string;
-  title: string;
-  description: string;
-  location: string;
-  start: string;
-  end: string;
-  ical: string;
-};
 
 export const server: Promise<Server> = (async (): Promise<Server> => {
   if (
@@ -51,7 +28,7 @@ export const server: Promise<Server> = (async (): Promise<Server> => {
 
   const introspectedSchema: GraphQLSchema = makeRemoteExecutableSchema({
     // @ts-ignore
-    schema: await buildClientSchema(introspectionResult.data),
+    schema: buildClientSchema(introspectionQueryResult.data),
     link
   });
 
@@ -60,8 +37,8 @@ export const server: Promise<Server> = (async (): Promise<Server> => {
       schemas: [buildClientSchema(clientSchema)],
       resolvers: {
         Query: {
-          event: eventResolver(introspectedSchema),
-          events: eventsResolver(introspectedSchema)
+          product: productResolver(introspectedSchema),
+          products: productsResolver(introspectedSchema)
         }
       }
     }),

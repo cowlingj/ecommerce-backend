@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "keystone-products.fullname" . }}
+  labels:
+{{ include "keystone-products.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "keystone-products.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "keystone-products.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: PORT
+              value: "80"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: KEYSTONE_URI
+              value: {{ .Values.keystone.uri }}
+            - name: NODE_ENV
+              value: {{ .Values.env }}
+          ports:
+            - name: http-main
+              containerPort: 80
+              protocol: TCP
+          {{- if .Values.livenessProbe }}
+          livenessProbe: {{ tpl .Values.livenessProbe . | nindent 12 }}
+          {{- end }}
+          {{- if .Values.readinessProbe }}
+          readinessProbe: {{ tpl .Values.readinessProbe . | nindent 12}}
+          {{- end }}
+          {{- if and .Values.startupProbe (ge (atoi .Capabilities.KubeVersion.Major) 1) (ge (atoi .Capabilities.KubeVersion.Minor) 16) }}
+          startupProbe: {{ tpl .Values.startupProbe . | nindent 12 }}
+          {{- end }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keystone-products.fullname" (merge (dict "Values" (dict "fullnameOverride" .Values.service.fullnameOverride "nameOverride" .Values.service.nameOverride)) .) }}
+  labels:
+{{ include "keystone-products.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.ports.main }}
+      targetPort: http-main
+      protocol: TCP
+      name: http-main
+  selector:
+    app.kubernetes.io/name: {{ include "keystone-products.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

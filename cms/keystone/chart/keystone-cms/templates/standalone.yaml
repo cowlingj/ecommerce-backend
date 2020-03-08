@@ -1,0 +1,193 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "keystone-cms.fullname" . }}
+  labels:
+{{ include "keystone-cms.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "keystone-cms.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "keystone-cms.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      initContainers:
+        - name: mongodb
+          image: "{{ .Values.image.init.repository }}:{{ .Values.image.init.tag }}"
+          imagePullPolicy: {{ .Values.image.init.pullPolicy }}
+          env:
+            - name: ADMIN_USERNAME
+              value: {{ .Values.mongodb.admin.username | quote }}
+            - name: ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "keystone-cms.scopedName" (list .Values.secrets.mongodbAdmin .) }}
+                  key: mongodb-root-password
+            - name: ADMIN_DB
+              value: {{ .Values.mongodb.admin.database | quote }}
+            - name: CMS_USERNAME
+              value: {{ .Values.mongodb.cms.username | quote }}
+            - name: CMS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "keystone-cms.scopedName" (list .Values.secrets.mongodbCms .) }}
+                  key: mongodb-password
+            - name: CMS_DB
+              value: {{ .Values.mongodb.cms.database | quote }}
+            - name: DB_HOST
+              value: {{ .Values.mongodb.host | quote }}
+            - name: DB_PORT
+              value: {{ .Values.mongodb.port | quote }}
+          resources: {{- toYaml .Values.resources.init | nindent 12 }}
+      containers:
+        - name: main
+          image: "{{ .Values.image.main.repository }}:{{ .Values.image.main.tag }}"
+          imagePullPolicy: {{ .Values.image.main.pullPolicy }}
+          resources: {{- toYaml .Values.resources.main | nindent 12 }}
+          ports:
+            - containerPort: 80
+          {{- if and .Values.livenessProbe }}
+          livenessProbe: {{ tpl .Values.livenessProbe . | nindent 12 }}
+          {{- end }}
+          {{- if and .Values.readinessProbe }}
+          readinessProbe: {{ tpl .Values.readinessProbe . | nindent 12 }}
+          {{- end }}
+          {{- if and .Values.startupProbe (ge (atoi .Capabilities.KubeVersion.Major) 1) (ge (atoi .Capabilities.KubeVersion.Minor) 16) }}
+          startupProbe: {{ tpl .Values.startupProbe . | nindent 12 }}
+          {{- end }}
+          env:
+            - name: BASE_PATH
+              value: {{ .Values.basePath | quote }}
+            - name: COOKIE_SECRET
+              value: {{ default (randAlphaNum 32) .Values.cookieSecret }}
+            - name: DB_USERNAME
+              value: {{ .Values.mongodb.cms.username | quote }}
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "keystone-cms.scopedName" (list .Values.secrets.mongodbCms .) }}
+                  key: mongodb-password
+            - name: DB_HOST
+              value: {{ .Values.mongodb.host | quote }}
+            - name: DB_PORT
+              value: {{ .Values.mongodb.port | quote }}
+            - name: DB_NAME
+              value: {{ .Values.mongodb.cms.database | quote }}
+            - name: DB_QUERY_STRING
+              value: {{ printf "\"authSource=%s\"" .Values.mongodb.admin.database }}
+            - name: NODE_ENV
+              value: {{ .Values.env | quote }}
+            - name: PORT
+              value: "80"
+            - name: IP
+              value: "0.0.0.0"
+            - name: FLAG_EVENTS
+              value: {{ quote .Values.features.events }}
+            - name: FLAG_PRODUCTS
+              value: {{ quote .Values.features.products }}
+            - name: FLAG_RESOURCES
+              value: {{ quote .Values.features.resources }}
+            {{ if .Values.secrets.users -}}
+            - name: USERS_FILE
+              value: /etc/secrets/users/users.json
+            {{- end }}
+            {{ if .Values.secrets.strings -}}
+            - name: STRINGS_FILE
+              value: /etc/secrets/strings/strings.json
+            {{- end }}
+          volumeMounts:
+            {{- if not .Values.secrets -}}
+            []
+            {{- end }}
+            {{ if .Values.secrets.users -}}
+            - name: user-data-volume
+              mountPath: /etc/secrets/users/
+              readOnly: true
+            {{- end }}
+            {{ if .Values.secrets.strings -}}
+            - name: string-data-volume
+              mountPath: /etc/secrets/strings/
+              readOnly: true
+            {{- end }}
+      volumes:
+        {{- if not .Values.secrets -}}
+        []
+        {{- end }}
+        {{ if .Values.secrets.users -}}
+        - name: user-data-volume
+          secret:
+            secretName: {{ include "keystone-cms.scopedName" (list .Values.secrets.users .) }}
+            items:
+              - key: users
+                path: users.json
+        {{- end }}
+        {{ if .Values.secrets.strings -}}
+        - name: string-data-volume
+          secret:
+            secretName: {{ include "keystone-cms.scopedName" (list .Values.secrets.strings .) }}
+            items:
+              - key: strings
+                path: strings.json
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keystone-cms.scopedName" (list .Values.service .) }}
+  labels:
+{{ include "keystone-cms.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "keystone-cms.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+---
+{{- if and (.Values.secrets.users) (not .Values.secrets.users.exists) }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "keystone-cms.scopedName" (list .Values.secrets.users .) }}
+  labels:
+{{ include "keystone-cms.labels" . | indent 4 }}
+type: Opaque
+data:
+  strings: {{ .Values.secrets.users.data | toJson | b64enc }}
+{{- end }}
+---
+{{- if and (.Values.secrets.strings) (not .Values.secrets.strings.exists) }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "keystone-cms.scopedName" (list .Values.secrets.strings .) }}
+  labels:
+{{ include "keystone-cms.labels" . | indent 4 }}
+type: Opaque
+data:
+  strings: {{ .Values.secrets.strings.data | toJson | b64enc }}
+{{- end }}

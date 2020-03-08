@@ -1,9 +1,0 @@
-dependencies:
-- name: mongodb
-  repository: file://../../../mongodb/charts/mongodb/
-  version: 0.0.1
-- name: helpers
-  repository: file://../../../helm/charts/helpers/
-  version: 0.0.1
-digest: sha256:10cad4ef18ebfff04a8ee34d8e1ea5dcbfca2a9b3de72d1cb230b31b241880d2
-generated: "2019-10-02T18:19:27.804948787+01:00"

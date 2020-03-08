@@ -4,8 +4,6 @@ import { Server, IncomingMessage, ServerResponse } from "http";
 import { promisify } from "util";
 import connect from "connect";
 import allSettled from "promise.allsettled";
-import path from "path";
-import fs from "fs";
 
 type Req = IncomingMessage & {
   body: { [key: string]: unknown };
@@ -71,39 +69,35 @@ describe("Server", () => {
     serversToCloseAfterEachTest = [];
   });
 
-  it("Can get a list of events", async () => {
-    const keystoneEvents = [
+  it("Can get a list of products", async () => {
+    const keystoneProducts = [
       {
         id: "id-0",
-        title: "title-0",
-        start: "start-0",
-        end: "end-0",
-        location: "location-0",
-        description: "description-0",
-        ical: "ical-0"
+        name: "name-0",
+        imageUrl: "imageUrl-0",
+        price: 100,
+        currency: "GBP"
       },
       {
         id: "id-1",
-        title: "title-1",
-        start: "start-1",
-        end: "end-1",
-        location: "location-1",
-        description: "description-1",
-        ical: "ical-1"
+        name: "name-1",
+        imageUrl: "imageUrl-1",
+        price: 101,
+        currency: "GBP"
       }
     ];
 
-    const eventsCalls: {
+    const productsCalls: {
       method: string;
       auth: string;
     }[] = [];
 
     serversToCloseAfterEachTest.push(
       await testServer(
-        eventsCalls,
+        productsCalls,
         () => null,
         [
-          JSON.stringify({ data: { allEvents: keystoneEvents } })
+          JSON.stringify({ data: { allProducts: keystoneProducts } })
         ],
         3001
       )
@@ -117,65 +111,63 @@ describe("Server", () => {
     const res = await client.query({
       query: gql`
         {
-          events {
+          products {
             id
-            title
-            start
-            end
-            location
-            description
-            ical
+            name
+            imageUrl
+            price {
+              value
+              currency
+            }
           }
         }
       `
     });
 
-    expect(res.data.events.length).toBe(2);
-    expect(res.data.events[0]).toMatchObject({
-      description: "description-0",
-      end: "end-0",
-      ical: "ical-0",
+    expect(res.data.products.length).toBe(2);
+    expect(res.data.products[0]).toMatchObject(      {
       id: "id-0",
-      location: "location-0",
-      start: "start-0",
-      title: "title-0"
+      name: "name-0",
+      imageUrl: "imageUrl-0",
+      price: {
+        value: 100,
+        currency: "GBP"
+      }
     });
-    expect(res.data.events[1]).toMatchObject({
-      description: "description-1",
-      end: "end-1",
-      ical: "ical-1",
+    expect(res.data.products[1]).toMatchObject(      {
       id: "id-1",
-      location: "location-1",
-      start: "start-1",
-      title: "title-1"
+      name: "name-1",
+      imageUrl: "imageUrl-1",
+      price: {
+        value: 101,
+        currency: "GBP"
+      }
     });
-    expect(eventsCalls.length).toBe(1);
+    expect(productsCalls.length).toBe(1);
   });
 
-  it("Can get a single event", async () => {
-    const expectedId = "event_id";
+  it("Can get a single product", async () => {
+    const expectedId = "product_id";
 
-    const keystoneEvent = {
+    const keystoneProduct = {
       id: expectedId,
-      title: "title-0",
-      start: "start-0",
-      end: "end-0",
-      location: "location-0",
-      description: "description-0",
-      ical: "ical-0"
+      name: "name-0",
+      imageUrl: "imageUrl-0",
+      price: 100,
+      currency: "GBP"
     };
 
-    const eventsCalls: {
+    const productsCalls: {
       method: string;
       auth: string;
     }[] = [];
 
     serversToCloseAfterEachTest.push(
       await testServer(
-        eventsCalls,
+        productsCalls,
         () => null,
         [
-          JSON.stringify({ data: { Event: keystoneEvent } })
+          JSON.stringify({ data: { Product: keystoneProduct } })
         ],
         3001
       )
@@ -189,28 +181,28 @@ describe("Server", () => {
     const res = await client.query({
       query: gql`
         {
-          event(id: "${expectedId}") {
+          product(id: "${expectedId}") {
             id
-            title
-            start
-            end
-            location
-            description
-            ical
+            name
+            imageUrl
+            price {
+              value
+              currency
+            }
           }
         }
       `
     });
 
-    expect(res.data.event).toMatchObject({
-      description: "description-0",
-      end: "end-0",
-      ical: "ical-0",
+    expect(res.data.product).toMatchObject({
       id: expectedId,
-      location: "location-0",
-      start: "start-0",
-      title: "title-0"
+      name: "name-0",
+      imageUrl: "imageUrl-0",
+      price: {
+        value: 100,
+        currency: "GBP"
+      }
     });
-    expect(eventsCalls.length).toBe(1);
+    expect(productsCalls.length).toBe(1);
   });
 });

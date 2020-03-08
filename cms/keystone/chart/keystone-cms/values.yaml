@@ -1,0 +1,74 @@
+replicaCount: 1
+
+image:
+  main:
+    repository: gcr.io/gke-test-253221/cms.admin
+    tag: 0.0.2
+    pullPolicy: IfNotPresent
+  init:
+    repository: gcr.io/gke-test-253221/init.cms.admin
+    tag: 0.0.1
+    pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  nameOverride: ""
+  fullnameOverride: ""
+  type: ClusterIP
+  port: 80
+
+resources:
+  main: {}
+  init: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+secrets:
+  users:
+    nameOverride: "usersSecret"
+    fullnameOverride: ""
+    exists: false
+    data:
+      users:
+        - username: admin
+          password: password
+          isAdmin: true
+  strings:
+    nameOverride: "stringsSecret"
+    fullnameOverride: ""
+    exists: false
+    data:
+      strings: []
+  mongodbCms:
+    nameOverride: "mongodbCmsSecret"
+    fullnameOverride: ""
+    exists: false
+    data:
+      password: null
+  mongodbAdmin: # This secret must be pre-configured
+    nameOverride: "mongodbAdminSecret"
+    fullnameOverride: ""
+
+env: production
+basePath: ""
+cookieSecret: null
+mongodb:
+  host: mongo
+  port: 27017
+  cms:
+    username: cms
+    database: cms
+  admin:
+    username: root
+    database: admin
+features:
+  events: true
+  products: true
+  resources: true

@@ -5,9 +5,9 @@ dependencies:
   - name: auth
     repository: file://../../../auth/charts/auth/
     version: 0.0.1
-  - name: cms
-    repository: file://../../../cms/charts/cms/
-    version: 0.0.1
+  - name: keystone-cms
+    repository: file://../../../cms/keystone/chart/keystone-cms/
+    version: 0.2.0
     tags:
       - keystone
       - keystone-cms
@@ -46,6 +46,9 @@ dependencies:
       - json-products
   - name: nginx-ingress
     repository: file://../../../helm/charts/nginx-ingress/
+    version: 0.0.1
+  - name: keystone-products
+    repository: file://../../../products/keystone/chart/keystone-products
     version: 0.0.1
     tags:
       - nginx-ingress

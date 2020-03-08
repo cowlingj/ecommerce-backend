@@ -44,6 +44,12 @@ workflows:
               only: master
           requires:
             - build-products-api
+      - build-keystone-products:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build-products-api
       - build-cms-init:
           filters:
             branches:
@@ -104,6 +110,10 @@ workflows:
               only: master
           requires:
             - package-helpers
+      - package-keystone-products:
+          filters:
+            branches:
+              only: master
       - package-prismic-events:
           filters:
             branches:
@@ -130,6 +140,7 @@ workflows:
             - package-istio-ingress
             - package-cms
             - package-izettle-products
+            - package-keystone-products
             - package-helpers
             - package-mongodb-config
             - package-json-products
@@ -145,6 +156,7 @@ workflows:
             - package-istio-ingress
             - package-cms
             - package-izettle-products
+            - package-keystone-products
             - package-helpers
             - package-mongodb-config
             - package-json-products
@@ -182,13 +194,13 @@ jobs:
     steps:
       - docker_package:
           image: "cms.admin"
-          path: "cms/main/"
+          path: "cms/keystone/app/"
   build-cms-init:
     executor: gcloud
     steps:
       - docker_package:
           image: "init.cms.admin"
-          path: "cms/init/"
+          path: "cms/keystone/init/"
   build-izettle-products:
     executor: gcloud
     steps:
@@ -201,6 +213,12 @@ jobs:
       - docker_package:
           image: "json-products.backend"
           path: "products/json"
+  build-keystone-products:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "keystone-products.backend"
+          path: "products/keystone/app"
   build-simple-example:
     executor: gcloud
     steps:
@@ -257,7 +275,7 @@ jobs:
     executor: helm
     steps:
       - helm_package:
-          path: cms/charts/cms/
+          path: cms/keystone/chart/keystone-cms/
   package-izettle-products:
     executor: helm
     steps:
@@ -278,6 +296,11 @@ jobs:
     steps:
       - helm_package:
           path: products/charts/json-products/
+  package-keystone-products:
+    executor: helm
+    steps:
+      - helm_package:
+          path: products/keystone/chart/keystone-products/ 
   package-simple-example:
     executor: helm
     steps:
@@ -357,25 +380,6 @@ commands:
             mkdir --parents /tmp/packages
             cd /tmp/packages
             npm pack << parameters.path >>
-      - persist_to_workspace:
-          root: /tmp/
-          paths:
-            - "packages"
-  npm_package_schema:
-    steps:
-      - checkout
-      - run:
-          name: "generate schema"
-          command: |
-            cd ~/project/cms/main
-            npm install
-            npm run schema
-      - run:
-          name: "package"
-          command: |
-            mkdir --parents /tmp/packages
-            cd /tmp/packages
-            npm pack "~/project/cms/main/cms-api-template"
       - persist_to_workspace:
           root: /tmp/
           paths:

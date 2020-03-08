@@ -31,8 +31,8 @@ mongodb:
   image:
     tag: 4.2.0
   service:
-    name: mongodb
-    port: 8080
+    name: &mongodb-host mongodb
+    port: &mongodb-port 8080
   existingSecret: *mongodb-config-name
   fullnameOverride: mongodb
   resources:
@@ -52,57 +52,19 @@ postgres:
   enabled: false
   peerDependenciesHandled: true
 
-cms:
-  <<: *all
-  name: cms
-  group: frontend
-  image: "gcr.io/gke-test-253221/cms.admin"
-  imagePullSecret: null
-  version: "0.0.2"
-  cookieSecret: null
-  service:
-    name: cms
-    type: NodePort
+keystone-cms:
   mongodb:
-    host: null
-    port: 8080
+    host: *mongodb-host
+    port: *mongodb-port
     cms:
       username: cms
       database: cms
-      secretName: cms-mongodb
-      existingSecret: false
-      password: null
     admin:
       username: root
       database: admin
-      secretName: *mongodb-config-name
-      password: null
-  users:
-    secretName: cms-users
-    existingSecret: false
-    data:
-      users:
-        - username: admin
-          password: password
-          isAdmin: true
-  strings:
-    secretName: cms-strings
-    existingSecret: false
-    data:
-      strings: []
-  ports:
-    ui:
-      port: 80
-      protocol: http
-      name: ui
-    api:
-      port: 8080
-      protocol: http
-      name: api
-  init:
-    mongodb:
-      image: "gcr.io/gke-test-253221/init.cms.admin"
-      version: "0.0.1"
+  secrets:
+    mongodbAdmin:
+      fullnameOverride: *mongodb-config-name
 
 tags:
   izettle-products: true
