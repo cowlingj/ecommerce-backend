@@ -54,7 +54,8 @@ spec:
           imagePullPolicy: {{ .Values.image.main.pullPolicy }}
           resources: {{- toYaml .Values.resources.main | nindent 12 }}
           ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 80
           {{- if and .Values.livenessProbe }}
           livenessProbe: {{ tpl .Values.livenessProbe . | nindent 12 }}
           {{- end }}
@@ -65,8 +66,6 @@ spec:
           startupProbe: {{ tpl .Values.startupProbe . | nindent 12 }}
           {{- end }}
           env:
-            - name: HOST
-              value: "0.0.0.0"
             - name: BASE_PATH
               value: {{ .Values.basePath | quote }}
             - name: COOKIE_SECRET
@@ -90,8 +89,6 @@ spec:
               value: {{ .Values.env | quote }}
             - name: PORT
               value: "80"
-            - name: IP
-              value: "0.0.0.0"
             - name: FLAG_EVENTS
               value: {{ quote .Values.features.events }}
             - name: FLAG_PRODUCTS
