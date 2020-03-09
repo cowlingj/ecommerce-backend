@@ -44,7 +44,7 @@ const authStrategy = keystone.createAuthStrategy({
 
 export { keystone }
 
-const basePath = `/${process.env.BASE_PATH ?? ""}`
+const basePath = process.env.BASE_PATH ?? ""
 const apiPath = path.join(basePath, "/graphql")
 const graphiqlPath = path.join(basePath, "/playground")
 const adminPath = path.join(basePath, "/admin")
