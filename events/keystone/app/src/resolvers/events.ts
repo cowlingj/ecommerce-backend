@@ -1,9 +1,8 @@
 import {
   Operation,
-  WrapQuery,
   MergeInfo
 } from "apollo-server";
-import { GraphQLSchema, Kind, SelectionSetNode, GraphQLResolveInfo } from "graphql";
+import { GraphQLSchema, GraphQLResolveInfo } from "graphql";
 
 export function resolver (schema: GraphQLSchema):
   (
@@ -15,14 +14,29 @@ export function resolver (schema: GraphQLSchema):
 {
   return async (
     _parent: any,
-    args: any,
+    args: { count?: number, order?: { field: string, reverse?: boolean } },
     context: any,
     info: GraphQLResolveInfo & { mergeInfo: MergeInfo }
   ): Promise<any> => {
+
+    const { count, order, ...rest } = args
+    const delegatedArgs = { ...rest }
+
+    if (count) {
+      Object.assign(delegatedArgs, {first: count})
+    }
+
+    const orderBy = order
+      ? `${order?.field}_${order?.reverse ? 'ASC' : 'DESC'}`
+      : null
+    if (orderBy) {
+      Object.assign(delegatedArgs, {orderBy})
+    }
+
     return await info.mergeInfo.delegateToSchema({
       schema,
       context,
-      args,
+      args: delegatedArgs,
       fieldName: "allEvents",
       info,
       operation:

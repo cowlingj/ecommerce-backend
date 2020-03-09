@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/cowlingj/ecommerce-backend#readme",
   "dependencies": {
-    "@cowlingj/events-api": "https://github.com/cowlingj/ecommerce-backend/raw/master/packages/node/cowlingj-events-api-0.0.9.tgz",
+    "@cowlingj/events-api": "https://github.com/cowlingj/ecommerce-backend/raw/master/packages/node/cowlingj-events-api-0.1.0.tgz",
     "apollo-link": "^1.2.13",
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
