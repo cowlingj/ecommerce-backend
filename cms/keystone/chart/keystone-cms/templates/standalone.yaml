@@ -177,7 +177,7 @@ metadata:
 {{ include "keystone-cms.labels" . | indent 4 }}
 type: Opaque
 data:
-  strings: {{ .Values.secrets.users.data | toJson | b64enc }}
+  users: {{ .Values.secrets.users.data | toJson | b64enc }}
 {{- end }}
 ---
 {{- if and (.Values.secrets.strings) (not .Values.secrets.strings.exists) }}
