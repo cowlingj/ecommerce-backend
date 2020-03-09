@@ -49,6 +49,12 @@ const apiPath = path.join(basePath, "/graphql")
 const graphiqlPath = path.join(basePath, "/playground")
 const adminPath = path.join(basePath, "/admin")
 
+console.log(`paths:
+base: ${basePath}
+api: ${apiPath}
+graphql: ${graphiqlPath}
+admin: ${adminPath}`)
+
 export const apps = [
     new GraphQLApp({
       apiPath,
