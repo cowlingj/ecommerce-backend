@@ -6,8 +6,7 @@
   "author": "Jonathan Cowling",
   "scripts": {
     "dev": "scripts/dev.sh",
-    "build": "scripts/build.sh",
-    "start": "scripts/start.sh",
+    "start": "scripts/build.sh && scripts/start.sh",
     "tsc": "scripts/tsc.sh",
     "clean": "scripts/clean.sh"
   },
@@ -19,7 +18,11 @@
     "@keystonejs/fields": "^5.0.0",
     "@keystonejs/keystone": "^5.4.3",
     "@keystonejs/logger": "^5.0.0",
-    "dotenv": "^8.2.0"
+    "@types/connect-mongo": "^3.1.3",
+    "@types/express-session": "^1.17.0",
+    "connect-mongo": "^3.2.0",
+    "dotenv": "^8.2.0",
+    "express-session": "^1.17.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
