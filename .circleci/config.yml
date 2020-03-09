@@ -32,6 +32,10 @@ workflows:
           filters:
             branches:
               only: master
+      - build-resources-api:
+          filters:
+            branches:
+              only: master
       - build-izettle-products:
           filters:
             branches:
@@ -77,6 +81,7 @@ workflows:
           requires:
             - build-products-api
             - build-events-api
+            - build-resources-api
 
   update_helm_charts:
     jobs:
@@ -251,6 +256,13 @@ jobs:
     steps:
       - npm_package:
           path: "~/project/events/api"
+  build-resources-api:
+    executor:
+      name: node/default
+      tag: '12.14.1'
+    steps:
+      - npm_package:
+          path: "~/project/resources/api"
   package-helpers:
     executor: helm
     steps:
