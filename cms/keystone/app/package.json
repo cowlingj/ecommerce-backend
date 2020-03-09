@@ -12,12 +12,12 @@
     "clean": "scripts/clean.sh"
   },
   "dependencies": {
-    "@keystonejs/adapter-mongoose": "^5.0.0",
-    "@keystonejs/app-admin-ui": "^5.0.0",
-    "@keystonejs/app-graphql": "^5.0.0",
-    "@keystonejs/auth-password": "^5.0.0",
+    "@keystonejs/adapter-mongoose": "^5.1.5",
+    "@keystonejs/app-admin-ui": "^5.7.1",
+    "@keystonejs/app-graphql": "^5.0.3",
+    "@keystonejs/auth-password": "^5.0.2",
     "@keystonejs/fields": "^5.0.0",
-    "@keystonejs/keystone": "^5.0.0",
+    "@keystonejs/keystone": "^5.4.3",
     "@keystonejs/logger": "^5.0.0",
     "dotenv": "^8.2.0"
   },
