@@ -32,7 +32,7 @@ affinity: {}
 
 secrets:
   users:
-    nameOverride: "usersSecret"
+    nameOverride: "users-secret"
     fullnameOverride: ""
     exists: false
     data:
@@ -41,19 +41,19 @@ secrets:
           password: password
           isAdmin: true
   strings:
-    nameOverride: "stringsSecret"
+    nameOverride: "strings-secret"
     fullnameOverride: ""
     exists: false
     data:
       strings: []
   mongodbCms:
-    nameOverride: "mongodbCmsSecret"
+    nameOverride: "mongodb-cms-secret"
     fullnameOverride: ""
     exists: false
     data:
       password: null
   mongodbAdmin: # This secret must be pre-configured
-    nameOverride: "mongodbAdminSecret"
+    nameOverride: "mongodb-admin-secret"
     fullnameOverride: ""
 
 env: production
