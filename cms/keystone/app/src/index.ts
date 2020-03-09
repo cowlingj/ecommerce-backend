@@ -69,9 +69,9 @@ export const apps = [
         Boolean(user && user.isAdmin),
       authStrategy
     }),
-    new RedirectApp({
-      routes: [
-        { path: basePath, redirect: adminPath },
-      ]
-    })
+    // new RedirectApp({
+    //   routes: [
+    //     { path: basePath, redirect: adminPath },
+    //   ]
+    // })
   ]
