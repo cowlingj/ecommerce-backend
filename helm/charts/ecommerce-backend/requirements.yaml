@@ -51,7 +51,8 @@ dependencies:
     repository: file://../../../products/keystone/chart/keystone-products
     version: 0.0.1
     tags:
-      - nginx-ingress
+      - keystone-products
+      - keystone
   - name: istio-ingress
     repository: file://../../../helm/charts/istio-ingress/
     version: 0.0.1

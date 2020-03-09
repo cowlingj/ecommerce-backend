@@ -67,7 +67,7 @@ keystone-cms:
       fullnameOverride: *mongodb-config-name
 
 tags:
-  izettle-products: true
+  izettle-products: false
   json-products: false
   simple-example: false
   istio-ingress: false
