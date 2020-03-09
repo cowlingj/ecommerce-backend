@@ -65,6 +65,8 @@ spec:
           startupProbe: {{ tpl .Values.startupProbe . | nindent 12 }}
           {{- end }}
           env:
+            - name: HOST
+              value: "0.0.0.0"
             - name: BASE_PATH
               value: {{ .Values.basePath | quote }}
             - name: COOKIE_SECRET
