@@ -104,9 +104,9 @@ spec:
               value: /etc/secrets/strings/strings.json
             {{- end }}
           volumeMounts:
-            {{- if not .Values.secrets -}}
-            []
-            {{- end }}
+            - name: dist-data-volume
+              mountPath: /usr/lib/app/dist
+              readOnly: false
             {{ if .Values.secrets.users -}}
             - name: user-data-volume
               mountPath: /etc/secrets/users/
@@ -118,9 +118,9 @@ spec:
               readOnly: true
             {{- end }}
       volumes:
-        {{- if not .Values.secrets -}}
-        []
-        {{- end }}
+        - name: dist-data-volume
+          emptyDir:
+            sizeLimit: "8Mi"
         {{ if .Values.secrets.users -}}
         - name: user-data-volume
           secret:
