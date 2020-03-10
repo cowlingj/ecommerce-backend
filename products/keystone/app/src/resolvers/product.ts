@@ -31,9 +31,7 @@ export function resolver (schema: GraphQLSchema):
       },
       fieldName: "Product",
       info,
-      operation:
-        (info.operation.name?.value as Operation | undefined) ??
-        "query",
+      operation: info.operation.operation,
       transforms: [
         new WrapQuery(
           ['Product'],

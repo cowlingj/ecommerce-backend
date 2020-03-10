@@ -39,10 +39,8 @@ export function resolver (schema: GraphQLSchema):
       args: delegatedArgs,
       fieldName: "allEvents",
       info,
-      operation:
-        (info.operation.name?.value as Operation | undefined) ??
-        "query"
-    });
+      operation: info.operation.operation,
+    })
   }
 }
 

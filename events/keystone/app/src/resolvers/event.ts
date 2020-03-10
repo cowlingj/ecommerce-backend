@@ -27,9 +27,7 @@ export function resolver (schema: GraphQLSchema):
       },
       fieldName: "Event",
       info,
-      operation:
-        (info.operation.name?.value as Operation | undefined) ??
-        "query",
+      operation: info.operation.operation,
     });
   }
 }
