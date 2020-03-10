@@ -47,6 +47,8 @@ dependencies:
   - name: nginx-ingress
     repository: file://../../../helm/charts/nginx-ingress/
     version: 0.0.1
+    tags:
+      - nginx-ingress
   - name: keystone-products
     repository: file://../../../products/keystone/chart/keystone-products
     version: 0.0.1

@@ -9,9 +9,9 @@ paths:
       port: 80
   - path: /store
     service:
-      name: cms
+      name: store
       port: 80
   - path: /products
     service:
-      name: cms
+      name: products
       port: 80
