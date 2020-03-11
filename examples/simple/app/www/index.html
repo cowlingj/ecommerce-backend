@@ -33,9 +33,20 @@
       </template>
     </section>
     <section>
+      <h1>String Resources</h1>
+      <ul id="strings-list"></ul>
+      <template id="string-template">
+        <li>
+          <p>
+            <span class="key">UNKNOWN_KEY</span>: <span class="value">UNKNOWN_VALUE</span>
+          </p>
+        </li>
+      </template>
+    </section>
+    <section>
       <h1>About</h1>
-      <pre id="about"></pre>
-      <pre id="privacy-policy"></pre>
+      <p>This page is an example of what kinds of data the api can provide out of the box.</p>
+      <p>The actual values may need to be added else the lists will be empty.</p>
     </section>
   </article>
   <template id="error-template">
@@ -145,7 +156,7 @@
             throw new Error("request failed")
           }
         } catch (e) {
-          replaceNode('#events-list', requestFailed.bind(this)(event, productsEndpoint))
+          replaceNode('#products-list', requestFailed.bind(this)(event, productsEndpoint))
           return
         }
 
@@ -175,9 +186,59 @@
       }))
     }
 
+    function hydrateStrings(){
+
+      const resourcesEndpoint = env.RESOURCES_URI
+
+      const req = new XMLHttpRequest()
+      req.overrideMimeType("application/json")
+
+      req.onerror = function(event) {
+        replaceNode('#strings-list', requestFailed.bind(this)(event, resourcesEndpoint))
+      }
+
+      req.ontimeout = function(event) {
+        replaceNode('#strings-list', requestFailed.bind(this)(event, resourcesEndpoint))
+      }
+
+      req.onload = function(event) {
+        let result
+        try {
+          result = JSON.parse(this.responseText)
+          if (this.status >= 300 || result.errors) {
+            throw new Error("request failed")
+          }
+        } catch (e) {
+          replaceNode('#strings-list', requestFailed.bind(this)(event, resourcesEndpoint))
+          return
+        }
+
+        const list = document.querySelector('#strings-list')
+        for (const stringValue of result.data.allStringValues) {
+          const node = document
+            .querySelector('#string-template')
+            .content
+            .cloneNode(true)
+        
+          node.querySelector('.key').innerHTML = stringValue.key
+          node.querySelector('.value').innerHTML = stringValue.value
+
+          list.appendChild(node)
+        }
+      }
+
+      req.open('POST', resourcesEndpoint)
+      req.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
+      req.send(JSON.stringify({
+        query: "query { allStringValues { key value } }",
+        variables: {}
+      }))
+    }
+
     function start() {
       hydrateProducts()
       hydrateEvents()
+      hydrateStrings()
     }
 
     if (document.readyState === 'loading') {
