@@ -20,9 +20,17 @@
   </article>
   <script type="text/javascript">
 
-    // env will be templated by apache
     const env = {
-      ENDPOINTS: JSON.parse('<!--#echo var="ENDPOINTS_INFO" -->').endpoints,
+      ENDPOINTS: []
+    }
+
+    {
+      // endpoints info as templated by apache needs unescaping
+      let div = document.createElement('div')
+      div.innerHTML = '<!--#echo var="ENDPOINTS_INFO" -->'
+      env.ENDPOINTS = div.childNodes.length === 0
+        ? []
+        : JSON.parse(div.childNodes[0].nodeValue).endpoints;
     }
 
     function start() {
