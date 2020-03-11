@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Available Endpoints</title>
+</head>
+<body>
+  <article>
+    <h1>Available Endpoints</h1>
+    <ul id="endpoints-list"></ul>
+    <template id="endpoint-template">
+      <li>
+        <p style="font-weight: bold;">
+          <span class="name">UNKNOWN_NAME</span> | <a class="uri" href="">UNKNOWN_URL</a>
+       </p>
+        <p class="description">UNKNOWN_DESCRIPTION</p>
+      </li>
+    </template>
+  </article>
+  <script type="text/javascript">
+
+    // env will be templated by apache
+    const env = {
+      ENDPOINTS: JSON.parse('<!--#echo var="ENDPOINTS_INFO" -->').endpoints,
+    }
+
+    function start() {
+      const list = document.querySelector('#endpoints-list')
+
+      for (endpoint of env.ENDPOINTS) {
+        const node = document
+          .querySelector('#endpoint-template')
+          .content
+          .cloneNode(true)
+          
+        node.querySelector('.name').innerHTML = endpoint.name
+        const a = node.querySelector('.uri')
+        a.innerHTML = endpoint.uri
+        a.setAttribute("href", endpoint.uri)
+        node.querySelector('.description').innerHTML = endpoint.description
+
+        list.appendChild(node)
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start);
+    } else { 
+      start();
+    }
+  </script>
+</body>
+</html>

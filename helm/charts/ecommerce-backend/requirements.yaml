@@ -65,4 +65,9 @@ dependencies:
     version: 0.0.1
     tags:
       - simple-example
+  - name: endpoints-example
+    repository: file://../../../examples/endpoints/chart/endpoints-example
+    version: 0.0.1
+    tags:
+      - endpoints-example
 

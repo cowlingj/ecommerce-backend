@@ -62,6 +62,10 @@ workflows:
           filters:
             branches:
               only: master
+      - build-endpoints-example:
+          filters:
+            branches:
+              only: master
       - build-prismic-events:
           filters:
             branches:
@@ -135,12 +139,17 @@ workflows:
           filters:
             branches:
               only: master
+      - package-endpoints-example:
+          filters:
+            branches:
+              only: master
       - package-backend:
           filters:
             branches:
               only: master
           requires:
             - package-simple-example
+            - package-endpoints-example
             - package-nginx-ingress
             - package-istio-ingress
             - package-cms
@@ -157,6 +166,7 @@ workflows:
               only: master
           requires:
             - package-simple-example
+            - package-endpoints-example
             - package-nginx-ingress
             - package-istio-ingress
             - package-cms
@@ -230,6 +240,12 @@ jobs:
       - docker_package:
           image: "simple.example"
           path: "examples/simple/app"
+  build-endpoints-example:
+    executor: gcloud
+    steps:
+      - docker_package:
+          image: "endpoints.example"
+          path: "examples/endpoints/app"
   build-prismic-events:
     executor: gcloud
     steps:
@@ -318,6 +334,11 @@ jobs:
     steps:
       - helm_package:
           path: examples/simple/chart/simple-example/
+  package-endpoints-example:
+    executor: helm
+    steps:
+      - helm_package:
+          path: examples/endpoints/chart/endpoints-example/
   package-backend:
     executor: helm
     steps:

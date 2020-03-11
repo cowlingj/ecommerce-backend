@@ -69,6 +69,7 @@ keystone-cms:
 tags:
   izettle-products: false
   json-products: false
+  endpoints-example: false
   simple-example: false
   istio-ingress: false
   nginx-ingress: true
