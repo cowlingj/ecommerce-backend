@@ -21,16 +21,7 @@
   <script type="text/javascript">
 
     const env = {
-      ENDPOINTS: []
-    }
-
-    {
-      // endpoints info as templated by apache needs unescaping
-      let div = document.createElement('div')
-      div.innerHTML = '<!--#echo var="ENDPOINTS_INFO" -->'
-      env.ENDPOINTS = div.childNodes.length === 0
-        ? []
-        : JSON.parse(div.childNodes[0].nodeValue).endpoints;
+      ENDPOINTS: JSON.parse('!!ENDPOINTS_INFO').endpoints
     }
 
     function start() {

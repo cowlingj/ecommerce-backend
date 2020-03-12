@@ -1,17 +1,16 @@
-FROM httpd:2.4.41-alpine
+FROM nginx:mainline
 
-RUN addgroup --system httpd &&\
-    adduser --system httpd --ingroup httpd
+COPY /nginx.conf /etc/nginx/nginx.conf.template
+COPY /www/ /home/www
 
-COPY /conf /usr/local/apache2/conf/
-COPY /www/ /home/httpd/www
+ENV PORT="80" \
+    STATUS_PORT="8080" \
+    BASE_PATH="/" \
+    ENDPOINTS_INFO="{ \"endpoints\": [] }"
 
-ENV HOST="0.0.0.0"
-ENV PORT="80"
-ENV STATUS_PORT="8080"
-ENV BASE_PATH="/"
-ENV ADMIN_EMAIL="admin@localhost"
-ENV ENDPOINTS_INFO="{ \"endpoints\": [] }"
+CMD [ "/bin/bash", \
+      "-c", \
+      "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'" \
+    ]
 
-
-LABEL version="0.0.1"
+LABEL version="0.0.2"

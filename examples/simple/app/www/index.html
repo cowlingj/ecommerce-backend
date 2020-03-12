@@ -57,11 +57,11 @@
 
   <script type="text/javascript">
 
-    // env will be templated by apache
+    // env will be templated by nginx
     const env = {
-      PRODUCTS_URI: '<!--#echo var="PRODUCTS_URI" -->',
-      RESOURCES_URI: '<!--#echo var="RESOURCES_URI" -->',
-      EVENTS_URI: '<!--#echo var="EVENTS_URI" -->'
+      PRODUCTS_URI: '!!PRODUCTS_URI',
+      RESOURCES_URI: '!!RESOURCES_URI',
+      EVENTS_URI: '!!EVENTS_URI'
     }
 
     function replaceNode(querySelector, newNode) {

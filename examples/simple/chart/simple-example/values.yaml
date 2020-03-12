@@ -47,5 +47,3 @@ network:
   events: events.localhost
   resources: resources.localhost
 
-admin:
-  email: admin@localhost

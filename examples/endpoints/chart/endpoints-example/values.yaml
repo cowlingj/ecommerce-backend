@@ -43,6 +43,3 @@ affinity: {}
 basePath: /
 
 endpoints: { "endpoints": [] }
-
-admin:
-  email: admin@localhost
