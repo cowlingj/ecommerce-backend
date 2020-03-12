@@ -8,7 +8,7 @@ ENV PORT="80" \
     BASE_PATH="/" \
     EVENTS_URI="events.localhost" \
     PRODUCTS_URI="products.localhost" \
-    RESOURCES_URI="resources.localhost" \
+    RESOURCES_URI="resources.localhost"
 
 CMD [ "/bin/bash", \
       "-c", \
