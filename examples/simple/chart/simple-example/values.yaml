@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: gcr.io/gke-test-253221/simple.example
-  tag: 0.0.1
+  tag: 0.0.2
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
