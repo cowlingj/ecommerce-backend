@@ -83,7 +83,7 @@ keystone-products:
     fullnameOverride: keystone-products
 
 istio-ingress:
-  exabled: false
+  enabled: false
 
 nginx-ingress:
   enabled: false
