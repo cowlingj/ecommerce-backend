@@ -1,5 +1,5 @@
 all: &all
-  env: production
+  env: development
   enabled: true
   peerDependenciesHandled: true
 
@@ -39,6 +39,7 @@ auth:
     version: 0.0.1
 
 keystone-cms:
+  env: development
   basePath: "/cms"
   service:
     fullnameOverride: keystone-cms
@@ -62,21 +63,26 @@ keystone-cms:
       database: admin
 
 prismic-events:
+  env: development
   enabled: false
 
 keystone-events:
+  env: development
   keystone:
     uri: http://keystone-cms/cms/graphql
   service:
     fullnameOverride: keystone-events
 
 izettle-products:
+  env: development
   enabled: false
 
 json-products:
+  env: development
   enabled: false
 
 keystone-products:
+  env: development
   keystone:
     uri: http://keystone-cms/cms/graphql
   service:
@@ -102,12 +108,26 @@ nginx-ingress:
       service:
         name: keystone-events
         port: 80
+    - path: /simple
+      service:
+        name: simple-example
+        port: 80
+    - path: /
+      service:
+        name: endpoints-example
+        port: 80
 
 simple-example:
-  enabled: false
+  service:
+    fullnameOverride: simple-example
+  basePath: "/simple"
 
 endpoints-example:
-  enabled: false
+  service:
+    fullnameOverride: endpoints-example
+  basePath: "/"
+  endpoints:
+    endpoints: []
 
 tags:
   keystone: true
