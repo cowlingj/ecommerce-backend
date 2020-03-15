@@ -90,7 +90,7 @@ tags:
   keystone-events: null
   prismic-events: false
   keystone-products: null
-  izettle-products: null
+  izettle-products: false
   simple-example: false
   endpoints-example: false
   examples: false
