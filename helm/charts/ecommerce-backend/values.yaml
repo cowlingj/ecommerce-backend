@@ -61,6 +61,7 @@ keystone-products:
     fullnameOverride: keystone-products
 
 nginx-ingress:
+  enabled: true
   domainName: null
   useHttps: false
   paths:
