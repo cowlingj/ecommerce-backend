@@ -1,15 +1,3 @@
-all: &all
-  env: production
-  enabled: true
-  peerDependenciesHandled: true
-
-elasticsearch:
-  enabled: false
-  peerDependenciesHandled: true
-
-postgres:
-  enabled: false
-
 mongodb-config:
   name: &mongodb-config-name mongodb-config
 
@@ -27,7 +15,6 @@ mongodb:
     group: data
 
 auth:
-  enabled: false
   peerDependenciesHandled: true
   fusionauth:
     app:
@@ -61,20 +48,11 @@ keystone-cms:
       username: root
       database: admin
 
-prismic-events:
-  enabled: false
-
 keystone-events:
   keystone:
     uri: http://keystone-cms/cms/graphql
   service:
     fullnameOverride: keystone-events
-
-izettle-products:
-  enabled: false
-
-json-products:
-  enabled: false
 
 keystone-products:
   keystone:
@@ -82,11 +60,7 @@ keystone-products:
   service:
     fullnameOverride: keystone-products
 
-istio-ingress:
-  enabled: false
-
 nginx-ingress:
-  enabled: false
   domainName: null
   useHttps: false
   paths:
@@ -103,11 +77,22 @@ nginx-ingress:
         name: keystone-events
         port: 80
 
-simple-example:
-  enabled: false
-
-endpoints-example:
-  enabled: false
-
 tags:
+  auth: false
+  postgres: false
+  elasticsearch: false
+  mongodb: true
   keystone: true
+  prismic: false
+  json: false
+  keystone-cms: null
+  keystone-events: null
+  prismic-events: false
+  keystone-products: null
+  izettle-products: null
+  simple-example: false
+  endpoints-example: false
+  examples: false
+  nginx-ingress: false
+  istio-ingress: false
+
