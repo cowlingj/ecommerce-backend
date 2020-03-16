@@ -24,7 +24,7 @@ export function resolver (schema: GraphQLSchema, queryName: string):
     return await info.mergeInfo.delegateToSchema({
       schema,
       context,
-      args,
+      args: {},
       fieldName: queryName,
       info,
       operation: info.operation.operation,
