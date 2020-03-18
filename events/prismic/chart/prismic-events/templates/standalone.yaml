@@ -27,6 +27,8 @@ spec:
           env:
             - name: PORT
               value: "80"
+            - name: NODE_ENV
+              value: {{ .Vaalues.env | quote }}
             - name: HOST
               value: "0.0.0.0"
             - name: PRISMIC_REFS_URI

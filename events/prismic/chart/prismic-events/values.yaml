@@ -9,6 +9,7 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+env: production
 prismic:
   accessToken: null
   uri:
