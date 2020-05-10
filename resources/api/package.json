@@ -30,6 +30,6 @@
     "/dist/**/*"
   ],
   "dependencies": {
-    "graphql-tools": "^4.0.7"
+    "graphql-tools": "^4.0.8"
   }
 }
