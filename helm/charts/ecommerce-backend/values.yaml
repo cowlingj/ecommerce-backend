@@ -14,17 +14,6 @@ mongodb:
   podLabels:
     group: data
 
-auth:
-  peerDependenciesHandled: true
-  fusionauth:
-    app:
-      version: latest
-    search:
-      servers: http://elasticsearch-0.elasticsearch.svc.cluster.local:9200
-  init:
-    image: gcr.io/gke-test-253221/init.auth.admin
-    version: 0.0.1
-
 keystone-cms:
   basePath: "/cms"
   service:

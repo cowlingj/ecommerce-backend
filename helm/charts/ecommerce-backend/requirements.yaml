@@ -1,14 +1,4 @@
 dependencies:
-  - name: elasticsearch
-    repository: file://../../../elasticsearch/charts/elasticsearch/
-    version: 0.0.1
-    tags:
-      - elasticsearch
-  - name: auth
-    repository: file://../../../auth/charts/auth/
-    version: 0.0.1
-    tags:
-      - auth
   - name: keystone-cms
     repository: file://../../../cms/keystone/chart/keystone-cms/
     version: 0.2.0
@@ -54,7 +44,6 @@ dependencies:
     repository: file://../../../products/charts/json-products
     version: 0.0.1
     tags:
-      - json
       - json-products
   - name: nginx-ingress
     repository: file://../../../helm/charts/nginx-ingress/
@@ -67,11 +56,6 @@ dependencies:
     tags:
       - keystone
       - keystone-products
-  - name: istio-ingress
-    repository: file://../../../helm/charts/istio-ingress/
-    version: 0.0.1
-    tags:
-      - istio-ingress
   - name: simple-example
     repository: file://../../../examples/simple/chart/simple-example
     version: 0.0.1
