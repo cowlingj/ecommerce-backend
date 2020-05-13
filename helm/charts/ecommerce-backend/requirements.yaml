@@ -15,11 +15,6 @@ dependencies:
     version: 0.0.1
     tags:
       - mongodb
-  - name: postgres
-    repository: file://../../../postgres/charts/postgres/
-    version: 0.0.1
-    tags:
-      - postgres
   - name: helpers
     repository: file://../../../helm/charts/helpers/
     version: 0.0.1
