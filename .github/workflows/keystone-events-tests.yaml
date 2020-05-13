@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - master
+    paths: events/keystone/app
 
 defaults:
   run:
