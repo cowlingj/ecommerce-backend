@@ -17,10 +17,9 @@ on:
       - 'examples/simple/chart/simple-example/**'
       - 'examples/endpoints/chart/endpoints-example/**'
 
-defaults:
-  if: "!contains(github.event.head_commit.message, '[ci skip]')"
 jobs:
   prepare-repo-delta:
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
     runs-on: ubuntu-latest
     steps:  
       - run: mkdir --parents /tmp/helm/repo
