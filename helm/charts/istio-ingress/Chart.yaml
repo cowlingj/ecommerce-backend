@@ -1,3 +1,0 @@
-apiVersion: v1
-name: istio-ingress
-version: 0.0.1
