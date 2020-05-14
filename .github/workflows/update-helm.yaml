@@ -211,7 +211,7 @@ jobs:
           path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo .
-        working-directory: examples/simple/chart/endpoints-example/
+        working-directory: examples/endpoints/chart/endpoints-example/
       - uses: actions/upload-artifact@v2
         with:
           name: repo
