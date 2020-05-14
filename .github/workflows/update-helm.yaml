@@ -1,0 +1,282 @@
+name: Update Helm
+on:
+  pull_request:
+    branches:
+      - master
+    paths: 
+      - helm/charts/ecommerce-backend/
+      - events/prismic/chart/prismic-events/
+      - helm/charts/nginx-ingress/
+      - mongodb/charts/mongodb-config/
+      - products/keystone/chart/keystone-products/
+      - events/keystone/chart/keystone-events/
+      - cms/keystone/chart/keystone-cms/
+      - products/charts/json-products/
+      - products/charts/izettle-products/
+      - helm/charts/helpers/
+      - examples/simple/chart/simple-example/
+      - examples/endpoints/chart/endpoints-example/
+
+jobs:
+  update-helpers:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: helm/charts/helpers/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-mongodb-config:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: mongodb/charts/mongodb-config/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-nginx-ingress:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: helm/charts/nginx-ingress/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-keystone-cms:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: cms/keystone/chart/keystone-cms/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-prismic-events:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: events/prismic/chart/prismic-events/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-keystone-events:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: events/keystone/chart/keystone-events/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-izettle-products:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: products/charts/izettle-products/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-json-products:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: products/charts/json-products/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-keystone-products:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: products/keystone/chart/keystone-products/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-simple-example:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: examples/simple/chart/simple-example/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-endpoints-example:
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: examples/simple/chart/endpoints-example/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+  update-ecommerce-backend:
+    needs:
+      - update-helpers
+      - update-mongodb-config
+      - update-nginx-ingress
+      - update-keystone-cms
+      - update-prismic-events
+      - update-keystone-events
+      - update-izettle-products
+      - update-json-products
+      - update-keystone-products
+      - update-simple-example
+      - update-endpoints-example
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - name: helm package
+        run: helm package --dependency-update --destination /tmp/helm/repo
+        working-directory: helm/charts/ecommerce-backend/
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+
+  index:
+    needs:
+      - update-helpers
+      - update-mongodb-config
+      - update-nginx-ingress
+      - update-keystone-cms
+      - update-prismic-events
+      - update-keystone-events
+      - update-izettle-products
+      - update-json-products
+      - update-keystone-products
+      - update-simple-example
+      - update-endpoints-example
+      - update-ecommerce-backend
+    steps:
+      - uses: actions/checkout@v2
+      - uses: azure/setup-helm@v1
+      - run: mkdir /tmp/helm/repo
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - run: |-
+          helm repo index --merge ${HOME}/helm/repo/index.yaml --url https://raw.githubusercontent.com/${{github.repository}}/master/helm/repo/ .
+        working-directory: /tmp/helm/repo
+      - uses: actions/upload-artifact@v1
+        with:
+          name: repo
+          path: /tmp/helm/repo
+
+  push:
+    needs:
+      - update-helpers
+      - update-mongodb-config
+      - update-nginx-ingress
+      - update-keystone-cms
+      - update-prismic-events
+      - update-keystone-events
+      - update-izettle-products
+      - update-json-products
+      - update-keystone-products
+      - update-simple-example
+      - update-endpoints-example
+      - update-ecommerce-backend
+      - index
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v1
+        with:
+          name: repo
+      - uses: oleksiyrudenko/gha-git-credentials@v1
+        with:
+          name: 'Bot'
+          email: '09cowlingj+bot@gmail.com'
+          actor: 'cowlingj-bot'
+          token: '${{ secrets.GH_BOT_TOKEN }}'
+      - name: commit new repo
+        working-directory: helm/repo/
+        run: |-
+          cp /tmp/helm/repo/* .
+          git add .
+          git commit -m "[ci] Update helm repo"
+      - uses: nick-invision/retry@v1
+        shell: bash
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          command: |-
+            git rebase origin/master
+            git push
