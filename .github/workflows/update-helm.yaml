@@ -30,7 +30,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: helm/charts/helpers/
       - uses: actions/upload-artifact@v2
         with:
@@ -48,7 +48,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: mongodb/charts/mongodb-config/
       - uses: actions/upload-artifact@v2
         with:
@@ -66,7 +66,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: helm/charts/nginx-ingress/
       - uses: actions/upload-artifact@v2
         with:
@@ -84,7 +84,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: cms/keystone/chart/keystone-cms/
       - uses: actions/upload-artifact@v2
         with:
@@ -102,7 +102,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: events/prismic/chart/prismic-events/
       - uses: actions/upload-artifact@v2
         with:
@@ -120,7 +120,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: events/keystone/chart/keystone-events/
       - uses: actions/upload-artifact@v2
         with:
@@ -138,7 +138,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: products/charts/izettle-products/
       - uses: actions/upload-artifact@v2
         with:
@@ -156,7 +156,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: products/charts/json-products/
       - uses: actions/upload-artifact@v2
         with:
@@ -174,7 +174,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: products/keystone/chart/keystone-products/
       - uses: actions/upload-artifact@v2
         with:
@@ -192,7 +192,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: examples/simple/chart/simple-example/
       - uses: actions/upload-artifact@v2
         with:
@@ -210,7 +210,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: examples/simple/chart/endpoints-example/
       - uses: actions/upload-artifact@v2
         with:
@@ -239,7 +239,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
       - name: helm package
-        run: helm package --dependency-update --destination /tmp/helm/repo
+        run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: helm/charts/ecommerce-backend/
       - uses: actions/upload-artifact@v2
         with:
