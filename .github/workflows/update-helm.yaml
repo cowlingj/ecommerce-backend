@@ -112,6 +112,4 @@ jobs:
           timeout_minutes: 5
           max_attempts: 3
           command: |-
-            git fetch
-            git rebase origin/master
-            git push
+            git rebase origin/master && git push origin/${{ github.head_ref }}
