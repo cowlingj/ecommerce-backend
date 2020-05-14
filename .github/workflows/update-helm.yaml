@@ -27,6 +27,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: helm/charts/helpers/
@@ -43,6 +44,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: mongodb/charts/mongodb-config/
@@ -59,6 +61,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: helm/charts/nginx-ingress/
@@ -75,6 +78,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: cms/keystone/chart/keystone-cms/
@@ -91,6 +95,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: events/prismic/chart/prismic-events/
@@ -107,6 +112,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: events/keystone/chart/keystone-events/
@@ -123,6 +129,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: products/charts/izettle-products/
@@ -139,6 +146,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: products/charts/json-products/
@@ -155,6 +163,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: products/keystone/chart/keystone-products/
@@ -171,6 +180,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: examples/simple/chart/simple-example/
@@ -187,6 +197,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: examples/simple/chart/endpoints-example/
@@ -215,6 +226,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - name: helm package
         run: helm package --dependency-update --destination /tmp/helm/repo
         working-directory: helm/charts/ecommerce-backend/
@@ -245,6 +257,7 @@ jobs:
       - uses: actions/download-artifact@v1
         with:
           name: repo
+          path: /tmp/helm/repo
       - run: |-
           helm repo index --merge ${HOME}/helm/repo/index.yaml --url https://raw.githubusercontent.com/${{github.repository}}/master/helm/repo/ .
         working-directory: /tmp/helm/repo
