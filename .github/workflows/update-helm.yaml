@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -55,7 +55,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -71,7 +71,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -87,7 +87,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -103,7 +103,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -119,7 +119,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -135,7 +135,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -151,7 +151,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -167,7 +167,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -183,7 +183,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -211,7 +211,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
@@ -241,7 +241,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir /tmp/helm/repo
+      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v1
         with:
           name: repo
