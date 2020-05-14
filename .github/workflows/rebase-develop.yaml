@@ -11,12 +11,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: develop
-      - uses: oleksiyrudenko/gha-git-credentials@v1
-        with:
-          name: 'Bot'
-          email: '09cowlingj+bot@gmail.com'
-          actor: 'cowlingj-bot'
-          token: '${{ secrets.GH_BOT_TOKEN }}'
+      - run: |-
+          git config user.email '09cowlingj+bot@gmail.com'
+          git config user.name 'Bot'
+          git config user.password ${{ secrets.GH_BOT_TOKEN }}
+          echo "::set-env name=GIT_USER::cowlingj-bot:${{ secrets.GH_BOT_TOKEN }}"
+          git remote add origin "https://${{ env.GIT_USER }}:${{ secrets.GH_BOT_TOKEN }}@github.com/${{ github.repository }}.git"
       - uses: nick-invision/retry@v1
         with:
           timeout_minutes: 5
