@@ -17,6 +17,8 @@ on:
       - 'examples/simple/chart/simple-example/**'
       - 'examples/endpoints/chart/endpoints-example/**'
 
+defaults:
+  if: "!contains(github.event.head_commit.message, '[ci skip]')"
 jobs:
   prepare-repo-delta:
     runs-on: ubuntu-latest
@@ -318,7 +320,7 @@ jobs:
         run: |-
           cp /tmp/helm/repo/* .
           git add .
-          git commit -m "[ci] Update helm repo"
+          git commit -m "#ci Update helm repo [ci skip]"
       - uses: nick-invision/retry@v1
         with:
           timeout_minutes: 5
