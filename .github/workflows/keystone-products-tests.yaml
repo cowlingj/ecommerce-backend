@@ -3,7 +3,7 @@ on:
   pull_request:
     branches:
       - master
-    paths: products/keystone/app
+    paths: 'products/keystone/app/**'
 
 defaults:
   run:
