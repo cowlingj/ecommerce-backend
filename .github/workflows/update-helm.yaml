@@ -113,5 +113,5 @@ jobs:
           max_attempts: 3
           command: |-
             git status
-            git remote list
+            git remote -v
             git rebase origin/master && git push origin/${{ github.head_ref }}
