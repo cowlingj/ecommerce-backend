@@ -1,0 +1,26 @@
+name: Rebase Develop
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  rebase:
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          branch: develop
+      - uses: oleksiyrudenko/gha-git-credentials@v1
+        with:
+          name: 'Bot'
+          email: '09cowlingj+bot@gmail.com'
+          actor: 'cowlingj-bot'
+          token: '${{ secrets.GH_BOT_TOKEN }}'
+      - uses: nick-invision/retry@v1
+        shell: bash
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          command: |-
+            git rebase origin/master
+            git push
