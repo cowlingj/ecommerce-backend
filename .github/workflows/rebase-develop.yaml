@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          branch: develop
+          ref: develop
       - uses: oleksiyrudenko/gha-git-credentials@v1
         with:
           name: 'Bot'
