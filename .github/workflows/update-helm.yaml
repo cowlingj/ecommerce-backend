@@ -287,7 +287,6 @@ jobs:
           git add .
           git commit -m "[ci] Update helm repo"
       - uses: nick-invision/retry@v1
-        shell: bash
         with:
           timeout_minutes: 5
           max_attempts: 3
