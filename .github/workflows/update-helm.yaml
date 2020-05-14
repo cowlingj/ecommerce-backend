@@ -19,6 +19,7 @@ on:
 
 jobs:
   update-helpers:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -34,6 +35,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-mongodb-config:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -49,6 +51,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-nginx-ingress:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -64,6 +67,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-keystone-cms:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -79,6 +83,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-prismic-events:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -94,6 +99,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-keystone-events:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -109,6 +115,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-izettle-products:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -124,6 +131,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-json-products:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -139,6 +147,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-keystone-products:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -154,6 +163,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-simple-example:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -169,6 +179,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-endpoints-example:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
@@ -184,6 +195,7 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-ecommerce-backend:
+    runs-on: ubuntu-latest
     needs:
       - update-helpers
       - update-mongodb-config
@@ -212,6 +224,7 @@ jobs:
           path: /tmp/helm/repo
 
   index:
+    runs-on: ubuntu-latest
     needs:
       - update-helpers
       - update-mongodb-config
@@ -241,6 +254,7 @@ jobs:
           path: /tmp/helm/repo
 
   push:
+    runs-on: ubuntu-latest
     needs:
       - update-helpers
       - update-mongodb-config
