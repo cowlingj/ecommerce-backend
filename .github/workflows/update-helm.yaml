@@ -18,227 +18,46 @@ on:
       - 'examples/endpoints/chart/endpoints-example/**'
 
 jobs:
-  update-helpers:
+  package-charts:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-helpers
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: helm/charts/helpers/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-mongodb-config:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-mongodb-config
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: mongodb/charts/mongodb-config/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-nginx-ingress:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-nginx-ingress
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: helm/charts/nginx-ingress/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-keystone-cms:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-keystone-cms
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: cms/keystone/chart/keystone-cms/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-prismic-events:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-prismic-events
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: events/prismic/chart/prismic-events/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-keystone-events:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-keystone-events
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: events/keystone/chart/keystone-events/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-izettle-products:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-izettle-products
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: products/charts/izettle-products/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-json-products:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-json-products
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: products/charts/json-products/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-keystone-products:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-keystone-products
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: products/keystone/chart/keystone-products/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-simple-example:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-simple-example
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: examples/simple/chart/simple-example/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-endpoints-example:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        continue-on-error: true
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-endpoints-example
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: examples/endpoints/chart/endpoints-example/
-      - uses: actions/upload-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-  update-ecommerce-backend:
-    runs-on: ubuntu-latest
-    needs:
-      - update-helpers
-      - update-mongodb-config
-      - update-nginx-ingress
-      - update-keystone-cms
-      - update-prismic-events
-      - update-keystone-events
-      - update-izettle-products
-      - update-json-products
-      - update-keystone-products
-      - update-simple-example
-      - update-endpoints-example
-    steps:
-      - uses: actions/checkout@v2
-      - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
-      - uses: actions/download-artifact@v2
-        with:
-          name: repo
-          path: /tmp/helm/repo
-      - name: helm package
+      - name: update-ecommerce-backend
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: helm/charts/ecommerce-backend/
       - uses: actions/upload-artifact@v2
@@ -249,22 +68,10 @@ jobs:
   index:
     runs-on: ubuntu-latest
     needs:
-      - update-helpers
-      - update-mongodb-config
-      - update-nginx-ingress
-      - update-keystone-cms
-      - update-prismic-events
-      - update-keystone-events
-      - update-izettle-products
-      - update-json-products
-      - update-keystone-products
-      - update-simple-example
-      - update-endpoints-example
-      - update-ecommerce-backend
+      - package-charts
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -280,24 +87,14 @@ jobs:
   push:
     runs-on: ubuntu-latest
     needs:
-      - update-helpers
-      - update-mongodb-config
-      - update-nginx-ingress
-      - update-keystone-cms
-      - update-prismic-events
-      - update-keystone-events
-      - update-izettle-products
-      - update-json-products
-      - update-keystone-products
-      - update-simple-example
-      - update-endpoints-example
-      - update-ecommerce-backend
+      - package-charts
       - index
     steps:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
           name: repo
+          path: /tmp/helm/repo
       - uses: oleksiyrudenko/gha-git-credentials@v1
         with:
           name: 'Bot'
