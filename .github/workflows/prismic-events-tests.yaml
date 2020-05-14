@@ -3,7 +3,7 @@ on:
   pull_request:
     branches:
       - master
-    paths: events/prismic/app
+    paths: 'events/prismic/app/**'
 
 defaults:
   run:

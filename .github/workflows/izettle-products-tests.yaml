@@ -3,7 +3,7 @@ on:
   pull_request:
     branches:
       - master
-    paths: products/izettle/
+    paths: 'products/izettle/**'
 
 
 defaults:
