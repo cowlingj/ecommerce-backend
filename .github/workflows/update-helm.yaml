@@ -4,18 +4,18 @@ on:
     branches:
       - master
     paths: 
-      - helm/charts/ecommerce-backend/
-      - events/prismic/chart/prismic-events/
-      - helm/charts/nginx-ingress/
-      - mongodb/charts/mongodb-config/
-      - products/keystone/chart/keystone-products/
-      - events/keystone/chart/keystone-events/
-      - cms/keystone/chart/keystone-cms/
-      - products/charts/json-products/
-      - products/charts/izettle-products/
-      - helm/charts/helpers/
-      - examples/simple/chart/simple-example/
-      - examples/endpoints/chart/endpoints-example/
+      - 'helm/charts/ecommerce-backend/**'
+      - 'events/prismic/chart/prismic-events/**'
+      - 'helm/charts/nginx-ingress/**'
+      - 'mongodb/charts/mongodb-config/**'
+      - 'products/keystone/chart/keystone-products/**'
+      - 'events/keystone/chart/keystone-events/**'
+      - 'cms/keystone/chart/keystone-cms/**'
+      - 'products/charts/json-products/**'
+      - 'products/charts/izettle-products/**'
+      - 'helm/charts/helpers/**'
+      - 'examples/simple/chart/simple-example/**'
+      - 'examples/endpoints/chart/endpoints-example/**'
 
 jobs:
   update-helpers:
