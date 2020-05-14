@@ -25,6 +25,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -42,6 +43,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -59,6 +61,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -76,6 +79,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -93,6 +97,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -110,6 +115,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -127,6 +133,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -144,6 +151,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -161,6 +169,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -178,6 +187,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
@@ -195,6 +205,7 @@ jobs:
       - uses: azure/setup-helm@v1
       - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
+        continue-on-error: true
         with:
           name: repo
           path: /tmp/helm/repo
