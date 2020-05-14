@@ -18,12 +18,22 @@ on:
       - 'examples/endpoints/chart/endpoints-example/**'
 
 jobs:
+  prepare-repo-delta:
+    runs-on: ubuntu-latest
+    steps:  
+      - run: mkdir --parents /tmp/helm/repo
+      - uses: actions/upload-artifact@v2
+        with:
+          name: repo
+          path: /tmp/helm/repo
+
   update-helpers:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -36,11 +46,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-mongodb-config:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -53,11 +64,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-nginx-ingress:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -70,11 +82,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-keystone-cms:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -87,11 +100,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-prismic-events:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -104,11 +118,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-keystone-events:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -121,11 +136,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-izettle-products:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -138,11 +154,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-json-products:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -155,11 +172,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-keystone-products:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -172,11 +190,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-simple-example:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -189,11 +208,12 @@ jobs:
           name: repo
           path: /tmp/helm/repo
   update-endpoints-example:
+    needs:
+      - prepare-repo-delta
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
@@ -208,6 +228,7 @@ jobs:
   update-ecommerce-backend:
     runs-on: ubuntu-latest
     needs:
+      - prepare-repo-delta
       - update-helpers
       - update-mongodb-config
       - update-nginx-ingress
@@ -222,7 +243,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
-      - run: mkdir --parents /tmp/helm/repo
       - uses: actions/download-artifact@v2
         with:
           name: repo
