@@ -25,8 +25,12 @@ jobs:
       - name: get version from label
         uses: docker://docker:19.03.8
         with:
-          entrypoint: sh
-          args: -c echo ::set-env "name=VERSION::`docker inspect "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" --format '{{ index .Config.Labels "version" }}'`"
+          entrypoint: echo
+          args: `docker inspect "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" --format '{{ index .Config.Labels "version" }}'` > /tmp/version.txt
+      - name: set version in environment
+        run: |-
+          echo ::set-env "name=VERSION::$(cat /tmp/version.txt)"
+          rm /tmp/version.txt
       - name: DEBUG
         uses: docker://docker:19.03.8
         with:
