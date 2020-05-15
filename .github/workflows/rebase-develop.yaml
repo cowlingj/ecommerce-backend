@@ -22,6 +22,6 @@ jobs:
           timeout_minutes: 5
           max_attempts: 3
           command: |-
-            git fetch
+            git fetch origin master
             git rebase origin/master
             git push
