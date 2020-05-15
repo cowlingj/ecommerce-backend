@@ -16,6 +16,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: docker build
         uses: docker://docker:19.03.8
         with:
