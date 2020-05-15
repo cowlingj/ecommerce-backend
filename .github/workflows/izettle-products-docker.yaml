@@ -26,18 +26,11 @@ jobs:
         uses: docker://docker:19.03.8
         with:
           entrypoint: echo
-          args: "`docker inspect \"${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest\" --format '{{ index .Config.Labels \"version\" }}'` > ${HOME}/version.txt"
-      - name: set version in environment
-        run: |-
-          echo $GITHUB_WORKSPACE
-          ls $GITHUB_WORKSPACE	
-          echo ::set-env "name=VERSION::$(cat /home/runner/work/_temp/_github_home/version.txt)"
-          rm /home/runner/work/_temp/_github_home/version.txt
+          args: "::set-env name=VERSION::`docker inspect \"${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest\" --format '{{ index .Config.Labels \"version\" }}'`"
       - name: DEBUG
-        uses: docker://docker:19.03.8
-        with:
-          entrypoint: echo
-          args: ${{ env.VERSION }}
+        run: |-
+          echo ${{ env.VERSION }}
+          exit 1
       - name: tag with version
         uses: docker://docker:19.03.8
         with:
