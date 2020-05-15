@@ -28,10 +28,6 @@ jobs:
           entrypoint: echo
           args: |-
             ::set-env name=VERSION::`docker inspect \"${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest\" --format '{{ index .Config.Labels \"version\" }}'`
-      - name: DEBUG
-        run: |-
-          echo ${{ env.VERSION }}
-          exit 1
       - name: tag with version
         uses: docker://docker:19.03.8
         with:
