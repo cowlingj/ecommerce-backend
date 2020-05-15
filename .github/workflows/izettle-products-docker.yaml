@@ -22,16 +22,16 @@ jobs:
         with:
           entrypoint: docker
           args: build --tag "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" --file "${{ env.DOCKERFILE }}" "${{ env.BUILD_CONTEXT }}"
-      - name: DEBUG
-        uses: docker://docker:19.03.8
-        with:
-          entrypoint: docker
-          args: image ls
       - name: get version from label
         uses: docker://docker:19.03.8
         with:
+          entrypoint: sh
+          args: -c echo ::set-env "name=VERSION::`docker inspect "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" --format '{{ index .Config.Labels "version" }}'`"
+      - name: DEBUG
+        uses: docker://docker:19.03.8
+        with:
           entrypoint: echo
-          args: ::set-env "name=VERSION::$(docker inspect "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" --format '{{ index .Config.Labels "version" }}')"
+          args: ${{ env.VERSION }}
       - name: tag with version
         uses: docker://docker:19.03.8
         with:
