@@ -30,7 +30,7 @@ jobs:
             ::set-env name=VERSION::`docker inspect \"${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest\" --format '{{ index .Config.Labels \"version\" }}'`
       - name: DEBUG
         run: |-
-          echo docker tag "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+          echo docker tag "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest"  "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
       - name: tag with version
         uses: docker://docker:19.03.8
         with:
