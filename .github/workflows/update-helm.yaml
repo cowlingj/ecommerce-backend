@@ -114,6 +114,9 @@ jobs:
           timeout_minutes: 5
           max_attempts: 3
           command: |-
+            git checkout origin/master
             git status
-            git remote -v
-            git rebase origin/master && git push origin/${{ github.head_ref }}
+            git log
+            exit 1
+            # git remote -v
+            # git rebase origin/master && git push origin/${{ github.head_ref }}
