@@ -115,4 +115,4 @@ jobs:
           max_attempts: 3
           command: |-
             git fetch origin master
-            git rebase origin/master && git push origin/${{ github.head_ref }}
+            git rebase origin/master && git push origin ${{ github.head_ref }}
