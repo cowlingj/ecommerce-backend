@@ -26,11 +26,11 @@ jobs:
         uses: docker://docker:19.03.8
         with:
           entrypoint: echo
-          args: "`docker inspect \"${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest\" --format '{{ index .Config.Labels \"version\" }}'` > /tmp/version.txt"
+          args: "`docker inspect \"${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest\" --format '{{ index .Config.Labels \"version\" }}'` > ${HOME}/version.txt"
       - name: set version in environment
         run: |-
-          echo ::set-env "name=VERSION::$(cat /tmp/version.txt)"
-          rm /tmp/version.txt
+          echo ::set-env "name=VERSION::$(cat ${HOME}/version.txt)"
+          rm ${HOME}/version.txt
       - name: DEBUG
         uses: docker://docker:19.03.8
         with:
