@@ -114,6 +114,7 @@ jobs:
           timeout_minutes: 5
           max_attempts: 3
           command: |-
+            git fetch origin master
             git checkout origin/master
             git status
             git log
