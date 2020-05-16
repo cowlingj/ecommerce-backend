@@ -1,9 +1,9 @@
-name: Izettle Products Docker
+name: JSON Products Docker
 on:
   push:
     branches:
       - master
-    # paths: 'products/json/**'
+    paths: 'products/json/**'
 
 env:
   DOCKERFILE: products/json/Dockerfile

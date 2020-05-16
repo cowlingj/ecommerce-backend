@@ -1,9 +1,9 @@
-name: Izettle Products Docker
+name: Keystone Products Docker
 on:
   push:
     branches:
       - master
-    # paths: 'products/keystone/app/**'
+    paths: 'products/keystone/app/**'
 
 env:
   DOCKERFILE: products/keystone/app/Dockerfile

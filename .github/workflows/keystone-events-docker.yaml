@@ -1,9 +1,9 @@
-name: Izettle Products Docker
+name: Keystone Events Docker
 on:
   push:
     branches:
       - master
-    # paths: 'events/keystone/app/**'
+    paths: 'events/keystone/app/**'
 
 env:
   DOCKERFILE: events/keystone/app/Dockerfile
