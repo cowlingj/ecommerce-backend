@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+    paths: 'products/izettle/**'
 
 env:
   DOCKERFILE: products/izettle/Dockerfile
@@ -42,9 +43,6 @@ jobs:
         with:
           entrypoint: docker
           args: push "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest"
-      - name: DEBUG
-        run: |-
-          docker image ls
       - name: docker push
         uses: docker://docker:19.03.8
         with:
