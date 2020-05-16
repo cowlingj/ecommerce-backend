@@ -1,0 +1,50 @@
+name: Izettle Products Docker
+on:
+  push:
+    branches:
+      - master
+    # paths: 'products/keystone/app/**'
+
+env:
+  DOCKERFILE: products/keystone/app/Dockerfile
+  BUILD_CONTEXT: products/keystone/app/
+  IMAGE_NAME: keystone-products.backend
+  REGISTRY: https://docker.pkg.github.com
+  TAG_PREFIX: docker.pkg.github.com/${{ github.repository }}
+  USERNAME: 09cowlingj+bot@gmail.com
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker build
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: build --tag "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" --file "${{ env.DOCKERFILE }}" "${{ env.BUILD_CONTEXT }}"
+      - name: get version from label
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: sh
+          args: -c "echo \"::set-env name=VERSION::\"`docker inspect \"${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest\" --format '{{ index .Config.Labels \"version\" }}'`"
+      - name: tag with version
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: tag "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+      - name: docker login
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: login --username "${{ env.USERNAME }}" --password "${{ secrets.DOCKER_PASSWORD }}" "${{ env.REGISTRY }}"
+      - name: docker push
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: push "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest"
+      - name: docker push
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: push "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
