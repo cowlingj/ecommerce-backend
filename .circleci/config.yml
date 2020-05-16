@@ -20,10 +20,6 @@ workflows:
 
   package:
     jobs:
-      - build-cms-main:
-          filters:
-            branches:
-              only: master
       - build-products-api:
           filters:
             branches:
@@ -36,56 +32,6 @@ workflows:
           filters:
             branches:
               only: master
-      - build-izettle-products:
-          filters:
-            branches:
-              only: master
-          requires:
-            - build-products-api
-      - build-json-products:
-          filters:
-            branches:
-              only: master
-          requires:
-            - build-products-api
-      - build-keystone-products:
-          filters:
-            branches:
-              only: master
-          requires:
-            - build-products-api
-      - build-cms-init:
-          filters:
-            branches:
-              only: master
-      - build-simple-example:
-          filters:
-            branches:
-              only: master
-      - build-endpoints-example:
-          filters:
-            branches:
-              only: master
-      - build-prismic-events:
-          filters:
-            branches:
-              only: master
-          requires:
-            - build-events-api
-      - build-keystone-events:
-          filters:
-            branches:
-              only: master
-          requires:
-            - build-events-api
-      - git-commit-packages:
-          filters:
-            branches:
-              only: master
-          requires:
-            - build-products-api
-            - build-events-api
-            - build-resources-api
 
 executors:
   gcloud:
