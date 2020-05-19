@@ -2,9 +2,10 @@
 const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
+const path = require("path");
 
 module.exports = class extends Generator {
-  prompting() {
+  async prompting() {
     this.log(
       yosay(
         `Welcome to ${chalk.red(
@@ -15,16 +16,35 @@ module.exports = class extends Generator {
 
     const prompts = [
       {
-        type: "confirm",
-        name: "someAnswer",
-        message: "Would you like to enable this option?",
-        default: true
+        type: "input",
+        name: "dir",
+        message: "What directory would you like to install the service into",
+        default: this.destinationRoot(),
+        filter: (dir) => path.isAbsolute(dir) ? dir : this.destinationPath(dir)
+      },
+      {
+        type: "input",
+        name: "chart.name",
+        message: "Name of the Helm Chart",
+        default: this.destinationRoot(),
+        filter: (dir) => path.isAbsolute(dir) ? dir : this.destinationPath(dir)
       }
     ];
 
-    return this.prompt(prompts).then(props => {
-      // To access props later use this.props.someAnswer;
-      this.props = props;
-    });
+    this.answers = await this.prompt(prompts)
+  }
+
+  async writing() {
+    this.fs.copy(
+      this.templatePath('app/.gitkeep'),
+      this.destinationPath('app/.gitkeep')
+    )
+    this.fs.copyTpl(
+      this.templatePath('chart/chart-name/Chart.yaml.ejs'),
+      this.destinationPath(`chart/${this.answers.chart.name}/Chart.yaml`),
+      {
+        chart: this.answers.chart
+      }
+    )
   }
 };
