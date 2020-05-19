@@ -1,0 +1,9 @@
+{
+  "name": "app-name-2",
+  "version": "0.0.0",
+  "description": "App description",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cowlingj/ecommerce-backend.git"
+  }
+}

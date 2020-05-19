@@ -1,0 +1,13 @@
+chartVersion: v2 
+version: chart-0.0.0
+description: chart description
+name: chart name
+appVersion: app-0.0.0
+kubeVersion: kube-0.0.0
+dependencies:
+  - name: dependency1
+    version: depVersion1
+    repository: depRepo1
+  - name: dependency2
+    version: depVersion2
+    repository: depRepo2
