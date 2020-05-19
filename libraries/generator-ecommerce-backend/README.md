@@ -45,6 +45,7 @@ Created structure:
 ```
 root/
 |- app/
+|  |- .gitkeep
 |- chart/
    |- <CHART NAME>/
       |- Chart.yaml
