@@ -1,7 +1,7 @@
 "use strict";
 const path = require("path");
 const helpers = require("yeoman-test");
-const fs = require('fs')
+const dircompare = require('dir-compare');
 
 describe("generator-ecommerce-backend-service:minimal-service", () => {
   beforeAll(() => {
@@ -9,26 +9,25 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
   });
 
   it("creates files", async () => {
-    const chartName = 'test-chart-name';
+
+    const answers = {
+      "app.path": "directory",
+      'app.id': 'test-chart-name',
+      'app.displayName': "Display Name"
+    }
+
     const dir = await helpers.run(path.join(__dirname))
-      .withPrompts({ dir: "directory", 'chart.name': chartName });
+      .withPrompts(answers);
 
-    expect(
-      fs.existsSync(path.resolve(dir, 'app', '.gitkeep'))
-    ).toBe(
-      true
-    )
+    const res = dircompare.compareSync(
+      path.resolve(__dirname, 'test-data'),
+      path.resolve(dir),
+      { compareContent: true }
+    );
 
-    expect(
-      fs.readFileSync(
-        path.resolve(dir, 'chart', chartName, 'Chart.yaml'),
-        { encoding: 'utf-8' }
-      )
-    ).toEqual(
-      fs.readFileSync(
-        path.resolve(__dirname, 'test-data', 'Chart.yaml'),
-        { encoding: 'utf-8' }
-      )
-    )
+    expect(res.same, `Error directories are different, differences:
+${
+  JSON.stringify(res.diffSet.filter((diff) => diff.state !== 'equal' || diff.reason), null, 2)
+}`).toBe(true)
   });
 });
