@@ -1,7 +1,6 @@
 "use strict";
 const path = require("path");
 const fs = require("fs");
-const core = require("@actions/core");
 const yaml = require("yaml");
 const dotenv = require("dotenv");
 const flat = require("flat");
@@ -42,11 +41,21 @@ module.exports = class extends Generator {
     }, {});
   }
 
-  generate() {
-    const dirs = {
-      helm: core.getInput("helm dir", { required: true }),
-      app: core.getInput("app dir", { required: true })
-    };
+  async generate() {
+    const answers = await this.prompt([
+      {
+        type: "input",
+        name: "paths.helm",
+        message: "path to Helm Chart:"
+      },
+      {
+        type: "input",
+        name: "paths.app",
+        message: "path to Node application:"
+      }
+    ]);
+
+    const dirs = answers.paths;
 
     const rawData = {
       helm: {
