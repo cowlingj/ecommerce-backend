@@ -1,0 +1,23 @@
+apiVersion: v2
+name: <%= app.id %>
+<%_ if (app.description) { _%>
+description: <%= app.description %>
+<%_ } _%>
+version: 0.0.1
+<%_ if (app.keywords && app.keywords.length > 0) { _%>
+keywords:
+<%_ app.keywords.forEach((keyword) => { _%>
+  - <%= keyword %>
+<%_ }); _%>
+<%_ } _%>
+<%_ if (app.author.name) { _%>
+maintainers:
+  - name: <%= app.author.name %>
+    <%_ if (app.author.email) { _%>
+    email: <%= app.author.email %>
+    <%_ } _%>
+<%_ }; _%>
+<%_ if (app.repository) { _%>
+sources:
+  - <%= app.repository %>
+<%_ } _%>

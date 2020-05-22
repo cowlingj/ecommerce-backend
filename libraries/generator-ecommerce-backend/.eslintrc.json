@@ -23,7 +23,11 @@
         "jest": true
       },
       "extends": ["plugin:jest/recommended"],
-      "plugins": ["jest"]
+      "plugins": ["jest"],
+      "rules": {
+        // using jest-expect-message means we can pass in an additional argument
+        "jest/valid-expect": 0
+      }
     }
   ]
 }

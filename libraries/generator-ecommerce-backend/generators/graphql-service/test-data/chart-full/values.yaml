@@ -1,0 +1,31 @@
+replicaCount: 1
+
+image:
+  repository: prefix/image-name
+  tag: 0.0.1
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+env: production
+
+service:
+  nameOverride: ""
+  fullnameOverride: ""
+  type: ClusterIP
+  ports:
+    main: 80
+
+resources: {}
+
+livenessProbe: null
+readinessProbe: null
+startupProbe: null
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

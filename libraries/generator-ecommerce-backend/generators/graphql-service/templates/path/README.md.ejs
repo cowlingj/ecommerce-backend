@@ -1,0 +1,55 @@
+# <%= app.displayName %>
+
+## Technologies
+
+### App
+
+- [NodeJS](https://nodejs.org/): v14.2.0
+- [Typescript](https://www.typescriptlang.org/): v3.8
+- [Appollo GraphQL](https://www.apollographql.com/): v2.11
+- [Jest](https://jestjs.io/): v24.9
+
+### Deployment
+
+- [Docker](https://www.docker.com/)
+- [Kubernetes](https://kubernetes.io/): v1.16
+- [Helm](https://helm.sh/): v3
+
+### CI/CD
+
+- [GitHub Actions](https://github.com/features/actions)
+- [GitHub Packages](https://github.com/features/packages)
+
+## Structure
+
+```
+/
+|- workflows/: Github Actions workflows
+|- <%= app.path %><%_ if (!app.path.endsWith('/')) { _%>/<%_ } %>
+   |- app/: Apollo GraphQL application
+   |- chart/
+      |- <%= app.id %>/: Helm Chart
+```
+
+## Running the Service
+
+Run the service by building and running the docker image or using node directly.
+Tests can only be run with node since they are not included within the image.
+Use the included helm chart to add the service to a kubernetes cluster.
+
+## Configuration
+
+When running the service with node environment variables can be configured by making changes to the `.env` file or setting environment variables on the development machine.
+Environment variables for the docker container can be set in the usual way.
+Helm charts don't support setting environment variables directly, but instead support configuration for many different aspects of the helm release using the `values.yaml` file.
+
+## CI/CD
+
+Through GitHub Actions the following is supported:
+- Building the image on a push to master
+- Testing on pull requests
+- Automatic documentation updates
+
+The following secrets are required to be set on the repository:
+- DOCKER_PASSWORD: password for interacting with docker registry
+- GIT_PASSWORD: password for interacting with GitHub (this should be a [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) and not the normal account password)

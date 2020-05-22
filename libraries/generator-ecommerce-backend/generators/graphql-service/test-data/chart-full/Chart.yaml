@@ -1,0 +1,12 @@
+apiVersion: v2
+name: test-app-id
+description: A very interesting description
+version: 0.0.1
+keywords:
+  - test
+  - app
+maintainers:
+  - name: author-name
+    email: author@email.com
+sources:
+  - app-repo
