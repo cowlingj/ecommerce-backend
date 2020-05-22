@@ -21,40 +21,40 @@ module.exports = class extends Generator {
         name: "app.path",
         message: "What directory would you like to install the service into",
         default: this.destinationRoot(),
-        filter: (dir) => path.isAbsolute(dir) ? dir : this.destinationPath(dir)
+        filter: dir => (path.isAbsolute(dir) ? dir : this.destinationPath(dir))
       },
       {
         type: "input",
         name: "app.id",
         message: "id of the application",
-        validate: (id) => idValidator(id),
+        validate: id => idValidator(id)
       },
       {
         type: "input",
         name: "app.displayName",
         message: "Name of the Helm Chart",
         default: this.destinationRoot(),
-        filter: (dir) => path.isAbsolute(dir) ? dir : this.destinationPath(dir)
+        filter: dir => (path.isAbsolute(dir) ? dir : this.destinationPath(dir))
       }
     ];
 
-    this.answers = await this.prompt(prompts)
+    this.answers = await this.prompt(prompts);
   }
 
   async writing() {
     this.fs.copy(
-      this.templatePath('app/.gitkeep'),
-      this.destinationPath('app/.gitkeep')
-    )
+      this.templatePath("app/.gitkeep"),
+      this.destinationPath("app/.gitkeep")
+    );
     this.fs.copyTpl(
-      this.templatePath('README.md.ejs'),
-      this.destinationPath('README.md'),
+      this.templatePath("README.md.ejs"),
+      this.destinationPath("README.md"),
       this.answers
-    )
+    );
     this.fs.copyTpl(
-      this.templatePath('chart/chart-name/Chart.yaml.ejs'),
+      this.templatePath("chart/chart-name/Chart.yaml.ejs"),
       this.destinationPath(`chart/${this.answers.app.id}/Chart.yaml`),
       this.answers
-    )
+    );
   }
 };
