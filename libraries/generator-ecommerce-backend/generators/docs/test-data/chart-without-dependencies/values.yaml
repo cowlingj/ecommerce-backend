@@ -12,9 +12,9 @@ list:
 
 listOuter:
   listInner:
-    - item1
-    - item2
-## listOuter.listInner.0: item1 from listOuter.listInner
+    - 1
+    - 2
+## listOuter.listInner.0: the number 1
 
 objList:
   ## objlist.0: first item in objList description

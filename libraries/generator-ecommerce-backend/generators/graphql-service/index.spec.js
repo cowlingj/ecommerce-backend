@@ -26,7 +26,7 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       {
         dest: path.resolve(__dirname, "test-data", "app-no-templates"),
         test: path.resolve(dir, answers["app.path"], "app"),
-        exclude: "package.json,Dockerfile,.eslintrc.json,.env"
+        exclude: "package.json,package-lock.json,Dockerfile,.eslintrc.json,.env,.nvmrc"
       },
       {
         dest: path.resolve(__dirname, "test-data", "chart-minimal"),
@@ -75,6 +75,14 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
         test: path.resolve(__dirname, "test-data", "app-minimal", ".env.sample")
       },
       {
+        dest: path.resolve(dir, answers["app.path"], "app", ".nvmrc"),
+        test: path.resolve(__dirname, "test-data", "app-minimal", ".nvmrc")
+      },
+      {
+        dest: path.resolve(dir, answers["app.path"], "app", "package-lock.json"),
+        test: path.resolve(__dirname, "test-data", "app-minimal", "package-lock.json")
+      },
+      {
         dest: path.resolve(dir, answers["app.path"], "app", "Dockerfile"),
         test: path.resolve(__dirname, "test-data", "app-minimal", "Dockerfile")
       },
@@ -106,6 +114,7 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       "app.author.email": "author@email.com",
       "app.repository": "app-repo",
       "app.license": "MIT",
+      "app.nodeVersion": "14.2.0",
       "image.repository": "prefix/image-name",
       "image.base": "node:current",
       "image.registry": "https://registry/url",
@@ -118,7 +127,7 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       {
         dest: path.resolve(__dirname, "test-data", "app-no-templates"),
         test: path.resolve(dir, answers["app.path"], "app"),
-        exclude: "package.json,Dockerfile,.eslintrc.json,.env"
+        exclude: "package.json,package-lock.json,Dockerfile,.eslintrc.json,.env,.nvmrc"
       },
       {
         dest: path.resolve(__dirname, "test-data", "chart-full"),
@@ -169,6 +178,14 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       {
         dest: path.resolve(dir, answers["app.path"], "app", ".env"),
         test: path.resolve(__dirname, "test-data", "app-full", ".env.sample")
+      },
+      {
+        dest: path.resolve(dir, answers["app.path"], "app", ".nvmrc"),
+        test: path.resolve(__dirname, "test-data", "app-full", ".nvmrc")
+      },
+      {
+        dest: path.resolve(dir, answers["app.path"], "app", "package-lock.json"),
+        test: path.resolve(__dirname, "test-data", "app-minimal", "package-lock.json")
       },
       {
         dest: path.resolve(dir, answers["app.path"], "app", "Dockerfile"),

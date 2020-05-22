@@ -4,6 +4,7 @@ const chalk = require("chalk");
 const yosay = require("yosay");
 const license = require("license");
 const idValidator = require("../../utils/id-validator").validator;
+const semver = require("semver");
 
 module.exports = class extends Generator {
   async prompting() {
@@ -53,6 +54,14 @@ module.exports = class extends Generator {
         filter: keywords => {
           return keywords.trim().split(/\s+/);
         }
+      },
+      {
+        type: "input",
+        name: "app.nodeVersion",
+        message: "Node Version:",
+        default: "14",
+        filter: version => semver.clean(version),
+        validate: version => semver.clean(version) !== null
       },
       {
         type: "input",
@@ -169,7 +178,7 @@ module.exports = class extends Generator {
   }
 
   _templating() {
-    ["package.json", "Dockerfile"].forEach(filename => {
+    ["package.json", "package-lock.json", "Dockerfile", ".nvmrc"].forEach(filename => {
       this.fs.delete(
         this.destinationPath(this.answers.app.path, "app", `${filename}.ejs`)
       );

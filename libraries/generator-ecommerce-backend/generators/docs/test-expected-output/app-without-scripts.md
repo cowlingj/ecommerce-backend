@@ -22,6 +22,6 @@ Detail on the environment variables is as follows:
 
 | Name | Default | Description |
 | - | - | - |
-| DOCUMENTED | DOCUMENTED_VALUE | documented description |
+| DOCUMENTED | "DOCUMENTED_VALUE" | documented description |
 | NO_DEFAULT | | no default description |
-| UNDOCUMENTED | UNDOCUMENTED_VALUE | |
+| UNDOCUMENTED | "UNDOCUMENTED_VALUE" | |

@@ -5,6 +5,7 @@ const yaml = require("yaml");
 const dotenv = require("dotenv");
 const flat = require("flat");
 const table = require("markdown-table");
+const semver = require('semver');
 const Generator = require("yeoman-generator");
 
 module.exports = class extends Generator {
@@ -18,7 +19,7 @@ module.exports = class extends Generator {
     );
 
     uniqueKeys.sort().forEach(key => {
-      retval.push([key, defaults[key], description[key]]);
+      retval.push([key, JSON.stringify(defaults[key]), description[key]]);
     });
 
     return retval;
@@ -46,7 +47,7 @@ module.exports = class extends Generator {
       {
         type: "input",
         name: "paths.helm",
-        message: "path to Helm Chart:"
+        message: "path to Helm Chart Directory:"
       },
       {
         type: "input",
@@ -73,9 +74,12 @@ module.exports = class extends Generator {
         package: fs.readFileSync(path.resolve(dirs.app, "package.json"), {
           encoding: "utf-8"
         }),
-        nodeVersion: fs.readFileSync(path.resolve(dirs.app, ".nvmrc"), {
-          encoding: "utf-8"
-        })
+        nodeVersion: semver.clean(
+          fs.readFileSync(
+            path.resolve(dirs.app, ".nvmrc"),
+            { encoding: 'utf-8' }
+          )
+        )
       }
     };
 
@@ -98,6 +102,7 @@ module.exports = class extends Generator {
         package: JSON.parse(rawData.app.package) || {}
       }
     };
+    
     this.fs.copyTpl(
       this.templatePath("helm.md.ejs"),
       this.destinationPath("helm.md"),

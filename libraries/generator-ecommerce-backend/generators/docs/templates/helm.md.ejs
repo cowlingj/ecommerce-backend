@@ -6,8 +6,10 @@
 chart version: v<%= version %>
 app version: <%= appVersion %>
 compatable Kubernetes versions: <%= kubeVersion %>
+<%_ if (description) { _%>
 
 <%= description %>
+<%_ }; _%>
 
 ## Installing the Chart
 
@@ -27,4 +29,4 @@ but the following peer dependencies must be met first:
 
 The chart can be configured with the following values:
 
-<%= valuesTable %>
+<%- valuesTable %>
