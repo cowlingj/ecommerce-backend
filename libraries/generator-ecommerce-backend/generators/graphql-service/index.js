@@ -136,20 +136,26 @@ module.exports = class extends Generator {
   }
 
   _copying() {
-    this.fs.copy(
-      this.templatePath("path", "app"),
-      this.destinationPath(this.answers.app.path, "app")
-    );
-
-    this.fs.copy(
-      this.templatePath("path", "app", ".*"),
-      this.destinationPath(this.answers.app.path, "app")
-    );
-
-    this.fs.copy(
-      this.templatePath("path", "app", ".env.sample"),
-      this.destinationPath(this.answers.app.path, "app", ".env")
-    );
+    [
+      {
+        src: this.templatePath("path", "app"),
+        dest: this.destinationPath(this.answers.app.path, "app")
+      },
+      {
+        src: this.templatePath("path", "app", ".*"),
+        dest: this.destinationPath(this.answers.app.path, "app")
+      },
+      {
+        src: this.templatePath("path", "app", ".env.sample"),
+        dest: this.destinationPath(this.answers.app.path, "app", ".env")
+      },
+      {
+        src: this.templatePath("path", ".yo-rc.json"),
+        dest: this.destinationPath(this.answers.app.path, ".yo-rc.json")
+      },
+    ].forEach(({src, dest}) =>{
+      this.fs.copy(src, dest);
+    })
 
     if (
       this.answers.app.license &&

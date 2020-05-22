@@ -62,6 +62,10 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
         test: path.resolve(__dirname, "test-data", "README.md")
       },
       {
+        dest: path.resolve(dir, answers["app.path"], ".yo-rc.json"),
+        test: path.resolve(__dirname, "test-data", ".yo-rc.json")
+      },
+      {
         dest: path.resolve(dir, answers["app.path"], "app", "package.json"),
         test: path.resolve(
           __dirname,
@@ -161,6 +165,10 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       {
         dest: path.resolve(dir, answers["app.path"], "README.md"),
         test: path.resolve(__dirname, "test-data", "README.md")
+      },
+      {
+        dest: path.resolve(dir, answers["app.path"], ".yo-rc.json"),
+        test: path.resolve(__dirname, "test-data", ".yo-rc.json")
       },
       {
         dest: path.resolve(dir, answers["app.path"], "LICENSE.txt"),
