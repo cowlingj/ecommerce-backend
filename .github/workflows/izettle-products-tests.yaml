@@ -1,8 +1,6 @@
 name: Izettle Products Tests
 on:
   pull_request:
-    branches:
-      - master
     paths: 'products/izettle/**'
 
 
