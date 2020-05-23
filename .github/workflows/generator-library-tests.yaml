@@ -1,8 +1,6 @@
 name: Publish generator-ecommerce-backend
 on:
-  push:
-    branches:
-      - master
+  pull_request:
     paths:
       - libraries/generator-ecommerce-backend/**
 
@@ -11,7 +9,7 @@ defaults:
     working-directory: libraries/generator-ecommerce-backend/
 
 jobs:
-  publish:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,6 +24,4 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.hash) }}
       - run: npm install
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run test
