@@ -8,7 +8,8 @@
     "email": "09cowlingj@gmail.com"
   },
   "files": [
-    "generators"
+    "generators/*/templates/",
+    "generators/*/index.js"
   ],
   "main": "generators/index.js",
   "keywords": [],
