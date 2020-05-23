@@ -1,4 +1,4 @@
-name: Publish generator-ecommerce-backend
+name: generator-ecommerce-backend Tests
 on:
   pull_request:
     paths:
