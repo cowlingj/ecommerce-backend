@@ -1,0 +1,24 @@
+name: Publish generator-ecommerce-backend
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - libraries/generator-ecommerce-backend/**
+
+defaults:
+  run:
+    working-directory: libraries/generator-ecommerce-backend/
+
+jobs:
+  rebase:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          registry-url: 'https://npm.pkg.github.com'
+      - run: npm install
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

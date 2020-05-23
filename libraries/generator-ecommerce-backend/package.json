@@ -1,6 +1,6 @@
 {
-  "name": "generator-ecommerce-backend-service",
-  "version": "0.0.0",
+  "name": "@github-cowlingj-ecommerce-backend/generator-ecommerce-backend-service",
+  "version": "0.0.1",
   "description": "",
   "homepage": "https://github.com/cowlingj/ecommerce-backend/",
   "author": {
@@ -56,5 +56,9 @@
     "type": "git",
     "url": "git+https://github.com/cowlingj/ecommerce-backend.git"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/",
+    "access": "public"
+  }
 }
