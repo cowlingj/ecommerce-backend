@@ -1,8 +1,6 @@
 name: Keystone Events Tests
 on:
   pull_request:
-    branches:
-      - master
     paths: 'events/keystone/app/**'
 
 defaults:
