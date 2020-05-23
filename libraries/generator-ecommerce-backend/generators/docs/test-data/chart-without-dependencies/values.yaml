@@ -1,0 +1,24 @@
+## outer: outer description
+outer:
+  ## outer.middle: middle description 
+  middle:
+    ## outer.middle.inner: inner description
+    inner: inner value
+
+## list: a list of values
+list:
+  - item1
+  - item2
+
+listOuter:
+  listInner:
+    - 1
+    - 2
+## listOuter.listInner.0: the number 1
+
+objList:
+  ## objlist.0: first item in objList description
+  - prop1: value11
+    prop2: value12
+  - prop1: value21
+    prop2: value22

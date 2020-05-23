@@ -1,16 +1,15 @@
-name: Izettle Products Docker
+name: JSON Products Docker
 on:
   push:
     branches:
       - master
-    # paths: 'products/json/**'
+    paths: 'products/json/**'
 
 env:
   DOCKERFILE: products/json/Dockerfile
   BUILD_CONTEXT: products/json/
-  IMAGE_NAME: json-products.backend
   REGISTRY: https://docker.pkg.github.com
-  TAG_PREFIX: docker.pkg.github.com/${{ github.repository }}
+  REPOSITORY: docker.pkg.github.com/${{ github.repository }}/json-products.backend
   USERNAME: 09cowlingj+bot@gmail.com
 
 jobs:
@@ -22,17 +21,17 @@ jobs:
         uses: docker://docker:19.03.8
         with:
           entrypoint: docker
-          args: build --tag "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" --file "${{ env.DOCKERFILE }}" "${{ env.BUILD_CONTEXT }}"
+          args: build --tag "${{ env.REPOSITORY }}:latest" --file "${{ env.DOCKERFILE }}" "${{ env.BUILD_CONTEXT }}"
       - name: get version from label
         uses: docker://docker:19.03.8
         with:
           entrypoint: sh
-          args: -c "echo \"::set-env name=VERSION::\"`docker inspect \"${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest\" --format '{{ index .Config.Labels \"version\" }}'`"
+          args: -c "echo \"::set-env name=VERSION::\"`docker inspect \"${{ env.REPOSITORY }}:latest\" --format '{{ index .Config.Labels \"version\" }}'`"
       - name: tag with version
         uses: docker://docker:19.03.8
         with:
           entrypoint: docker
-          args: tag "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest" "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+          args: tag "${{ env.REPOSITORY }}:latest" "${{ env.REPOSITORY }}:${{ env.VERSION }}"
       - name: docker login
         uses: docker://docker:19.03.8
         with:
@@ -42,9 +41,9 @@ jobs:
         uses: docker://docker:19.03.8
         with:
           entrypoint: docker
-          args: push "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:latest"
+          args: push "${{ env.REPOSITORY }}:latest"
       - name: docker push
         uses: docker://docker:19.03.8
         with:
           entrypoint: docker
-          args: push "${{ env.TAG_PREFIX }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}"
+          args: push "${{ env.REPOSITORY }}:${{ env.VERSION }}"

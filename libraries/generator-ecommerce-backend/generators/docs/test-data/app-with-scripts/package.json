@@ -1,0 +1,13 @@
+{
+  "name": "app-name-1",
+  "version": "0.0.0",
+  "description": "App description",
+  "scripts": {
+    "script1": "command1",
+    "secript2": "command2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cowlingj/ecommerce-backend.git"
+  }
+}

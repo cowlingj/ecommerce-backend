@@ -1,0 +1,6 @@
+chartVersion: v2 
+version: chart-0.0.0
+description: chart description
+name: chart name
+appVersion: app-0.0.0
+kubeVersion: kube-0.0.0

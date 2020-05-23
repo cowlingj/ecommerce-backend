@@ -1,0 +1,7 @@
+{
+  "@github-cowlingj-ecommerce-backend/generator-ecommerce-backend-service": {
+    "docs.paths.helm": "chart",
+    "docs.paths.app": "app",
+    "docs.paths.out": "docs"
+  }
+}

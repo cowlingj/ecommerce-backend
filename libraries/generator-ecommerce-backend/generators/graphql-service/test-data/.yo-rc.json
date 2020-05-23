@@ -1,0 +1,6 @@
+{
+  "generator-ecommerce-backend-service": {
+    "docs.paths.helm": "chart/test-app-id/",
+    "docs.paths.app": "app"
+  }
+}

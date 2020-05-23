@@ -1,0 +1,32 @@
+# <%= name %>
+
+<%# If you're reading this, this is the template that you should edit! _%>
+> This documentation is generated automatically do not edit by hand
+
+chart version: <%= version %>
+app version: <%= appVersion %>
+compatable Kubernetes versions: <%= kubeVersion %>
+<%_ if (description) { _%>
+
+<%= description %>
+<%_ }; _%>
+
+## Installing the Chart
+
+The chart can be installed into a kubernetes cluster using the `helm install` command,
+but the following peer dependencies must be met first:
+
+<%_ dependencies.forEach((dependency) => { _%>
+<%_ if (!dependency.enabled) { _%>
+  - <%= dependency.name %>:<%= dependency.version %> (<%= dependency.repository %>)
+<%_ }; _%>
+<%_ }); _%>
+<%_ if (Object.keys(dependencies).length === 0) { _%>
+  > There are no peer dependencies for this chart
+<%_ }; _%>
+
+## Values
+
+The chart can be configured with the following values:
+
+<%- valuesTable %>

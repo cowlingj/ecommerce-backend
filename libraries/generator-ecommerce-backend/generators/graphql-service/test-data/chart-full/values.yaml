@@ -1,0 +1,40 @@
+replicaCount: 1
+
+image:
+  ## image.repository: docker image repository
+  repository: prefix/image-name
+  ## image.tag: docker image tag
+  tag: 0.0.1
+  ## image.pullPolicy: the imagePullPolicy for this container 
+  pullPolicy: IfNotPresent
+
+## imagePullSecrets: imagePullSecrets for the pod
+imagePullSecrets: []
+## nameOverride: replaces the pod name (appended to Chart.Name) and adds the app.kubernetes.io/name label
+nameOverride: ""
+## fullnameOverride: replaces the name entirely
+fullnameOverride: ""
+
+## env: the NODE_ENV to run the service with
+env: production
+
+service:
+  ## service.nameOverride: replaces the service name (appended to Chart.Name) and adds the app.kubernetes.io/name label
+  nameOverride: ""
+  ## service.fullnameOverride: replaces the service name entirely
+  fullnameOverride: ""
+  type: ClusterIP
+  ports:
+    main: 80
+
+resources: {}
+
+livenessProbe: null
+readinessProbe: null
+startupProbe: null
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

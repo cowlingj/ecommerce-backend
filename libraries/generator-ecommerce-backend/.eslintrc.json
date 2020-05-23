@@ -1,0 +1,33 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
+  "root": true,
+  "plugins": [
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    "es6": true,
+    "node" : true
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.spec.js"
+      ],
+      "env": {
+        "jest": true
+      },
+      "extends": ["plugin:jest/recommended"],
+      "plugins": ["jest"],
+      "rules": {
+        // using jest-expect-message means we can pass in an additional argument
+        "jest/valid-expect": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+# <%= name %>
+
+<%# If you're reading this, this is the template that you should edit! _%>
+> This documentation is generated automatically do not edit by hand
+
+app version: <%= version %>
+node version: <%= nodeVersion %>
+<%_ if (description) { _%>
+
+<%= description %>
+<%_ }; _%>
+
+## Running the App
+
+The scripts available to run the application (using `npm run-script`),
+including [lifecycle scripts](https://docs.npmjs.com/misc/scripts) are:
+
+<%_ Object.entries(scripts || {}).forEach((script) => { _%>
+  - <%= script[0] %>: `<%= script[1] %>`
+<%_ }); _%>
+<%_ if (Object.keys(scripts).length === 0) { _%>
+  > There are no scripts for this app
+<%_ }; _%>
+
+## Environment Variables
+
+Environment variables can be set with the use of the `dotenv` package for development only.
+Copy the included `.env.sample` to `.env` to configure the application using those environment variables.
+Detail on the environment variables is as follows:
+
+<%- envTable %>
