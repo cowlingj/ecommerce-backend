@@ -2,7 +2,7 @@
 
 > This documentation is generated automatically do not edit by hand
 
-chart version: vchart-0.0.0
+chart version: chart-0.0.0
 app version: app-0.0.0
 compatable Kubernetes versions: kube-0.0.0
 

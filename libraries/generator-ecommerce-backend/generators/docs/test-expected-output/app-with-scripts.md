@@ -2,8 +2,8 @@
 
 > This documentation is generated automatically do not edit by hand
 
-app version: v0.0.0
-node version: v0.0.0
+app version: 0.0.0
+node version: 0.0.0
 
 App description
 

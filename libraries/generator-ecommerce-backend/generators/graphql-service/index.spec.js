@@ -14,35 +14,43 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       "app.path": "path/to/service",
       "app.id": "test-app-id",
       "app.displayName": "Display Name",
+      "app.nodeVersion": "14.3.0",
       "image.repository": "prefix/image-name",
       "image.base": "node:current",
       "image.registry": "https://registry/url",
       "workflows.dockerUser": "docker-username"
     };
 
-    const dir = await helpers.run(path.join(__dirname)).withPrompts(answers);
+    const dir = await helpers
+      .run(path.join(__dirname))
+      .withPrompts(answers);
 
     [
       {
         dest: path.resolve(__dirname, "test-data", "app-no-templates"),
         test: path.resolve(dir, answers["app.path"], "app"),
-        exclude: "package.json,package-lock.json,Dockerfile,.eslintrc.json,.env,.nvmrc"
+        exclude:
+          "package.json,package-lock.json,Dockerfile,.eslintrc.json,.env,.nvmrc"
       },
       {
         dest: path.resolve(__dirname, "test-data", "chart-minimal"),
         test: path.resolve(dir, answers["app.path"], "chart", answers["app.id"])
       },
       {
+        dest: path.resolve(__dirname, "test-data", "docs-minimal"),
+        test: path.resolve(dir, answers["app.path"], "docs")
+      },
+      {
         dest: path.resolve(__dirname, "test-data", "workflows"),
         test: path.resolve(dir, ".github", "workflows")
       }
-    ].forEach(compareData => {
+    ].forEach(({dest, test, exclude}) => {
       const result = dircompare.compareSync(
-        compareData.dest,
-        compareData.test,
+        dest,
+        test,
         {
           compareContent: true,
-          excludeFilter: compareData.exclude
+          excludeFilter: exclude
         }
       );
 
@@ -83,8 +91,18 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
         test: path.resolve(__dirname, "test-data", "app-minimal", ".nvmrc")
       },
       {
-        dest: path.resolve(dir, answers["app.path"], "app", "package-lock.json"),
-        test: path.resolve(__dirname, "test-data", "app-minimal", "package-lock.json")
+        dest: path.resolve(
+          dir,
+          answers["app.path"],
+          "app",
+          "package-lock.json"
+        ),
+        test: path.resolve(
+          __dirname,
+          "test-data",
+          "app-minimal",
+          "package-lock.json"
+        )
       },
       {
         dest: path.resolve(dir, answers["app.path"], "app", "Dockerfile"),
@@ -118,20 +136,27 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       "app.author.email": "author@email.com",
       "app.repository": "app-repo",
       "app.license": "MIT",
-      "app.nodeVersion": "14.2.0",
+      "app.nodeVersion": "12.16.0",
       "image.repository": "prefix/image-name",
       "image.base": "node:current",
       "image.registry": "https://registry/url",
       "workflows.dockerUser": "docker-username"
     };
 
-    const dir = await helpers.run(path.join(__dirname)).withPrompts(answers);
+    const dir = await helpers
+      .run(path.join(__dirname))
+      .withPrompts(answers);
 
     [
       {
         dest: path.resolve(__dirname, "test-data", "app-no-templates"),
         test: path.resolve(dir, answers["app.path"], "app"),
-        exclude: "package.json,package-lock.json,Dockerfile,.eslintrc.json,.env,.nvmrc"
+        exclude:
+          "package.json,package-lock.json,Dockerfile,.eslintrc.json,.env,.nvmrc"
+      },
+      {
+        dest: path.resolve(__dirname, "test-data", "docs-full"),
+        test: path.resolve(dir, answers["app.path"], "docs")
       },
       {
         dest: path.resolve(__dirname, "test-data", "chart-full"),
@@ -192,8 +217,18 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
         test: path.resolve(__dirname, "test-data", "app-full", ".nvmrc")
       },
       {
-        dest: path.resolve(dir, answers["app.path"], "app", "package-lock.json"),
-        test: path.resolve(__dirname, "test-data", "app-minimal", "package-lock.json")
+        dest: path.resolve(
+          dir,
+          answers["app.path"],
+          "app",
+          "package-lock.json"
+        ),
+        test: path.resolve(
+          __dirname,
+          "test-data",
+          "app-minimal",
+          "package-lock.json"
+        )
       },
       {
         dest: path.resolve(dir, answers["app.path"], "app", "Dockerfile"),

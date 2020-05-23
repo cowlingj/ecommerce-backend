@@ -1,14 +1,31 @@
 "use strict";
-const path = require("path");
-const fs = require("fs");
 const yaml = require("yaml");
 const dotenv = require("dotenv");
 const flat = require("flat");
 const table = require("markdown-table");
-const semver = require('semver');
+const semver = require("semver");
 const Generator = require("yeoman-generator");
 
 module.exports = class extends Generator {
+  constructor(args, options) {
+    super(args, options);
+
+    this.option("config", {
+      description:
+        "use yo-rc.json config and only ask questions that aren't there.",
+      type: Boolean,
+      alias: "c",
+      default: false
+    });
+
+    this.option("save", {
+      description: "save answers to .yo-rc.json",
+      type: Boolean,
+      alias: "s",
+      default: true
+    });
+  }
+
   _createTable(defaults, description) {
     const retval = [["Name", "Default", "Description"]];
 
@@ -43,43 +60,55 @@ module.exports = class extends Generator {
   }
 
   async generate() {
-    const answers = await this.prompt([
-      {
-        type: "input",
-        name: "paths.helm",
-        message: "path to Helm Chart Directory:"
-      },
-      {
-        type: "input",
-        name: "paths.app",
-        message: "path to Node application:"
-      }
-    ]);
+    const defaults = this.options.config ? this.config.getAll() : {};
 
-    const dirs = answers.paths;
+    let answers = Object.assign(
+      {},
+      flat(
+        await this.prompt([
+          {
+            type: "input",
+            name: "docs.paths.helm",
+            message: "path to Helm Chart Directory:",
+            default: this.config.get("docs.paths.helm"),
+            when: () => defaults["docs.paths.helm"] === undefined
+          },
+          {
+            type: "input",
+            name: "docs.paths.app",
+            message: "path to Node application:",
+            defualt: this.config.get("docs.paths.app"),
+            when: () => defaults["docs.paths.app"] === undefined
+          },
+          {
+            type: "input",
+            name: "docs.paths.out",
+            message: "path to output directory:",
+            defualt: this.config.get("docs.paths.out") || this.destinationPath(),
+            when: () => defaults["docs.paths.out"] === undefined
+          },
+        ])
+      ),
+      defaults
+    );
+
+    if (this.options.save) {
+      this.config.set(answers);
+    }
+
+    answers = flat.unflatten(answers);
+
+    const dirs = answers.docs.paths;
 
     const rawData = {
       helm: {
-        chart: fs.readFileSync(path.resolve(dirs.helm, "Chart.yaml"), {
-          encoding: "utf-8"
-        }),
-        values: fs.readFileSync(path.resolve(dirs.helm, "values.yaml"), {
-          encoding: "utf-8"
-        })
+        chart: this.fs.read(this.destinationPath(dirs.helm, "Chart.yaml")),
+        values: this.fs.read(this.destinationPath(dirs.helm, "values.yaml"))
       },
       app: {
-        env: fs.readFileSync(path.resolve(dirs.app, ".env.sample"), {
-          encoding: "utf-8"
-        }),
-        package: fs.readFileSync(path.resolve(dirs.app, "package.json"), {
-          encoding: "utf-8"
-        }),
-        nodeVersion: semver.clean(
-          fs.readFileSync(
-            path.resolve(dirs.app, ".nvmrc"),
-            { encoding: 'utf-8' }
-          )
-        )
+        env: this.fs.read(this.destinationPath(dirs.app, ".env.sample")),
+        package: this.fs.read(this.destinationPath(dirs.app, "package.json")),
+        nodeVersion: this.fs.read(this.destinationPath(dirs.app, ".nvmrc"))
       }
     };
 
@@ -99,13 +128,14 @@ module.exports = class extends Generator {
       },
       app: {
         env: flat(dotenv.parse(rawData.app.env) || {}),
-        package: JSON.parse(rawData.app.package) || {}
+        package: JSON.parse(rawData.app.package) || {},
+        nodeVersion: semver.clean(rawData.app.nodeVersion)
       }
     };
-    
+
     this.fs.copyTpl(
       this.templatePath("helm.md.ejs"),
-      this.destinationPath("helm.md"),
+      this.destinationPath(dirs.out, "helm.md"),
       {
         name: "",
         version: "",
@@ -123,7 +153,7 @@ module.exports = class extends Generator {
 
     this.fs.copyTpl(
       this.templatePath("app.md.ejs"),
-      this.destinationPath("app.md"),
+      this.destinationPath(dirs.out, "app.md"),
       {
         name: "",
         version: "",
@@ -133,7 +163,7 @@ module.exports = class extends Generator {
         envTable: table(this._createTable(parsed.app.env, comments.app.env), {
           alignDelimiters: false
         }),
-        nodeVersion: rawData.app.nodeVersion || ""
+        nodeVersion: parsed.app.nodeVersion || ""
       }
     );
   }
