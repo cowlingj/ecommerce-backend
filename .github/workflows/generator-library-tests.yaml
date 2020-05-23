@@ -23,5 +23,5 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.hash) }}
-      - run: npm install
+      - run: npm ci
       - run: npm run test

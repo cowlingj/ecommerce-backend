@@ -23,7 +23,7 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('events/prismic/app/package-lock.json') }}
-      - run: npm install
+      - run: npm ci
       - run: npm run-script test:unit
   integration:
     name: Integration Test
@@ -39,5 +39,5 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('events/prismic/app/package-lock.json') }}
-      - run: npm install
+      - run: npm ci
       - run: npm run-script test:integration
