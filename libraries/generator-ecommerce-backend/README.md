@@ -6,13 +6,13 @@ First, install [Yeoman](http://yeoman.io) and generator-ecommerce-backend-servic
 
 ```bash
 npm install -g yo
-npm install -g generator-ecommerce-backend-service
+npm install -g @cowlingj/generator-ecommerce-backend-service
 ```
 
-Then generate your new project:
+Then generate files using one of the subgenerators:
 
 ```bash
-yo ecommerce-backend-service
+yo @cowlingj/generator-ecommerce-backend-service:<sub-generator>
 ```
 
 ## Sub Generators
@@ -43,7 +43,7 @@ The format for a doc commant should be `## key: value`, no support exists for mu
 The minimum-service generator produces the expected layout for a service, with as little files as possible.
 Created structure:
 ```
-root/
+/
 |- app/
 |  |- .gitkeep
 |- chart/
@@ -52,3 +52,17 @@ root/
 ```
 
 ## graphql-service
+
+The graphql-service generator produces the full recommended layout for a service including github workflows, appollo server, docker image, and helm chart.
+
+```
+/
+|- .github/workflows/
+   |- <app-id>-tests.yaml
+   |- <app-id>-docker.yaml
+   |- <app-id>-docs.yaml [TODO]
+|- path/to/service/
+   |- app/ : node application
+   |- chart/
+      |- <CHART NAME>/ : helm chart
+```
