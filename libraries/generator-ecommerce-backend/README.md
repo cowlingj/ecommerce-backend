@@ -1,8 +1,13 @@
 # generator-ecommerce-backend-service
 
-## Installation [TODO]
+## Installation
 
-First, install [Yeoman](http://yeoman.io) and generator-ecommerce-backend-service using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
+First add github package registry to your `~/.npmrc` for packages scoped `@cowlingj`
+```bash
+@cowlingj:registry=https://npm.pkg.github.com
+```
+
+Then install [Yeoman](http://yeoman.io) and `@cowlingj/generator-ecommerce-backend` using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
 npm install -g yo

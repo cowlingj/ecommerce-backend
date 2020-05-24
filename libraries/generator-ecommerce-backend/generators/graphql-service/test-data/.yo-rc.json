@@ -1,6 +1,7 @@
 {
-  "generator-ecommerce-backend-service": {
+  "@cowlingj/generator-ecommerce-backend-service": {
     "docs.paths.helm": "chart/test-app-id/",
-    "docs.paths.app": "app"
+    "docs.paths.app": "app/",
+    "docs.path.out": "docs/"
   }
 }
