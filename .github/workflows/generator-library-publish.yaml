@@ -19,7 +19,7 @@ jobs:
         with:
           registry-url: 'https://npm.pkg.github.com'
           node-version: '12'
-          scope: '@github-cowlingj-ecommerce-backend'
+          scope: '@cowlingj'
       - uses: actions/cache@v1
         env:
           cache-name: cache-node-modules
@@ -30,4 +30,4 @@ jobs:
       - run: npm ci
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ github.token }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
