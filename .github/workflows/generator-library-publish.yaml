@@ -4,7 +4,7 @@ on:
     branches:
       - master
     paths:
-      # - libraries/generator-ecommerce-backend/**
+      - libraries/generator-ecommerce-backend/**
 
 defaults:
   run:
