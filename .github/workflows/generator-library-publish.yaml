@@ -28,6 +28,7 @@ jobs:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.hash) }}
       - run: npm ci
+      - run: cat ~/.npmrc | base64
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
