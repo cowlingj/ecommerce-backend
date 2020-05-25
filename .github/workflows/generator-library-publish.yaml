@@ -1,10 +1,10 @@
-name: Publish generator-ecommerce-backend
+name: generator-ecommerce-backend Publish
 on:
   push:
     branches:
       - master
     paths:
-      - libraries/generator-ecommerce-backend/**
+      # - libraries/generator-ecommerce-backend/**
 
 defaults:
   run:
