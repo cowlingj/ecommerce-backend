@@ -89,12 +89,18 @@ spec:
               value: {{ .Values.env | quote }}
             - name: PORT
               value: "80"
-            - name: FLAG_EVENTS
-              value: {{ quote .Values.features.events }}
-            - name: FLAG_PRODUCTS
-              value: {{ quote .Values.features.products }}
-            - name: FLAG_RESOURCES
-              value: {{ quote .Values.features.resources }}
+            {{ if not .Values.features.events -}}
+            - name: FLAG_DISABLE_EVENTS
+              value: "true"
+            {{- end }}
+            {{ if not .Values.features.products -}}
+            - name: FLAG_DISABLE_PRODUCTS
+              value: "true"
+            {{- end }}
+            {{ if not .Values.features.resources -}}
+            - name: FLAG_DISABLE_RESOURCES
+              value: "true"
+            {{- end }}
             {{ if .Values.secrets.users -}}
             - name: USERS_FILE
               value: /etc/secrets/users/users.json

@@ -1,5 +1,6 @@
 replicaCount: 1
 
+## image: configure the images used within the deployment
 image:
   main:
     repository: gcr.io/gke-test-253221/cms.admin
@@ -30,45 +31,71 @@ tolerations: []
 
 affinity: {}
 
+## secrets: kubernetes secrets to create or use
+## secrets.*.nameOverride: the name of the secret if no fullnameOverride exists (appended to release name)
+## secrets.*.fullnameOverride: the name of the secret
+## secrets.*.exists: whether the secret already exists or does it need to be created by this chart
+## secrets.*.data: yaml data to be  stored in the created secret (when exists: false used to cause secret to be created)
 secrets:
+  ## secrets.users: kubernetes secret used to store default users
   users:
     nameOverride: "users-secret"
     fullnameOverride: ""
     exists: false
     data:
       users:
+          ## secrets.users.data.users.*.username: username to log into the CMS with
         - username: admin
+          ## secrets.users.data.users.*.password: password to log into the CMS with
           password: password
+          ## secrets.users.data.users.*.isAdmin: whether or not the user is an administrator
           isAdmin: true
+  ## secrets.strings: kubernetes secret to store default string resources
   strings:
     nameOverride: "strings-secret"
     fullnameOverride: ""
     exists: false
     data:
+      ## secrets.strings.data.*.key: key/id of the resource the resource
+      ## secrets.strings.data.*.value: string value for the resource
       strings: []
+  ## secrets.mongodbCms: password for mongodb to access the database as the cms
   mongodbCms:
     nameOverride: "mongodb-cms-secret"
     fullnameOverride: ""
     exists: false
     data:
       password: null
-  mongodbAdmin: # This secret must be pre-configured
+  ## secrets.mongodbAdmin: password used to create the CMS database and user if they do not exist (this secret cannot be created with exists: false)
+  mongodbAdmin:
     nameOverride: "mongodb-admin-secret"
     fullnameOverride: ""
 
+## env: NODE_ENV environment variable
 env: production
+## basePath: BASE_PATH environment variable
 basePath: ""
+## cookieSecret: COOKIE_SECRET environment variable
 cookieSecret: null
 mongodb:
+  ## mongodb.host: hostname for mongodb instance
   host: mongo
+  ## mongodb.port: port for mongodb instance
   port: 27017
   cms:
+    ## mongodb.cms.username: username for the CMS database user
     username: cms
+    ## mongodb.cms.database: database for the CMS user to use
     database: cms
   admin:
+    ## mongodb.admin.username: username for the admin database user
     username: root
+    ## mongodb.admin.database: database for the admin user to use
     database: admin
 features:
+  ## features.events: whether events are enabled in the CMS 
   events: true
+  ## features.products: whether products are enabled in the CMS
   products: true
+  ## features.resources: whether resources are enabled in the CMS
   resources: true

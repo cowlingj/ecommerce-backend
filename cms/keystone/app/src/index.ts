@@ -11,11 +11,9 @@ import RedirectApp from './apps/redirect-app'
 import session from 'express-session'
 import connectMongo from 'connect-mongo'
 
-const MongoDBStore = connectMongo(session)
+config();
 
-if (process.env.NODE_ENV === "development") {
-  config({ path: path.resolve(process.cwd(), "config", ".env") });
-}
+const MongoDBStore = connectMongo(session)
 
 const mongoUri = process.env.MONGO_URI
   ? process.env.MONGO_URI
