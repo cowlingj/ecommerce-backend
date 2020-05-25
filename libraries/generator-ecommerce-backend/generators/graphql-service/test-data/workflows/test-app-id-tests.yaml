@@ -10,6 +10,9 @@ defaults:
     shell: bash
     working-directory: path/to/service/app/
 
+env:
+  PACKAGE_LOCK: path/to/service/app/package-lock.json
+
 jobs:
   unit:
     name: Unit Test
@@ -24,7 +27,7 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.PACKAGE_LOCK) }}
       - run: npm install
       - run: npm run-script test:unit
   integration:
@@ -40,6 +43,6 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.PACKAGE_LOCK) }}
       - run: npm install
       - run: npm run-script test:integration

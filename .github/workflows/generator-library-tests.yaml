@@ -8,6 +8,9 @@ defaults:
   run:
     working-directory: libraries/generator-ecommerce-backend/
 
+env:
+  PACKAGE_LOCK: libraries/generator-ecommerce-backend/package-lock.json
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -19,9 +22,8 @@ jobs:
       - uses: actions/cache@v1
         env:
           cache-name: cache-node-modules
-          hash: package-lock.json
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.hash) }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.PACKAGE_LOCK) }}
       - run: npm ci
       - run: npm run test

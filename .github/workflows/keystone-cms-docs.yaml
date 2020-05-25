@@ -29,7 +29,7 @@ jobs:
           hash: libraries/generator-ecommerce-backend/package-lock.json
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('events/keystone/app/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.hash) }}
       - run: npm install --global yo @cowlingj/generator-ecommerce-backend-service  
       - run: yo @cowlingj/ecommerce-backend-service:docs --config
       - name: check if docs different
