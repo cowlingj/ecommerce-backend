@@ -8,9 +8,9 @@ on:
 env:
   DOCKERFILE: products/izettle/app/Dockerfile
   BUILD_CONTEXT: products/izettle/app
-  REGISTRY: https://docker.pkg.github.com
-  REPOSITORY: docker.pkg.github.com/${{ github.repository }}/izettle-products.backend
-  USERNAME: 09cowlingj+bot@gmail.com
+  REGISTRY: '' #use default registry
+  REPOSITORY: cowlingj/izettle-products.backend
+  USERNAME: cowlingj
 
 jobs:
   build-and-publish:
