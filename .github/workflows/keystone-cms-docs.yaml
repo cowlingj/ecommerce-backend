@@ -1,8 +1,6 @@
 name: Keystone CMS Docs
 on:
-  push:
-    branches:
-      - master
+  pull_request:
     paths:
       - 'cms/keystone/app/package.json'
       - 'cms/keystone/app/.nvmrc'
