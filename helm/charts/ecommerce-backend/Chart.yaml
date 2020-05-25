@@ -1,5 +1,70 @@
-apiVersion: v1
+apiVersion: v2
 name: ecommerce-backend
 description: umberella package for ecommerce-backend
 version: 0.0.1
 appVersion: 0.0.0
+dependencies:
+  - name: keystone-cms
+    repository: file://../../../cms/keystone/chart/keystone-cms/
+    version: 0.2.0
+    tags:
+      - keystone
+      - keystone-cms
+  - name: mongodb
+    repository: https://kubernetes-charts.storage.googleapis.com
+    version: 7.4.3
+    tags:
+      - mongodb
+  - name: mongodb-config
+    repository: file://../../../mongodb/charts/mongodb-config/
+    version: 0.0.1
+    tags:
+      - mongodb
+  - name: helpers
+    repository: file://../../../helm/charts/helpers/
+    version: 0.0.1
+  - name: prismic-events
+    repository: file://../../../events/prismic/chart/prismic-events
+    version: 0.0.1
+    tags:
+      - prismic
+      - prismic-events
+  - name: keystone-events
+    repository: file://../../../events/keystone/chart/keystone-events
+    version: 0.0.1
+    tags:
+      - keystone
+      - keystone-events
+  - name: izettle-products
+    repository: file://../../../products/izettle/chart/izettle-products
+    version: 0.0.2
+    tags:
+      - izettle-products
+  - name: json-products
+    repository: file://../../../products/json/chart/json-products
+    version: 0.0.1
+    tags:
+      - json-products
+  - name: nginx-ingress
+    repository: file://../../../helm/charts/nginx-ingress/
+    version: 0.0.1
+    tags:
+      - nginx-ingress
+  - name: keystone-products
+    repository: file://../../../products/keystone/chart/keystone-products
+    version: 0.0.1
+    tags:
+      - keystone
+      - keystone-products
+  - name: simple-example
+    repository: file://../../../examples/simple/chart/simple-example
+    version: 0.0.1
+    tags:
+      - examples
+      - simple-example
+  - name: endpoints-example
+    repository: file://../../../examples/endpoints/chart/endpoints-example
+    version: 0.0.1
+    tags:
+      - examples
+      - endpoints-example

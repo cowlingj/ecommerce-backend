@@ -6,7 +6,10 @@ on:
 defaults:
   run:
     shell: bash
-    working-directory: products/keystone/app
+    working-directory: products/keystone/app/
+
+env:
+  PACKAGE_LOCK: products/keystone/app/package-lock.json
 
 jobs:
   unit:
@@ -16,13 +19,13 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: '14'
       - uses: actions/cache@v1
         env:
           cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('products/keystone/app/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.PACKAGE_LOCK) }}
       - run: npm ci
       - run: npm run-script test:unit
   integration:
@@ -32,12 +35,12 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
-          node-version: '12'
+          node-version: '14'
       - uses: actions/cache@v1
         env:
           cache-name: cache-node-modules
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('products/keystone/app/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.PACKAGE_LOCK) }}
       - run: npm ci
       - run: npm run-script test:integration

@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - master
-    # paths:
-    #   - libraries/generator-ecommerce-backend/**
+    paths:
+      - libraries/generator-ecommerce-backend/**
 
 defaults:
   run:
