@@ -202,13 +202,6 @@ module.exports = class extends Generator {
       }
     );
 
-
-    // this.fs.copyTpl(
-    //   this.templatePath("path", "README.md.ejs"),
-    //   this.destinationPath(this.answers.app.path, "README.md"),
-    //   this.answers
-    // );
-
     [
       {
         src: this.templatePath("path", ".yo-rc.json.ejs"),
@@ -256,6 +249,14 @@ module.exports = class extends Generator {
           ".github",
           "workflows",
           `${this.answers.app.id}-tests.yaml`
+        )
+      },
+      {
+        src: this.templatePath("workflows", `docs.yaml.ejs`),
+        dest: this.destinationPath(
+          ".github",
+          "workflows",
+          `${this.answers.app.id}-docs.yaml`
         )
       },
     ].forEach(({ src, dest }) => {

@@ -2,11 +2,6 @@
 
 ## Installation
 
-First add github package registry to your `~/.npmrc` for packages scoped `@cowlingj`
-```bash
-@cowlingj:registry=https://npm.pkg.github.com
-```
-
 Then install [Yeoman](http://yeoman.io) and `@cowlingj/generator-ecommerce-backend` using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
@@ -17,7 +12,7 @@ npm install -g @cowlingj/generator-ecommerce-backend-service
 Then generate files using one of the subgenerators:
 
 ```bash
-yo @cowlingj/generator-ecommerce-backend-service:<sub-generator>
+yo @cowlingj/ecommerce-backend-service:<sub-generator>
 ```
 
 ## Sub Generators
@@ -65,7 +60,7 @@ The graphql-service generator produces the full recommended layout for a service
 |- .github/workflows/
    |- <app-id>-tests.yaml
    |- <app-id>-docker.yaml
-   |- <app-id>-docs.yaml [TODO]
+   |- <app-id>-docs.yaml
 |- path/to/service/
    |- app/ : node application
    |- chart/
