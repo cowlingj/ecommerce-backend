@@ -1,6 +1,6 @@
 name: Display Name Docs
 on:
-  pull_request:
+  push:
     paths:
       - 'path/to/service/app/package.json'
       - 'path/to/service/app/.nvmrc'
