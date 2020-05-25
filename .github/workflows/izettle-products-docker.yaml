@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-    paths: 'products/izettle/app/**'
+    # paths: 'products/izettle/app/**'
 
 env:
   DOCKERFILE: products/izettle/app/Dockerfile
