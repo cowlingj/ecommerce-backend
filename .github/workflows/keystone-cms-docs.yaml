@@ -39,20 +39,20 @@ jobs:
             echo "::set-output name=diff::true"
           fi
       - uses: oleksiyrudenko/gha-git-credentials@v1
-        if: steps.diff.outputs.diff == "true"	
+        if: steps.diff.outputs.diff == 'true'
         with:
           name: 'Bot'
           email: '09cowlingj+bot@gmail.com'
           actor: 'cowlingj-bot'
           token: '${{ secrets.GH_BOT_TOKEN }}'
       - name: commit diff
-        if: steps.diff.outputs.diff == "true"	
+        if: steps.diff.outputs.diff == 'true'
         working-directory: helm/repo/
         run: |-
           git add .
           git commit -m "#ci update docs [ci skip]"
       - uses: nick-invision/retry@v1
-        if: steps.diff.outputs.diff == "true"	
+        if: steps.diff.outputs.diff == 'true'
         with:
           timeout_minutes: 5
           max_attempts: 3
