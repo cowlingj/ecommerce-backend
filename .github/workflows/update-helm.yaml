@@ -44,10 +44,10 @@ jobs:
         working-directory: events/keystone/chart/keystone-events/
       - name: update-izettle-products
         run: helm package --dependency-update --destination /tmp/helm/repo .
-        working-directory: products/charts/izettle-products/
+        working-directory: products/izettle/chart/izettle-products/
       - name: update-json-products
         run: helm package --dependency-update --destination /tmp/helm/repo .
-        working-directory: products/charts/json-products/
+        working-directory: products/json/chart/json-products/
       - name: update-keystone-products
         run: helm package --dependency-update --destination /tmp/helm/repo .
         working-directory: products/keystone/chart/keystone-products/

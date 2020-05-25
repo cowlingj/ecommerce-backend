@@ -6,8 +6,8 @@ on:
     paths: 'products/json/**'
 
 env:
-  DOCKERFILE: products/json/Dockerfile
-  BUILD_CONTEXT: products/json/
+  DOCKERFILE: products/json/app/Dockerfile
+  BUILD_CONTEXT: products/json/app/
   REGISTRY: https://docker.pkg.github.com
   REPOSITORY: docker.pkg.github.com/${{ github.repository }}/json-products.backend
   USERNAME: 09cowlingj+bot@gmail.com

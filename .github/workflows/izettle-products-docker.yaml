@@ -3,11 +3,11 @@ on:
   push:
     branches:
       - master
-    paths: 'products/izettle/**'
+    paths: 'products/izettle/app/**'
 
 env:
-  DOCKERFILE: products/izettle/Dockerfile
-  BUILD_CONTEXT: products/izettle/
+  DOCKERFILE: products/izettle/app/Dockerfile
+  BUILD_CONTEXT: products/izettle/app
   REGISTRY: https://docker.pkg.github.com
   REPOSITORY: docker.pkg.github.com/${{ github.repository }}/izettle-products.backend
   USERNAME: 09cowlingj+bot@gmail.com
