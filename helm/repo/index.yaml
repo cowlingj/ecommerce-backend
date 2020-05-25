@@ -3,7 +3,7 @@ entries:
   ecommerce-backend:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: "2020-05-25T16:11:55.533328092Z"
+    created: "2020-05-25T16:19:08.575369602Z"
     dependencies:
     - name: keystone-cms
       repository: file://../../../cms/keystone/chart/keystone-cms/
@@ -70,7 +70,7 @@ entries:
       - endpoints-example
       version: 0.0.1
     description: umberella package for ecommerce-backend
-    digest: dd36765fdc6c847ced5fc36930733c222fdca0380663391c84a2db87e7ccbc4d
+    digest: b2017ba34c6fe69eadff22097aea9ad285d1be040446eb6da379f23f8fbb3dad
     name: ecommerce-backend
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/ecommerce-backend-0.0.1.tgz
@@ -78,8 +78,8 @@ entries:
   endpoints-example:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: "2020-05-25T16:11:55.533671395Z"
-    digest: 54f83823949f4e437002e3dcdd943ffafa01db3b2df7566c0ca4f9746ca88dff
+    created: "2020-05-25T16:19:08.5757201Z"
+    digest: 6be167bde1e3afccf312bc15125e2f5af18228f0ca38564cebe98a1d60f018fc
     name: endpoints-example
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/endpoints-example-0.0.1.tgz
@@ -87,9 +87,9 @@ entries:
   helpers:
   - apiVersion: v1
     appVersion: 0.0.0
-    created: "2020-05-25T16:11:55.533862996Z"
+    created: "2020-05-25T16:19:08.575904699Z"
     description: utility template functions
-    digest: 0b9022d3db33b38265135a66554a166a11fa744112248ada703c4e077d4bea2b
+    digest: 095526e7d2448da674885c1f77ac2547ad45d8a13ff6472919f60355d12d00cf
     name: helpers
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/helpers-0.0.1.tgz
@@ -97,8 +97,8 @@ entries:
   izettle-products:
   - apiVersion: v1
     appVersion: 0.0.4
-    created: "2020-05-25T16:11:55.534241899Z"
-    digest: 216a4de136ede4721698531f5a98d05bc3a4cc735aea7e4b5feacd68a8826a02
+    created: "2020-05-25T16:19:08.576266797Z"
+    digest: 0e674b65fce3c3b4d337659ca806155dc70e710f39fa17e769dc5a5a9d510ee9
     name: izettle-products
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/izettle-products-0.0.2.tgz
@@ -106,8 +106,8 @@ entries:
   json-products:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: "2020-05-25T16:11:55.534558701Z"
-    digest: d7c7e532a04674f1109148eee746f2dd52e7738bd349f298df912e2031eae8c9
+    created: "2020-05-25T16:19:08.576566995Z"
+    digest: 372378544389f2a05695449d2b75573f2e567353e96a1a838bcbf1ae6b38b4e6
     name: json-products
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/json-products-0.0.1.tgz
@@ -115,9 +115,9 @@ entries:
   keystone-cms:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-25T16:11:55.535156405Z"
+    created: "2020-05-25T16:19:08.577197291Z"
     description: A Helm chart for Kubernetes
-    digest: 358efd53415fab61079804c1be9bff337d2f9414edee20f2dff689ed9a6e19ff
+    digest: 94b5adb2e0c2bfb288262a3d6ef0c0a258ef9519d8e040f71fd482924d26ffa9
     name: keystone-cms
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/keystone-cms-0.2.0.tgz
@@ -125,9 +125,9 @@ entries:
   keystone-events:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-25T16:11:55.535473807Z"
+    created: "2020-05-25T16:19:08.577518189Z"
     description: A Helm chart for Kubernetes
-    digest: 1b62ab76327bd1e02095a022a39b4178384ae6b2970f254eac20a90fc1bafecc
+    digest: cefb295406326fd21cfc64d023628ff7822eaaec37ecf7e64dcc74c9eaf552d5
     name: keystone-events
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/keystone-events-0.0.1.tgz
@@ -135,25 +135,25 @@ entries:
   keystone-products:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-25T16:11:55.535830809Z"
+    created: "2020-05-25T16:19:08.577822688Z"
     description: A Helm chart for Kubernetes
-    digest: 3fcb92077d274169ec39378dceb12e54acc8efae25ce8bc4986aae778c3695b1
+    digest: 0f057e98e5d7c002a7066b953342d3304ac048767b4c90c7cc8b30829f5b3fc7
     name: keystone-products
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/keystone-products-0.0.1.tgz
     version: 0.0.1
   mongodb-config:
   - apiVersion: v1
-    created: "2020-05-25T16:11:55.536405513Z"
-    digest: e90bcbfe9adea259f192a7c512c7c3e79ef13e59a9cf076b72f353caf957c4ad
+    created: "2020-05-25T16:19:08.577969387Z"
+    digest: d522c7fca0f6b1baf591771486b3a0c7738a023f83c905811a5ecbe54e3c6cee
     name: mongodb-config
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/mongodb-config-0.0.1.tgz
     version: 0.0.1
   nginx-ingress:
   - apiVersion: v1
-    created: "2020-05-25T16:11:55.537321519Z"
-    digest: a8b090f646a2b273a7f508b6ca5650b17a51158b82718c3e186ba6f67e1f03c1
+    created: "2020-05-25T16:19:08.578198685Z"
+    digest: 725e6c1239a92cf9baf0c9315e687fe227c58eb844c07231f85da8feeaf041d8
     name: nginx-ingress
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/nginx-ingress-0.0.1.tgz
@@ -161,9 +161,9 @@ entries:
   prismic-events:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-05-25T16:11:55.537823522Z"
+    created: "2020-05-25T16:19:08.578531883Z"
     description: A Helm chart for Kubernetes
-    digest: 43110c890001e99e994aed268f4e0e06d98c42cdd69b83cd80de8aba012f0221
+    digest: ea9de920c5d1b0cc1519ee75da1e426616f5b5f63ba480f8640317b8bb1d73da
     name: prismic-events
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/prismic-events-0.0.1.tgz
@@ -171,10 +171,10 @@ entries:
   simple-example:
   - apiVersion: v1
     appVersion: 0.0.1
-    created: "2020-05-25T16:11:55.538553227Z"
-    digest: f67121f06d98ff93fec6800fdd5d7c3e04201660e08cf2a44a29b0b138a09582
+    created: "2020-05-25T16:19:08.578892081Z"
+    digest: b1cf855ed75af7fe57949cb52fa0547291892462b707017f04256e40a6a38074
     name: simple-example
     urls:
     - https://raw.githubusercontent.com/cowlingj/ecommerce-backend/master/helm/repo/simple-example-0.0.1.tgz
     version: 0.0.1
-generated: "2020-05-25T16:11:55.527156751Z"
+generated: "2020-05-25T16:19:08.567003152Z"
