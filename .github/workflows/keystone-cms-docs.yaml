@@ -28,11 +28,12 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('events/keystone/app/package-lock.json') }}
-      - run: npm install --global yo @cowlingj/generator-ecommerce-backend-service
+      - run: npm install --global yo @cowlingj/generator-ecommerce-backend-service  
       - run: yo @cowlingj/ecommerce-backend-service:docs --config
       - name: check if docs different
         id: diff
         run: |-
+          git add --intent-to-add ./docs/
           if git diff --summary --exit-code ./docs/; then
             echo "::set-output name=diff::false"
           else
