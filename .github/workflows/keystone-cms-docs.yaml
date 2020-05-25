@@ -48,9 +48,8 @@ jobs:
           token: '${{ secrets.GH_BOT_TOKEN }}'
       - name: commit diff
         if: steps.diff.outputs.diff == 'true'
-        working-directory: helm/repo/
         run: |-
-          git add .
+          git add ./docs/
           git commit -m "#ci update docs [ci skip]"
       - uses: nick-invision/retry@v1
         if: steps.diff.outputs.diff == 'true'

@@ -1,4 +1,4 @@
-name: Rebase Develop
+name: Merge Develop
 on:
   push:
     branches:
@@ -23,5 +23,5 @@ jobs:
           max_attempts: 3
           command: |-
             git fetch origin master
-            git rebase origin/master
+            git merge origin/master
             git push
