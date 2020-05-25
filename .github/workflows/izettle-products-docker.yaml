@@ -36,7 +36,7 @@ jobs:
         uses: docker://docker:19.03.8
         with:
           entrypoint: docker
-          args: login --username "${{ env.USERNAME }}" --password "${{ secrets.DOCKER_PASSWORD }}" "${{ env.REGISTRY }}"
+          args: login --username "${{ env.USERNAME }}" --password "${{ secrets.DOCKER_PASSWORD2 }}" "${{ env.REGISTRY }}"
       - name: docker push
         uses: docker://docker:19.03.8
         with:
