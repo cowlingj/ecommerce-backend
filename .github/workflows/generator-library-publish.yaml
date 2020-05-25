@@ -17,13 +17,14 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
+          registry-url: 'https://registry.npmjs.org'
           node-version: '14'
           scope: '@cowlingj'
           always-auth: true
       - uses: actions/cache@v1
         env:
           cache-name: cache-node-modules
-          hash: package-lock.json
+          hash: libraries/generator-ecommerce-backend/package-lock.json
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.hash) }}
