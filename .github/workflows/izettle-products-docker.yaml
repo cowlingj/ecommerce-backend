@@ -8,7 +8,7 @@ on:
 env:
   DOCKERFILE: products/izettle/app/Dockerfile
   BUILD_CONTEXT: products/izettle/app
-  REGISTRY: '' #use default registry
+  REGISTRY: ''
   REPOSITORY: cowlingj/izettle-products.backend
   USERNAME: cowlingj
 
@@ -36,13 +36,13 @@ jobs:
         uses: docker://docker:19.03.8
         with:
           entrypoint: docker
-          args: login --username "${{ env.USERNAME }}" --password "${{ secrets.DOCKER_PASSWORD2 }}" "${{ env.REGISTRY }}"
-      - name: docker push
+          args: login --username "${{ env.USERNAME }}" --password "${{ secrets.DOCKER_PASSWORD }}" "${{ env.REGISTRY }}"
+      - name: docker push (latest)
         uses: docker://docker:19.03.8
         with:
           entrypoint: docker
           args: push "${{ env.REPOSITORY }}:latest"
-      - name: docker push
+      - name: docker push (versioned)
         uses: docker://docker:19.03.8
         with:
           entrypoint: docker
