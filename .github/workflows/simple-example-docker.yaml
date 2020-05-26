@@ -1,9 +1,9 @@
-name: EndpoiSimplents Example Docker
+name: Simple Example Docker
 on:
   push:
     branches:
       - master
-    # paths: 'examples/simple/app/**'
+    paths: 'examples/simple/app/**'
 
 env:
   DOCKERFILE: examples/simple/app/Dockerfile
