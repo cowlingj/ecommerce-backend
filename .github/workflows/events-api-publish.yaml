@@ -1,17 +1,17 @@
-name: generator-ecommerce-backend Publish
+name: events-api Publish
 on:
   push:
     branches:
       - master
-    paths:
-      - libraries/generator-ecommerce-backend/**
+    # paths:
+    #   - events/api/**
 
 defaults:
   run:
-    working-directory: libraries/generator-ecommerce-backend/
+    working-directory: events/api/
 
 env:
-  PACKAGE_LOCK: libraries/generator-ecommerce-backend/package-lock.json
+  PACKAGE_LOCK: events/api/package-lock.json
 
 jobs:
   publish:

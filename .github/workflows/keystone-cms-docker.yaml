@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-    # paths: 'cms/keystone/app/**'
+    paths: 'cms/keystone/app/**'
 
 env:
   DOCKERFILE: cms/keystone/app/Dockerfile
