@@ -3,11 +3,11 @@ replicaCount: 1
 ## image: configure the images used within the deployment
 image:
   main:
-    repository: cowlingj/cms.admin
+    repository: cowlingj/keystone-cms.admin
     tag: 0.0.4
     pullPolicy: IfNotPresent
   init:
-    repository: cowlingj/init.cms.admin
+    repository: cowlingj/init-keystone-cms.admin
     tag: 0.0.1
     pullPolicy: IfNotPresent
 

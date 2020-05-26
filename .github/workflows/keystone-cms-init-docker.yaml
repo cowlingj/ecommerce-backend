@@ -1,0 +1,49 @@
+name: Keystone Init CMS Docker
+on:
+  push:
+    branches:
+      - master
+    # paths: 'cms/keystone/init/**'
+
+env:
+  DOCKERFILE: cms/keystone/init/Dockerfile
+  BUILD_CONTEXT: cms/keystone/init/
+  REGISTRY: ''
+  REPOSITORY: cowlingj/init-keystone-cms.admin
+  USERNAME: cowlingj
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker build
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: build --tag "${{ env.REPOSITORY }}:latest" --file "${{ env.DOCKERFILE }}" "${{ env.BUILD_CONTEXT }}"
+      - name: get version from label
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: sh
+          args: -c "echo \"::set-env name=VERSION::\"`docker inspect \"${{ env.REPOSITORY }}:latest\" --format '{{ index .Config.Labels \"version\" }}'`"
+      - name: tag with version
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: tag "${{ env.REPOSITORY }}:latest" "${{ env.REPOSITORY }}:${{ env.VERSION }}"
+      - name: docker login
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: login --username "${{ env.USERNAME }}" --password "${{ secrets.DOCKER_PASSWORD }}" "${{ env.REGISTRY }}"
+      - name: docker push (latest)
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: push "${{ env.REPOSITORY }}:latest"
+      - name: docker push (versioned)
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: push "${{ env.REPOSITORY }}:${{ env.VERSION }}"
