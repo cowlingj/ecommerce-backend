@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-    # paths: 'examples/endpoints/app/**'
+    paths: 'examples/endpoints/app/**'
 
 env:
   DOCKERFILE: examples/endpoints/app/Dockerfile
