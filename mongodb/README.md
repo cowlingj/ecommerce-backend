@@ -4,7 +4,7 @@ A mongodb client
 
 ## Images
 
-init: gcr.io/gke-test-253221/init.mongodb.data:0.0.1
+init: cowlingj/init.mongodb.data:0.0.1
 
 ## Getting Started
 

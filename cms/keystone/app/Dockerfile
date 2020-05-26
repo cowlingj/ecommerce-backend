@@ -8,4 +8,4 @@ RUN npm install
 
 ENTRYPOINT [ "npm", "run", "start" ]
 
-LABEL version="0.0.3"
+LABEL version="0.0.4"

@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: gcr.io/gke-test-253221/simple.example
+  repository: cowlingj/simple.example
   tag: 0.0.2
   pullPolicy: IfNotPresent
 
