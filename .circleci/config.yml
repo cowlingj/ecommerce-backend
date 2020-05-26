@@ -20,18 +20,18 @@ workflows:
 
   package:
     jobs:
-      - build-products-api:
-          filters:
-            branches:
-              only: master
-      - build-events-api:
-          filters:
-            branches:
-              only: master
-      - build-resources-api:
-          filters:
-            branches:
-              only: master
+      # - build-products-api:
+      #     filters:
+      #       branches:
+      #         only: master
+      # - build-events-api:
+      #     filters:
+      #       branches:
+      #         only: master
+      # - build-resources-api:
+      #     filters:
+      #       branches:
+      #         only: master
 
 executors:
   gcloud:

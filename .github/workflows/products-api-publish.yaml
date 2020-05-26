@@ -1,17 +1,17 @@
-name: generator-ecommerce-backend Publish
+name: products-api Publish
 on:
   push:
     branches:
       - master
-    paths:
-      - libraries/generator-ecommerce-backend/**
+    # paths:
+    #   - products/api/**
 
 defaults:
   run:
-    working-directory: libraries/generator-ecommerce-backend/
+    working-directory: products/api/
 
 env:
-  PACKAGE_LOCK: libraries/generator-ecommerce-backend/package-lock.json
+  PACKAGE_LOCK: products/api/package-lock.json
 
 jobs:
   publish:
