@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-    # paths: 'products/json/**'
+    paths: 'products/json/**'
 
 env:
   DOCKERFILE: products/json/app/Dockerfile

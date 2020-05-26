@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-    # paths: 'events/prismic/app/**'
+    paths: 'events/prismic/app/**'
 
 env:
   DOCKERFILE: events/prismic/app/Dockerfile
