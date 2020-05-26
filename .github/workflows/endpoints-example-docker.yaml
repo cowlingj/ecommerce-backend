@@ -1,15 +1,15 @@
-name: Keystone CMS Docker
+name: Endpoints Example Docker
 on:
   push:
     branches:
       - master
-    paths: 'cms/keystone/app/**'
+    # paths: 'examples/endpoints/app/**'
 
 env:
-  DOCKERFILE: cms/keystone/app/Dockerfile
-  BUILD_CONTEXT: cms/keystone/app/
+  DOCKERFILE: examples/endpoints/app/Dockerfile
+  BUILD_CONTEXT: examples/endpoints/app/
   REGISTRY: ''
-  REPOSITORY: cowlingj/keystone-cms.admin
+  REPOSITORY: cowlingj/endpoints.example
   USERNAME: cowlingj
 
 jobs:
