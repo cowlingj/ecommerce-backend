@@ -31,5 +31,8 @@
   ],
   "dependencies": {
     "graphql-tools": "^4.0.8"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
