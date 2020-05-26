@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - master
-    # paths:
-    #   - resources/api/**
+    paths:
+      - resources/api/**
 
 defaults:
   run:

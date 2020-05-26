@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - master
-    # paths:
-    #   - events/api/**
+    paths:
+      - events/api/**
 
 defaults:
   run:
