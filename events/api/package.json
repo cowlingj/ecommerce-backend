@@ -32,5 +32,8 @@
   "dependencies": {
     "graphql-scalars": "^1.1.2",
     "graphql-tools": "^4.0.8"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
