@@ -2,7 +2,7 @@ name: izettle-products
 group: backend
 
 image:
-  repository: gcr.io/gke-test-253221/izettle-products.backend
+  repository: cowlingj/izettle-products.backend
   tag: "0.0.4"
   pullPolicy: IfNotPresent
 

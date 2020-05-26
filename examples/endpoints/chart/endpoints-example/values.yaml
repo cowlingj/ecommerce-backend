@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: gcr.io/gke-test-253221/endpoints.example
+  repository: cowlingj/endpoints.example
   tag: 0.0.2
   pullPolicy: IfNotPresent
 

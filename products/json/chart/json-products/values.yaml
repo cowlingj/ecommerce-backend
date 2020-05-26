@@ -1,7 +1,7 @@
 group: backend
 replicas: 1
 image:
-  repository: "gcr.io/gke-test-253221/json-products.backend"
+  repository: "cowlingj/json-products.backend"
   tag: "0.0.1"
   pullPolicy: IfNotPresent
 secrets:

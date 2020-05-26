@@ -2,7 +2,7 @@
   "name": "ecommerce-backend-cms",
   "description": "A CMS powered by keystonejs",
   "private": true,
-  "version": "5.0.0",
+  "version": "0.0.4",
   "author": "Jonathan Cowling",
   "scripts": {
     "dev": "scripts/dev.sh",

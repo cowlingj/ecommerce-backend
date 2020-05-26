@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: gcr.io/gke-test-253221/prismic-events.backend
+  repository: cowlingj/prismic-events.backend
   tag: 0.0.1
   pullPolicy: IfNotPresent
 

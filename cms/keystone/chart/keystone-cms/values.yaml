@@ -3,11 +3,11 @@ replicaCount: 1
 ## image: configure the images used within the deployment
 image:
   main:
-    repository: gcr.io/gke-test-253221/cms.admin
-    tag: 0.0.3
+    repository: cowlingj/cms.admin
+    tag: 0.0.4
     pullPolicy: IfNotPresent
   init:
-    repository: gcr.io/gke-test-253221/init.cms.admin
+    repository: cowlingj/init.cms.admin
     tag: 0.0.1
     pullPolicy: IfNotPresent
 

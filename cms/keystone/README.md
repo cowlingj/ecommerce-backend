@@ -6,7 +6,7 @@ A headless cms built with [keystonejs](https://keystonejs.com)
 
 ## Images
 
-main: gcr.io/gke-test-253221/cms.admin:0.0.1
+main: cowlingj/cms.admin:0.0.1
 
 ### Prerequisites
 
