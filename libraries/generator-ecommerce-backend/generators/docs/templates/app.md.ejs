@@ -16,7 +16,7 @@ The scripts available to run the application (using `npm run-script`),
 including [lifecycle scripts](https://docs.npmjs.com/misc/scripts) are:
 
 <%_ Object.entries(scripts || {}).forEach((script) => { _%>
-  - <%= script[0] %>: `<%= script[1] %>`
+  - <%= script[0] %>: `<%- script[1] %>`
 <%_ }); _%>
 <%_ if (Object.keys(scripts).length === 0) { _%>
   > There are no scripts for this app

@@ -84,9 +84,10 @@ module.exports = class extends Generator {
             type: "input",
             name: "docs.paths.out",
             message: "path to output directory:",
-            defualt: this.config.get("docs.paths.out") || this.destinationPath(),
+            defualt:
+              this.config.get("docs.paths.out") || this.destinationPath(),
             when: () => defaults["docs.paths.out"] === undefined
-          },
+          }
         ])
       ),
       defaults

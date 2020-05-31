@@ -1,6 +1,6 @@
 {
   "name": "@cowlingj/generator-ecommerce-backend-service",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "homepage": "https://github.com/cowlingj/ecommerce-backend/",
   "author": {
@@ -9,7 +9,8 @@
   },
   "files": [
     "generators/*/templates/",
-    "generators/*/index.js"
+    "generators/*/index.js",
+    "utils/**/*.js"
   ],
   "main": "generators/index.js",
   "keywords": [],

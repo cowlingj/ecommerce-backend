@@ -4,7 +4,7 @@
   "description": "App description",
   "scripts": {
     "script1": "command1",
-    "secript2": "command2"
+    "secript2": "command1 && command2"
   },
   "repository": {
     "type": "git",

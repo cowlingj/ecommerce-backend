@@ -21,9 +21,7 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       "workflows.dockerUser": "docker-username"
     };
 
-    const dir = await helpers
-      .run(path.join(__dirname))
-      .withPrompts(answers);
+    const dir = await helpers.run(path.join(__dirname)).withPrompts(answers);
 
     [
       {
@@ -44,15 +42,11 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
         dest: path.resolve(__dirname, "test-data", "workflows"),
         test: path.resolve(dir, ".github", "workflows")
       }
-    ].forEach(({dest, test, exclude}) => {
-      const result = dircompare.compareSync(
-        dest,
-        test,
-        {
-          compareContent: true,
-          excludeFilter: exclude
-        }
-      );
+    ].forEach(({ dest, test, exclude }) => {
+      const result = dircompare.compareSync(dest, test, {
+        compareContent: true,
+        excludeFilter: exclude
+      });
 
       expect(
         result.same,
@@ -143,9 +137,7 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       "workflows.dockerUser": "docker-username"
     };
 
-    const dir = await helpers
-      .run(path.join(__dirname))
-      .withPrompts(answers);
+    const dir = await helpers.run(path.join(__dirname)).withPrompts(answers);
 
     [
       {
