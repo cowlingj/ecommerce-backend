@@ -2,11 +2,11 @@ name: Keystone Events Docs
 on:
   push:
     paths:
-      # - 'events/keystone/app/package.json'
-      # - 'events/keystone/app/.nvmrc'
-      # - 'events/keystone/app/.env.sample'
-      # - 'events/keystone/chart/keystone-cms/Chart.yaml'
-      # - 'events/keystone/chart/keystone-cms/values.yaml'
+      - 'events/keystone/app/package.json'
+      - 'events/keystone/app/.nvmrc'
+      - 'events/keystone/app/.env.sample'
+      - 'events/keystone/chart/keystone-cms/Chart.yaml'
+      - 'events/keystone/chart/keystone-cms/values.yaml'
 
 defaults:
   run:

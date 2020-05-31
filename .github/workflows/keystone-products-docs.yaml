@@ -2,11 +2,11 @@ name: Keystone Products Docs
 on:
   push:
     paths:
-      # - 'products/keystone/app/package.json'
-      # - 'products/keystone/app/.nvmrc'
-      # - 'products/keystone/app/.env.sample'
-      # - 'products/keystone/chart/keystone-cms/Chart.yaml'
-      # - 'products/keystone/chart/keystone-cms/values.yaml'
+      - 'products/keystone/app/package.json'
+      - 'products/keystone/app/.nvmrc'
+      - 'products/keystone/app/.env.sample'
+      - 'products/keystone/chart/keystone-cms/Chart.yaml'
+      - 'products/keystone/chart/keystone-cms/values.yaml'
 
 defaults:
   run:

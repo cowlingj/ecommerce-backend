@@ -1,12 +1,12 @@
-name: Priosmic Events Docs
+name: Prismic Events Docs
 on:
   push:
     paths:
-      # - 'events/prismic/app/package.json'
-      # - 'events/prismic/app/.nvmrc'
-      # - 'events/prismic/app/.env.sample'
-      # - 'events/prismic/chart/keystone-cms/Chart.yaml'
-      # - 'events/prismic/chart/keystone-cms/values.yaml'
+      - 'events/prismic/app/package.json'
+      - 'events/prismic/app/.nvmrc'
+      - 'events/prismic/app/.env.sample'
+      - 'events/prismic/chart/keystone-cms/Chart.yaml'
+      - 'events/prismic/chart/keystone-cms/values.yaml'
 
 defaults:
   run:

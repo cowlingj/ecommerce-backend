@@ -2,11 +2,11 @@ name: Izettle Products Docs
 on:
   push:
     paths:
-      # - 'products/izettle/app/package.json'
-      # - 'products/izettle/app/.nvmrc'
-      # - 'products/izettle/app/.env.sample'
-      # - 'products/izettle/chart/keystone-cms/Chart.yaml'
-      # - 'products/izettle/chart/keystone-cms/values.yaml'
+      - 'products/izettle/app/package.json'
+      - 'products/izettle/app/.nvmrc'
+      - 'products/izettle/app/.env.sample'
+      - 'products/izettle/chart/keystone-cms/Chart.yaml'
+      - 'products/izettle/chart/keystone-cms/values.yaml'
 
 defaults:
   run:
@@ -15,6 +15,9 @@ defaults:
 
 env:
   GIT_UPSTREAM: origin
+  GIT_USERNAME: Bot
+  GIT_EMAIL: 09cowlingj+bot@gmail.com
+  GH_ACTOR: cowlingj-bot
 
 jobs:
   build-and-publish:
@@ -45,10 +48,10 @@ jobs:
       - uses: oleksiyrudenko/gha-git-credentials@v1
         if: steps.diff.outputs.diff == 'true'
         with:
-          name: 'Bot'
-          email: '09cowlingj+bot@gmail.com'
-          actor: 'cowlingj-bot'
-          token: '${{ secrets.GH_BOT_TOKEN }}'
+          name: '${{ env.GIT_USERNAME }}'
+          email: '${{ env.GIT_EMAIL }}'
+          actor: '${{ env.GH_ACTOR }}'
+          token: '${{ secrets.GH_TOKEN }}'
       - name: commit diff
         if: steps.diff.outputs.diff == 'true'
         run: |-
