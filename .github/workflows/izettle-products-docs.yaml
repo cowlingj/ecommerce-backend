@@ -19,7 +19,8 @@ jobs:
     steps:
       - name: Extract branch name
         run: |-
-          echo "::set-env name=BRANCH_NAME::$(echo test)"
+          echo "::set-env name=BRANCH_NAME::test2"
+          echo "done"
           exit 1
       - uses: actions/checkout@v2
         with:
