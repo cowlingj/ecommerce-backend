@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: ls
+        shell: /bin/bash
       - uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_NAME }}
