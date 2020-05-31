@@ -1,6 +1,6 @@
 {
   "name": "@cowlingj/resources-api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Graphql API for resources service",
   "main": "dist/index.js",
   "scripts": {
