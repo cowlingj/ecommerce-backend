@@ -17,12 +17,12 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - run: echo done
-      - name: debug
-        run: exit 1
       - uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_NAME }}
+      - run: echo done
+      - name: debug
+        run: exit 1
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
