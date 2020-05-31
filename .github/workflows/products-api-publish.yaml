@@ -30,7 +30,7 @@ jobs:
         with:
           path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.PACKAGE_LOCK) }}
-      - run: npm 
+      - run: npm ci
       - run: npm run build
       - run: npm publish
         env:
