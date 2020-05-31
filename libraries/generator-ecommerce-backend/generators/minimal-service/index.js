@@ -3,7 +3,7 @@ const Generator = require("yeoman-generator");
 const chalk = require("chalk");
 const yosay = require("yosay");
 const path = require("path");
-const idValidator = require("../../utils/id-validator").idValidator;
+const idValidator = require("../../utils/id-validator").validator;
 
 module.exports = class extends Generator {
   async prompting() {
