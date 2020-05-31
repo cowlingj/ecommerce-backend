@@ -17,9 +17,11 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
+      - name: Extract branch name
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/}
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ env.BRANCH_NAME }}
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
