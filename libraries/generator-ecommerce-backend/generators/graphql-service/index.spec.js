@@ -18,7 +18,10 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       "image.repository": "prefix/image-name",
       "image.base": "node:current",
       "image.registry": "https://registry/url",
-      "workflows.dockerUser": "docker-username"
+      "workflows.dockerUser": "docker-username",
+      "workflows.gitUser": "git-username",
+      "workflows.gitEmail": "git-email",
+      "workflows.githubActor": "github-actor"
     };
 
     const dir = await helpers.run(path.join(__dirname)).withPrompts(answers);
@@ -134,7 +137,10 @@ describe("generator-ecommerce-backend-service:minimal-service", () => {
       "image.repository": "prefix/image-name",
       "image.base": "node:current",
       "image.registry": "https://registry/url",
-      "workflows.dockerUser": "docker-username"
+      "workflows.dockerUser": "docker-username",
+      "workflows.gitUser": "git-username",
+      "workflows.gitEmail": "git-email",
+      "workflows.githubActor": "github-actor"
     };
 
     const dir = await helpers.run(path.join(__dirname)).withPrompts(answers);

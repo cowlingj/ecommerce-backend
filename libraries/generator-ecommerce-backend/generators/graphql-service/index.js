@@ -119,7 +119,22 @@ module.exports = class extends Generator {
       {
         type: "input",
         name: "workflows.dockerUser",
-        message: "Docker User for workflow:"
+        message: "Docker User:"
+      },
+      {
+        type: "input",
+        name: "workflows.gitUser",
+        message: "Git Username:"
+      },
+      {
+        type: "input",
+        name: "workflows.gitEmail",
+        message: "Git email:"
+      },
+      {
+        type: "input",
+        name: "workflows.githubActor",
+        message: "Github actor:"
       }
     ]);
 
