@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/cowlingj/ecommerce-backend#readme",
   "dependencies": {
-    "@cowlingj/products-api": "https://github.com/cowlingj/ecommerce-backend/raw/master/packages/node/cowlingj-products-api-0.0.6.tgz",
+    "@cowlingj/products-api": "0.0.7",
     "apollo-link": "^1.2.14",
     "apollo-link-context": "^1.0.20",
     "apollo-link-http": "^1.5.17",
