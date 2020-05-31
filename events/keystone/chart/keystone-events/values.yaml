@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cowlingj/keystone-events.backend
-  tag: 0.0.1
+  tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

@@ -1,0 +1,47 @@
+name: JSON Products Tests
+on:
+  pull_request:
+    paths: 'products/json/app/**'
+
+
+defaults:
+  run:
+    shell: bash
+    working-directory: products/json/app/
+
+env:
+  PACKAGE_LOCK: 'products/json/app/package-lock.json'
+
+jobs:
+  unit:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.PACKAGE_LOCK) }}
+      - run: npm ci
+      - run: npm run-script test:unit
+  integration:
+    name: Integration Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - uses: actions/cache@v1
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.PACKAGE_LOCK) }}
+      - run: npm ci
+      - run: npm run-script test:integration

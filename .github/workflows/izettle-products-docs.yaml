@@ -1,0 +1,68 @@
+name: Izettle Products Docs
+on:
+  push:
+    paths:
+      - 'products/izettle/app/package.json'
+      - 'products/izettle/app/.nvmrc'
+      - 'products/izettle/app/.env.sample'
+      - 'products/izettle/chart/keystone-cms/Chart.yaml'
+      - 'products/izettle/chart/keystone-cms/values.yaml'
+
+defaults:
+  run:
+    shell: bash
+    working-directory: 'products/izettle/'
+
+env:
+  GIT_UPSTREAM: origin
+  GIT_USERNAME: Bot
+  GIT_EMAIL: 09cowlingj+bot@gmail.com
+  GH_ACTOR: cowlingj-bot
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - uses: actions/cache@v1
+        env:
+          cache-name: cache-yeoman-node-modules
+          hash: libraries/generator-ecommerce-backend/package-lock.json
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles(env.hash) }}
+      - run: npm install --global yo @cowlingj/generator-ecommerce-backend-service  
+      - run: yo @cowlingj/ecommerce-backend-service:docs --config
+      - name: check if docs different
+        id: diff
+        run: |-
+          git add --intent-to-add ./docs/
+          if git diff --summary --exit-code ./docs/; then
+            echo "::set-output name=diff::false"
+          else
+            echo "::set-output name=diff::true"
+          fi
+      - uses: oleksiyrudenko/gha-git-credentials@v1
+        if: steps.diff.outputs.diff == 'true'
+        with:
+          name: '${{ env.GIT_USERNAME }}'
+          email: '${{ env.GIT_EMAIL }}'
+          actor: '${{ env.GH_ACTOR }}'
+          token: '${{ secrets.GH_TOKEN }}'
+      - name: commit diff
+        if: steps.diff.outputs.diff == 'true'
+        run: |-
+          git add ./docs/
+          git commit -m "#ci update docs [ci skip]"
+      - uses: nick-invision/retry@v1
+        if: steps.diff.outputs.diff == 'true'
+        with:
+          timeout_minutes: 5
+          max_attempts: 3
+          command: |-
+            git fetch ${{ github.head_ref }}
+            git pull "${GIT_UPSTREAM}" "${GITHUB_REF#refs/heads/}"
+            git push "${GIT_UPSTREAM}" "${GITHUB_REF#refs/heads/}"

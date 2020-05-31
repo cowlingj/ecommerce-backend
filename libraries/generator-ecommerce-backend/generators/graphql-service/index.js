@@ -119,7 +119,22 @@ module.exports = class extends Generator {
       {
         type: "input",
         name: "workflows.dockerUser",
-        message: "Docker User for workflow:"
+        message: "Docker User:"
+      },
+      {
+        type: "input",
+        name: "workflows.gitUser",
+        message: "Git Username:"
+      },
+      {
+        type: "input",
+        name: "workflows.gitEmail",
+        message: "Git email:"
+      },
+      {
+        type: "input",
+        name: "workflows.githubActor",
+        message: "Github actor:"
       }
     ]);
 
@@ -171,13 +186,6 @@ module.exports = class extends Generator {
       );
     }
 
-    // this.fs.writeJSON(
-    //   this.destinationPath(this.answers.app.path, ".yo-rc.json"),
-    //   {
-    //     [this.rootGeneratorName()]: this.config.getAll()
-    //   }
-    // );
-
     // eslint in this project will pick up the file .eslintrc.json
     // so we must rename the file in the template directory
     // hence the need to rename it back here
@@ -214,25 +222,56 @@ module.exports = class extends Generator {
       {
         src: this.templatePath("path", "chart", "chart-name", `Chart.yaml.ejs`),
         dest: this.destinationPath(
-          this.answers.app.path, "chart", this.answers.app.id, "Chart.yaml"
+          this.answers.app.path,
+          "chart",
+          this.answers.app.id,
+          "Chart.yaml"
         )
       },
       {
-        src: this.templatePath("path", "chart", "chart-name", `values.yaml.ejs`),
+        src: this.templatePath(
+          "path",
+          "chart",
+          "chart-name",
+          `values.yaml.ejs`
+        ),
         dest: this.destinationPath(
-          this.answers.app.path, "chart", this.answers.app.id, "values.yaml"
+          this.answers.app.path,
+          "chart",
+          this.answers.app.id,
+          "values.yaml"
         )
       },
       {
-        src: this.templatePath("path", "chart", "chart-name", "templates" ,`_helpers.tpl.ejs`),
+        src: this.templatePath(
+          "path",
+          "chart",
+          "chart-name",
+          "templates",
+          `_helpers.tpl.ejs`
+        ),
         dest: this.destinationPath(
-          this.answers.app.path, "chart", this.answers.app.id, "templates", "_helpers.tpl"
+          this.answers.app.path,
+          "chart",
+          this.answers.app.id,
+          "templates",
+          "_helpers.tpl"
         )
       },
       {
-        src: this.templatePath("path", "chart", "chart-name", "templates" ,`standalone.yaml.ejs`),
+        src: this.templatePath(
+          "path",
+          "chart",
+          "chart-name",
+          "templates",
+          `standalone.yaml.ejs`
+        ),
         dest: this.destinationPath(
-          this.answers.app.path, "chart", this.answers.app.id, "templates", "standalone.yaml"
+          this.answers.app.path,
+          "chart",
+          this.answers.app.id,
+          "templates",
+          "standalone.yaml"
         )
       },
       {
@@ -258,56 +297,27 @@ module.exports = class extends Generator {
           "workflows",
           `${this.answers.app.id}-docs.yaml`
         )
-      },
+      }
     ].forEach(({ src, dest }) => {
       this.fs.copyTpl(src, dest, this.answers);
     });
-
-    // [
-    //   "Chart.yaml",
-    //   "values.yaml",
-    //   "templates/_helpers.tpl",
-    //   "templates/standalone.yaml"
-    // ].forEach(filename => {
-    //   this.fs.copyTpl(
-    //     this.templatePath("path", "chart", "chart-name", `${filename}.ejs`),
-    //     this.destinationPath(
-    //       this.answers.app.path,
-    //       "chart",
-    //       this.answers.app.id,
-    //       filename
-    //     ),
-    //     this.answers
-    //   );
-    // });
-
-    // ["docker.yaml", "tests.yaml"].forEach(filename => {
-    //   this.fs.copyTpl(
-    //     this.templatePath("workflows", `${filename}.ejs`),
-    //     this.destinationPath(
-    //       ".github",
-    //       "workflows",
-    //       `${this.answers.app.id}-${filename}`
-    //     ),
-    //     this.answers
-    //   );
-    // });
   }
 
   _autoDocs() {
     const config = this.config.getAll();
-    Object.keys(config).forEach((key) => {
+    Object.keys(config).forEach(key => {
       this.config.delete(key);
     });
 
-
     this.config.set({
       "docs.paths.helm": this.destinationPath(
-        this.answers.app.path, "chart", this.answers.app.id
+        this.answers.app.path,
+        "chart",
+        this.answers.app.id
       ),
       "docs.paths.app": this.destinationPath(this.answers.app.path, "app"),
       "docs.paths.out": this.destinationPath(this.answers.app.path, "docs")
-    })
+    });
     this.composeWith(require.resolve("../docs/"), {
       config: true
     });

@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: cowlingj/keystone-products.backend
-  tag: 0.0.1
+  tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

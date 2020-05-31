@@ -69,7 +69,7 @@ export const server: Promise<Server> = (async (): Promise<Server> => {
   });
 
   return apollo
-    .listen(process.env.PORT, () => {
+    .listen(process.env.PORT, process.env.HOST, () => {
       console.log(
         `Server ready at http://${process.env.HOST ?? "localhost"}:${
           process.env.PORT

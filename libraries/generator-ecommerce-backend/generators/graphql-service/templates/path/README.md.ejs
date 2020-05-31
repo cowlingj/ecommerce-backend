@@ -57,4 +57,4 @@ Through GitHub Actions the following is supported:
 
 The following secrets are required to be set on the repository:
 - DOCKER_PASSWORD: password for interacting with docker registry
-- GIT_PASSWORD: password for interacting with GitHub (this should be a [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) and not the normal account password)
+- GH_TOKEN: password for interacting with GitHub (this should be a [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) and not the normal account password)

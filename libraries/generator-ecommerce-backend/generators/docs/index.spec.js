@@ -42,7 +42,9 @@ describe("generator-ecommerce-backend-service:docs", () => {
       });
 
     expect(
-      fs.readFileSync(path.resolve(dir, answers["docs.paths.out"], "helm.md"), { encoding: "utf-8" })
+      fs.readFileSync(path.resolve(dir, answers["docs.paths.out"], "helm.md"), {
+        encoding: "utf-8"
+      })
     ).toEqual(
       fs.readFileSync(
         path.resolve(
@@ -55,7 +57,9 @@ describe("generator-ecommerce-backend-service:docs", () => {
     );
 
     expect(
-      fs.readFileSync(path.resolve(dir, answers["docs.paths.out"], "app.md"), { encoding: "utf-8" })
+      fs.readFileSync(path.resolve(dir, answers["docs.paths.out"], "app.md"), {
+        encoding: "utf-8"
+      })
     ).toEqual(
       fs.readFileSync(
         path.resolve(__dirname, "test-expected-output", "app-with-scripts.md"),
@@ -101,7 +105,9 @@ describe("generator-ecommerce-backend-service:docs", () => {
       });
 
     expect(
-      fs.readFileSync(path.resolve(dir, answers["docs.paths.out"], "helm.md"), { encoding: "utf-8" })
+      fs.readFileSync(path.resolve(dir, answers["docs.paths.out"], "helm.md"), {
+        encoding: "utf-8"
+      })
     ).toEqual(
       fs.readFileSync(
         path.resolve(
@@ -114,7 +120,9 @@ describe("generator-ecommerce-backend-service:docs", () => {
     );
 
     expect(
-      fs.readFileSync(path.resolve(dir, answers["docs.paths.out"], "app.md"), { encoding: "utf-8" })
+      fs.readFileSync(path.resolve(dir, answers["docs.paths.out"], "app.md"), {
+        encoding: "utf-8"
+      })
     ).toEqual(
       fs.readFileSync(
         path.resolve(
@@ -206,7 +214,9 @@ describe("generator-ecommerce-backend-service:docs", () => {
       });
 
     expect(
-      fs.readFileSync(path.resolve(dir, config["docs.paths.out"], "helm.md"), { encoding: "utf-8" })
+      fs.readFileSync(path.resolve(dir, config["docs.paths.out"], "helm.md"), {
+        encoding: "utf-8"
+      })
     ).toEqual(
       fs.readFileSync(
         path.resolve(

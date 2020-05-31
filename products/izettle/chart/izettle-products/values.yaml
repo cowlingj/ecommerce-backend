@@ -3,7 +3,7 @@ group: backend
 
 image:
   repository: cowlingj/izettle-products.backend
-  tag: "0.0.4"
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

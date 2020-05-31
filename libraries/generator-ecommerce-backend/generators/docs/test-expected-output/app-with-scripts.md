@@ -13,7 +13,7 @@ The scripts available to run the application (using `npm run-script`),
 including [lifecycle scripts](https://docs.npmjs.com/misc/scripts) are:
 
   - script1: `command1`
-  - secript2: `command2`
+  - secript2: `command1 && command2`
 
 ## Environment Variables
 
