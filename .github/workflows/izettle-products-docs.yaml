@@ -2,11 +2,11 @@ name: Izettle Products Docs
 on:
   push:
     paths:
-      - 'products/izettle/app/package.json'
-      - 'products/izettle/app/.nvmrc'
-      - 'products/izettle/app/.env.sample'
-      - 'products/izettle/chart/keystone-cms/Chart.yaml'
-      - 'products/izettle/chart/keystone-cms/values.yaml'
+      # - 'products/izettle/app/package.json'
+      # - 'products/izettle/app/.nvmrc'
+      # - 'products/izettle/app/.env.sample'
+      # - 'products/izettle/chart/keystone-cms/Chart.yaml'
+      # - 'products/izettle/chart/keystone-cms/values.yaml'
 
 defaults:
   run:
