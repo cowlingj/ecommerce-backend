@@ -13,18 +13,14 @@ defaults:
     shell: bash
     working-directory: 'products/izettle/'
 
+env:
+  GIT_UPSTREAM: origin
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          pwd
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ env.BRANCH_NAME }}
-      - run: echo done
-      - name: debug
-        run: exit 1
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
@@ -64,4 +60,6 @@ jobs:
           timeout_minutes: 5
           max_attempts: 3
           command: |-
-            git pull && git push origin
+            git fetch ${{ github.head_ref }}
+            git pull "${GIT_UPSTREAM}" "${GITHUB_REF#refs/heads/}"
+            git push "${GIT_UPSTREAM}" "${GITHUB_REF#refs/heads/}"
