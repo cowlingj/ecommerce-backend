@@ -2,24 +2,28 @@ name: Keystone Products Docs
 on:
   push:
     paths:
-      - 'products/keystone/app/package.json'
-      - 'products/keystone/app/.nvmrc'
-      - 'products/keystone/app/.env.sample'
-      - 'products/keystone/chart/keystone-cms/Chart.yaml'
-      - 'products/keystone/chart/keystone-cms/values.yaml'
+      # - 'products/keystone/app/package.json'
+      # - 'products/keystone/app/.nvmrc'
+      # - 'products/keystone/app/.env.sample'
+      # - 'products/keystone/chart/keystone-cms/Chart.yaml'
+      # - 'products/keystone/chart/keystone-cms/values.yaml'
 
 defaults:
   run:
     shell: bash
     working-directory: 'products/keystone/'
 
+env:
+  GIT_UPSTREAM: origin
+  GIT_USERNAME: Bot
+  GIT_EMAIL: 09cowlingj+bot@gmail.com
+  GH_ACTOR: cowlingj-bot
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
@@ -44,10 +48,10 @@ jobs:
       - uses: oleksiyrudenko/gha-git-credentials@v1
         if: steps.diff.outputs.diff == 'true'
         with:
-          name: 'Bot'
-          email: '09cowlingj+bot@gmail.com'
-          actor: 'cowlingj-bot'
-          token: '${{ secrets.GH_BOT_TOKEN }}'
+          name: '${{ env.GIT_USERNAME }}'
+          email: '${{ env.GIT_EMAIL }}'
+          actor: '${{ env.GH_ACTOR }}'
+          token: '${{ secrets.GH_TOKEN }}'
       - name: commit diff
         if: steps.diff.outputs.diff == 'true'
         run: |-
@@ -59,4 +63,6 @@ jobs:
           timeout_minutes: 5
           max_attempts: 3
           command: |-
-            git pull && git push origin
+            git fetch ${{ github.head_ref }}
+            git pull "${GIT_UPSTREAM}" "${GITHUB_REF#refs/heads/}"
+            git push "${GIT_UPSTREAM}" "${GITHUB_REF#refs/heads/}"
