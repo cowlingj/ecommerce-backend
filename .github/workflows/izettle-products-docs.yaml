@@ -18,7 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Extract branch name
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+        run: |-
+          echo "::set-env name=BRANCH_NAME::$(echo test)"
+          exit 1
       - uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_NAME }}
