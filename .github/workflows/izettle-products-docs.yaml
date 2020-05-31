@@ -17,6 +17,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
+      - run: echo start
       - uses: actions/checkout@v2
         with:
           ref: ${{ env.BRANCH_NAME }}
