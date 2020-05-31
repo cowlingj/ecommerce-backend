@@ -17,8 +17,7 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Extract branch name
-        run: echo "done"
+      - run: echo done
       - name: debug
         run: exit 1
       - uses: actions/checkout@v2
