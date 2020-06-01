@@ -75,7 +75,7 @@ dependencies:
       - fusionauth
   - name: postgresql
     repository: https://charts.bitnami.com/bitnami/
-    version: 11.8.0
+    version: 8.10.4
     tags:
       - postgres
       - fusionauth
