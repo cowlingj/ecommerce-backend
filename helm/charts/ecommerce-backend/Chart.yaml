@@ -68,3 +68,14 @@ dependencies:
     tags:
       - examples
       - endpoints-example
+  - name: fusionauth
+    repository: https://fusionauth.github.io/charts/
+    version: 0.4.2
+    tags:
+      - fusionauth
+  - name: postgresql
+    repository: https://charts.bitnami.com/bitnami/
+    version: 11.8.0
+    tags:
+      - postgres
+      - fusionauth
