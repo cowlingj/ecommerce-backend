@@ -1,4 +1,4 @@
-FROM node:13.2.0-buster
+FROM node:14.3.0-buster
 
 COPY . /usr/lib/app/
 
@@ -8,4 +8,4 @@ RUN npm install
 
 ENTRYPOINT [ "npm", "run", "start" ]
 
-LABEL version="0.0.5"
+LABEL version="0.0.6"
