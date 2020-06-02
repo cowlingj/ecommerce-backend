@@ -1,12 +1,12 @@
 apiVersion: v2
 name: ecommerce-backend
 description: umberella package for ecommerce-backend
-version: 0.0.1
+version: 0.0.2
 appVersion: 0.0.0
 dependencies:
   - name: keystone-cms
     repository: file://../../../cms/keystone/chart/keystone-cms/
-    version: 0.2.0
+    version: 0.2.1
     tags:
       - keystone
       - keystone-cms
