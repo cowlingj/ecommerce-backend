@@ -4,11 +4,11 @@ replicaCount: 1
 image:
   main:
     repository: cowlingj/keystone-cms.admin
-    tag: 0.0.4
+    tag: latest
     pullPolicy: IfNotPresent
   init:
     repository: cowlingj/init-keystone-cms.admin
-    tag: 0.0.1
+    tag: latest
     pullPolicy: IfNotPresent
 
 imagePullSecrets: []
