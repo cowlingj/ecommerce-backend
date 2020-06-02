@@ -2,7 +2,7 @@
   "name": "ecommerce-backend-cms",
   "description": "A CMS powered by keystonejs",
   "private": true,
-  "version": "0.0.4",
+  "version": "0.0.0",
   "author": "Jonathan Cowling",
   "scripts": {
     "dev": "scripts/dev.sh",
@@ -11,13 +11,13 @@
     "clean": "scripts/clean.sh"
   },
   "dependencies": {
-    "@keystonejs/adapter-mongoose": "^5.2.2",
-    "@keystonejs/app-admin-ui": "^5.12.0",
-    "@keystonejs/app-graphql": "^5.1.7",
-    "@keystonejs/auth-password": "^5.1.8",
-    "@keystonejs/fields": "^5.2.0",
-    "@keystonejs/keystone": "^5.6.0",
-    "@keystonejs/logger": "^5.1.1",
+    "@keystonejs/adapter-mongoose": "^8.1.2",
+    "@keystonejs/app-admin-ui": "^7.0.1",
+    "@keystonejs/app-graphql": "^5.1.8",
+    "@keystonejs/auth-password": "^5.1.9",
+    "@keystonejs/fields": "^12.0.1",
+    "@keystonejs/keystone": "^10.0.0",
+    "@keystonejs/logger": "^5.1.2",
     "@types/connect-mongo": "^3.1.3",
     "@types/express-session": "^1.17.0",
     "connect-mongo": "^3.2.0",
@@ -33,9 +33,9 @@
     "@types/keystonejs__app-admin-ui": "^5.1.0",
     "@types/keystonejs__app-graphql": "^5.0.1",
     "@types/keystonejs__auth-password": "^5.0.0",
-    "@types/keystonejs__keystone": "^5.2.2",
+    "@types/keystonejs__keystone": "^6.0.0",
     "@types/keystonejs__logger": "^5.0.0",
-    "@types/pino": "^5.20.0",
+    "@types/pino": "^6.0.1",
     "nodemon": "^2.0.4",
     "typescript": "^3.9.3"
   }

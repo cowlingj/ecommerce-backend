@@ -4,7 +4,7 @@ import { Keystone } from "@keystonejs/keystone";
 export default function(keystone: Keystone) {
   keystone.createList("StringValue", {
     label: 'Text',
-    plural: 'Text',
+    plural: 'Texts',
     labelField: 'key',
     fields: {
       key: {
