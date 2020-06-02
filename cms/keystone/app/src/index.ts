@@ -23,6 +23,7 @@ const keystone = new Keystone({
   name: "Uni-Cycle",
   adapter: new MongooseAdapter({ mongoUri }),
   secureCookies: false,
+  cookieSecret: process.env.COOKIE_SECRET,
   sessionStore: new MongoDBStore({
     url: mongoUri,
     collection: '_session'
