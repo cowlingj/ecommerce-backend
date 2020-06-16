@@ -36,6 +36,13 @@ keystone-cms:
     admin:
       username: root
       database: admin
+  authAdmin:
+    enabled: true
+    config:
+      resources:
+        - "uri=/cms/admin|roles=keystone:admin"
+  authApi:
+    enabled: false
 
 keystone-events:
   keystone:
@@ -79,29 +86,27 @@ postgresql:
   service:
     port: &postgres-port 5432
 
-fusionauth:
+keycloak:
+  existingSecret: ${keycloak.secrets.rootUser.secretName}
+  existingSecretKey: ${keycloak.secrets.rootUser.key}
+  basepath: auth
+  username: keycloak
+  fullname: keycloak
+  extraArgs: ${keycloak.extra_args}
+  extraVolumes: |
+${keycloak.volumes}
+  extraVolumeMounts: |
+${keycloak.volume_mounts}
   service:
-    port: 80
-  database:
-    protocol: postgresql
-    host: *postgres-host
-    port: *postgres-port
-    name: fusionauth
-    user: fusionauth
-    password:
-    root:
-      user: *postgres-root-username
-      password:
-    existingSecret: postgres-fusionauth
-  search:
-    engine: database
-  kickstart:
-    enabled: false
-    data: {}
+    httpPort: 80
+    httpsPort: 443
+  persistence:
+    # existingSecret:
+    # existingSecretPasswordKey:
+    # existingSecretUsernameKey:
+    dbVendor: postgres
 
 tags:
-  auth: false
-  postgres: false
   elasticsearch: false
   mongodb: true
   keystone: true
@@ -117,6 +122,6 @@ tags:
   examples: false
   nginx-ingress: false
   istio-ingress: false
-  fusionauth: false
-  postgresql: false
+  keycloak: true
+  postgresql: true
   

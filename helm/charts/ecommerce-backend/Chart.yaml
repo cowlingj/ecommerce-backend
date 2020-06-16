@@ -1,7 +1,7 @@
 apiVersion: v2
 name: ecommerce-backend
 description: umberella package for ecommerce-backend
-version: 0.0.2
+version: 0.0.3
 appVersion: 0.0.0
 dependencies:
   - name: keystone-cms
@@ -68,14 +68,14 @@ dependencies:
     tags:
       - examples
       - endpoints-example
-  - name: fusionauth
-    repository: https://fusionauth.github.io/charts/
-    version: 0.4.2
+  - name: keycloak
+    repository: https://codecentric.github.io/helm-charts/
+    version: 8.2.2
     tags:
-      - fusionauth
+      - keycloak
   - name: postgresql
     repository: https://charts.bitnami.com/bitnami/
     version: 8.10.4
     tags:
       - postgres
-      - fusionauth
+      - keycloak
