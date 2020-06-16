@@ -5,29 +5,26 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "allowJs": true,
-        "noEmit": true,
+        "sourceMap": true,
         "strict": true,
         "esModuleInterop": true,
         "typeRoots" : [
             "./node_modules/@types",
-            "./typings"
+            "./@types"
         ],
         "paths": {
             "@keystonejs/keystone": [
-                "typings/keystonejs__keystone",
+                "@types/keystonejs__keystone",
                 "node_modules/@types/keystonejs__keystone"
             ],
             "@keystonejs/logger": [
-              "typings/keystonejs__logger",
+              "@types/keystonejs__logger",
               "node_modules/@types/keystonejs__logger"
             ],
             "@keystonejs/adapter-mongoose": [
-                "typings/keystonejs__adapter-mongoose",
+                "@types/keystonejs__adapter-mongoose",
                 "node_modules/@types/keystonejs__adapter-mongoose"
             ]
         }
-    },
-    "include": [
-        "src/**/*"
-    ]
+    }
 }

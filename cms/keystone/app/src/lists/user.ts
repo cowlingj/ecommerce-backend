@@ -13,7 +13,7 @@ export default function(keystone: Keystone) {
                 type: Password,
             },
         },
-        access: ({ authentication: { item: user }, operation: operation }) =>
-          Boolean(operation === 'auth' || user && user.isAdmin)
+        // access: ({ authentication: { item: user }, operation: operation }) =>
+        //   Boolean(operation === 'auth' || user && user.isAdmin)
   })
 }

@@ -1,0 +1,23 @@
+{{- if and (.Values.secrets.users) (not .Values.secrets.users.exists) }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "keystone-cms.scopedName" (list .Values.secrets.users .) }}
+  labels:
+{{ include "keystone-cms.labels" . | indent 4 }}
+type: Opaque
+data:
+  users: {{ .Values.secrets.users.data | toJson | b64enc }}
+{{- end }}
+---
+{{- if and (.Values.secrets.strings) (not .Values.secrets.strings.exists) }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "keystone-cms.scopedName" (list .Values.secrets.strings .) }}
+  labels:
+{{ include "keystone-cms.labels" . | indent 4 }}
+type: Opaque
+data:
+  strings: {{ .Values.secrets.strings.data | toJson | b64enc }}
+{{- end }}

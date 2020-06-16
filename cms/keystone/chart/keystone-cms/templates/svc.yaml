@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "keystone-cms.scopedName" (list .Values.service .) }}
+  labels:
+{{ include "keystone-cms.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  {{ if not or .Values.authAdmin.enabled .Values.authApi.enabled -}}
+    - port: {{ .Values.service.port }}
+      targetPort: http-main
+      protocol: TCP
+      name: http-main
+  {{ else -}}
+  {{ if .Values.authAdmin.enabled -}}
+    - port: {{ .Values.authAdmin.service.port }}
+      targetPort: http-admin
+      protocol: TCP
+      name: http-admin
+  {{- end }}
+  {{ if .Values.authApi.enabled -}}
+    - port: {{ .Values.authApi.service.port }}
+      targetPort: http-api
+      protocol: TCP
+      name: http-api
+  {{- end }}
+  {{- end }}
+  selector:
+    app.kubernetes.io/name: {{ include "keystone-cms.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

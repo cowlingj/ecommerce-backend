@@ -18,14 +18,14 @@ export default function(keystone: Keystone) {
         isMultiline: true
       }
     },
-    access: {
-      create: ({ authentication: { item: user } }) =>
-        Boolean(user && user.isAdmin),
-      read: true,
-      update: ({ authentication: { item: user } }) =>
-        Boolean(user && user.isAdmin),
-      delete: ({ authentication: { item: user } }) =>
-        Boolean(user && user.isAdmin)
-    }
+    // access: {
+    //   create: ({ authentication: { item: user } }) =>
+    //     Boolean(user && user.isAdmin),
+    //   read: true,
+    //   update: ({ authentication: { item: user } }) =>
+    //     Boolean(user && user.isAdmin),
+    //   delete: ({ authentication: { item: user } }) =>
+    //     Boolean(user && user.isAdmin)
+    // }
   });
 }
