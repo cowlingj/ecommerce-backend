@@ -1,0 +1,42 @@
+type PageInfo {
+  startCursor: String
+  endCursor: String
+  hasNextPage: Boolean!
+}
+
+type ProductEdge {
+  node: String! #Product!
+  cursor: String
+}
+
+type DiscountCodeEdge {
+  node: String!
+  cursor: String!
+}
+
+type Items {
+  totalCount: Int!
+  edges: [ProductEdge!]!
+  pageInfo: PageInfo!
+}
+
+type DiscountCodes {
+  totalCount: Int!
+  edges: [DiscountCodeEdge!]!
+  pageInfo: PageInfo!
+}
+
+type Basket {
+  items(before: String, after: String, first: Int, last: Int): Items!
+  discountCodes(before: String, after: String, first: Int, last: Int): DiscountCodes!
+}
+
+extend type Query {
+  myBasket: Basket!
+}
+
+extend type Mutation {
+  addToMyBasket: Basket
+  removeFromMyBasket: Basket
+  emptyMyBasket: Basket
+}

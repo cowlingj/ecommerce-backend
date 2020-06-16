@@ -1,0 +1,5 @@
+{
+    "exec": "NODE_ENV=development npm run build || exit 1; [ -n \"$NODE_INSPECT_PORT\" ] && export NODE_INSPECT_PORT && NODE_ENV=development npm run debug || NODE_ENV=development npm run start",
+    "watch": [ "src" ],
+    "ext": "js,ts,json,gql"
+}

@@ -1,0 +1,8 @@
+{
+  "@cowlingj/generator-ecommerce-backend-service": {
+    "docs.paths.helm": "chart/apollo-basket/",
+    "docs.paths.app": "app/",
+    "docs.paths.out": "/home/jonathan/Projects/ecommerce-framework/backend/basket/apollo/docs",
+    "docs.path.out": "docs/"
+  }
+}
