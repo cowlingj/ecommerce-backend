@@ -38,7 +38,7 @@ describe("Server", () => {
     serversToCloseAfterEachTest = [];
   });
 
-  it("Can get a list of events", async () => {
+  it("Outputs hello world", async () => {
     jest.resetModules();
     serversToCloseAfterEachTest.push(await require("./index").server);
 
