@@ -73,9 +73,3 @@ dependencies:
     version: 8.2.2
     tags:
       - keycloak
-  - name: postgresql
-    repository: https://charts.bitnami.com/bitnami/
-    version: 8.10.4
-    tags:
-      - postgres
-      - keycloak

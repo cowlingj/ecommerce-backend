@@ -74,37 +74,16 @@ nginx-ingress:
         name: keystone-events
         port: 80
 
-postgresql:
-  postgresqlUsername: &postgres-root-username postgres
-  postgresqlPostgresPassword:
-  postgresqlDatabase: admin
-  persistence:
-    enabled: false
-    existingClaim:
-    size: 128Mi
-  fullnameOverride: &postgres-host postgres
-  service:
-    port: &postgres-port 5432
-
 keycloak:
-  existingSecret: ${keycloak.secrets.rootUser.secretName}
-  existingSecretKey: ${keycloak.secrets.rootUser.key}
+  existingSecret: null
   basepath: auth
   username: keycloak
   fullname: keycloak
-  extraArgs: ${keycloak.extra_args}
-  extraVolumes: |
-${keycloak.volumes}
-  extraVolumeMounts: |
-${keycloak.volume_mounts}
+  persistence:
+    dbVendor: h2
   service:
     httpPort: 80
     httpsPort: 443
-  persistence:
-    # existingSecret:
-    # existingSecretPasswordKey:
-    # existingSecretUsernameKey:
-    dbVendor: postgres
 
 tags:
   elasticsearch: false
@@ -123,5 +102,4 @@ tags:
   nginx-ingress: false
   istio-ingress: false
   keycloak: true
-  postgresql: true
   
