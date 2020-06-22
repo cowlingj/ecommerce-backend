@@ -11,6 +11,7 @@ import jwksClient from "jwks-rsa"
 import { promisify } from "util"
 import express from "express"
 import cookieParser from "cookie-parser"
+//  TODO: use mongoose for users with an account
 // import { connect, Schema, model } from "mongoose"
 
 config();
@@ -18,19 +19,6 @@ config();
 const client = process.env.JWKS_URI ? jwksClient({
   jwksUri: process.env.JWKS_URI
 }) : undefined;
-
-// const itemsSchema = new Schema({
-
-// })
-
-// const discountCodesSchema = new Schema({
-
-// })
-
-// const basketSchema = new Schema({
-//   items: itemsSchema,
-//   discountCodes: discountCodesSchema
-// })
 
 export const server: Promise<Server> = (async (): Promise<Server> => {
 
