@@ -140,7 +140,8 @@ spec:
           {{- if and .Values.authAdmin.startupProbe (ge (atoi .Capabilities.KubeVersion.Major) 1) (ge (atoi .Capabilities.KubeVersion.Minor) 16) }}
           startupProbe: {{ tpl .Values.authAdmin.startupProbe . | nindent 12 }}
           {{- end }}
-          entrypoint: /bin/sh
+          command:
+          - /bin/sh
           args:
           - -c
           - >-

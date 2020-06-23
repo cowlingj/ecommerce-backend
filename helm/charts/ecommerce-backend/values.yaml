@@ -38,6 +38,8 @@ keystone-cms:
       database: admin
   authAdmin:
     enabled: true
+    service:
+      port:
     config:
       resources:
         - "uri=/cms/admin|roles=keystone:admin"

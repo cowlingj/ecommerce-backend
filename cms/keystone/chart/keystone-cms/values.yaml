@@ -108,6 +108,12 @@ features:
 authAdmin:
   ## authAdmin.enabled: protects admin interface with authorization code flow
   enabled: false
+  image:
+    repository: keycloak/keycloak-gatekeeper
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  service:
+    port: 80
   ## authAdmin.secrets: kubernetes secrets for authAdmin
   secrets:
     ## authAdmin.secrets.clientSecret: client secret for the keystone to use for auth
@@ -128,8 +134,8 @@ authAdmin:
   config:
     ## authAdmin.config.clientSecretSecretKey: key for oauth client secret
     clientSecretSecretKey: "client_secret"
-    ## authAdmin.config.encryptionKeySecretkey: key for encryption key
-    encryptionKeySecretkey: "encryption_key"
+    ## authAdmin.config.encryptionKeySecretKey: key for encryption key
+    encryptionKeySecretKey: "encryption_key"
     ## authAdmin.config.clientId: oauth client id
     clientId: keystone
     ## authAdmin.config.discoveryUrl: openid connect discovery url (external url)
