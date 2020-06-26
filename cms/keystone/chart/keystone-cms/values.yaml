@@ -99,3 +99,99 @@ features:
   products: true
   ## features.resources: whether resources are enabled in the CMS
   resources: true
+
+## *.secrets.<secret_name>.nameOverride: the name of the secret if no fullnameOverride exists (appended to release name)
+## *.secrets.<secret_name>.fullnameOverride: the name of the secret
+## *.secrets.<secret_name>.exists: whether the secret already exists or does it need to be created by this chart
+## *.secrets.<secret_name>.data: yaml data to be stored in the created secret (when exists: false used to cause secret to be created)
+
+authAdmin:
+  ## authAdmin.enabled: protects admin interface with authorization code flow
+  enabled: false
+  image:
+    repository: keycloak/keycloak-gatekeeper
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  service:
+    port: 8080
+  ## authAdmin.secrets: kubernetes secrets for authAdmin
+  secrets:
+    ## authAdmin.secrets.clientSecret: client secret for the keystone to use for auth
+    clientSecret:
+      nameOverride: "keystone-cms-admin-auth-client-secret"
+      fullnameOverride: ""
+      exists: false
+      data:
+        client_secret: ""
+    ## authAdmin.secrets.encryptionKey: encryption key for sessions
+    encryptionKey:
+      nameOverride: "keystone-cms-admin-auth-encryption-key"
+      fullnameOverride: ""
+      exists: false
+      data:
+        ## authAdmin.secrets.encryptionKey.data.encryptionKey: 32 character encryption key (key will be extended or truncated to 32 characters) 
+        encryption_key: ""
+  config:
+    ## authAdmin.config.clientSecretSecretKey: key for oauth client secret
+    clientSecretSecretKey: "client_secret"
+    ## authAdmin.config.encryptionKeySecretKey: key for encryption key
+    encryptionKeySecretKey: "encryption_key"
+    ## authAdmin.config.clientId: oauth client id
+    clientId: keystone
+    ## authAdmin.config.discoveryUrl: openid connect discovery url (external url)
+    discoveryUrl: null
+    ## authAdmin.config.redirectionUrl: redirection url back to authentication service 
+    redirectionUrl: null
+    ## authAdmin.config.proxyUrl: openid connect internal url
+    proxyUrl: null
+    ## authAdmin.config.secureCookie: whether or not to enable secure cookies (requires https)
+    secureCookie: true
+    ## authAdmin.config.defaultDeny: deny authorization for routes not in resources
+    defaultDeny: true
+    ## authAdmin.config.resources: each string is a keycloak gateway resources argument
+    resources:
+      - "uri=/admin|roles=keystone:admin"
+      - "uri=/favicon|white-listed=true"
+      - "uri=/graphql|roles=keystone:admin"
+
+authApi:
+  ## authAdmin.enabled: protects admin interface with authorization code flow
+  enabled: false
+  image:
+    repository: keycloak/keycloak-gatekeeper
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  service:
+    port: 80
+  ## authAdmin.secrets: kubernetes secrets for authAdmin
+  secrets:
+    ## authApi.secrets.clientSecret: client secret for the keystone to use for api auth
+    clientSecret:
+      nameOverride: "keystone-cms-admin-auth-client-secret"
+      fullnameOverride: ""
+      exists: false
+      data:
+        client_secret: ""
+    ## authApi.secrets.encryptionKey: encryption key for sessions
+    encryptionKey:
+      nameOverride: "keystone-cms-api-auth-encryption-key"
+      fullnameOverride: ""
+      exists: false
+      data:
+        encryption_key: ""
+  config:
+    ## authAdmin.config.clientSecretSecretKey: key for oauth client secret
+    clientSecretSecretKey: "client_secret"
+    ## authAdmin.config.encryptionKeySecretkey: key for encryption key
+    encryptionKeySecretKey: "encryption_key"
+    ## authAdmin.config.clientId: oauth client id
+    clientId: keystone
+    ## authAdmin.config.discoveryUrl: openid connect discovery url (external url)
+    discoveryUrl: null
+    ## authAdmin.config.proxyUrl: openid connect internal url
+    proxyUrl: null
+    ## authAdmin.config.defaultDeny: deny authorization for routes not in resources
+    defaultDeny: true
+    ## authAdmin.config.resources: each string is a keycloak gateway resources argument
+    resources:
+      - "uri=/graphql|roles=keystone:admin"

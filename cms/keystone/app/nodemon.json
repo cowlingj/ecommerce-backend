@@ -1,5 +1,5 @@
 {
-    "exec": "scripts/_nodemon_exec.sh",
+    "exec": "npm run build || exit 1; [ -n \"$NODE_INSPECT_PORT\" ] && export NODE_INSPECT_PORT && npm run debug || npm run start",
     "watch": [ "src" ],
     "ext": "js,ts,json"
 }

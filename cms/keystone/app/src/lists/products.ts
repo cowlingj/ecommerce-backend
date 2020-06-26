@@ -28,4 +28,20 @@ export default function(keystone: Keystone) {
         Boolean(user && user.isAdmin)
     }
   });
+  keystone.createList("Product", {
+    fields: {
+      name: {
+        type: Text
+      },
+      imageUrl: {
+        type: Url
+      },
+      price: {
+        type: Integer
+      },
+      currency: {
+        type: Text
+      }
+    }
+  });
 }

@@ -1,0 +1,17 @@
+{
+  "rootDir": "..",
+  "roots": ["<rootDir>/src"],
+  "moduleNameMapper": {
+    "~/(.*)$": "<rootDir>/src/$1"
+  },
+  "transform": {
+    "^.+\\.ts$": "babel-jest",
+    "^.+\\.(gql)|(graphql)$": "@jagi/jest-transform-graphql"
+  },
+  "testRegex": "(?:\\.|\\/)spec\\.ts$",
+  "moduleFileExtensions": [
+    "ts",
+    "js",
+    "json"
+  ]
+}

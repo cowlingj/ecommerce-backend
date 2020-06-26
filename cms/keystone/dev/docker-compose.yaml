@@ -1,0 +1,68 @@
+version: '3.8'
+services:
+  mongodb:
+    image: "mongo:latest"
+    ports:
+      - "27017:27017"
+  gatekeeper_admin:
+    image: "keycloak/keycloak-gatekeeper:latest"
+    ports:
+      - "8080:8080"
+    command: >-
+      --client-id=keystone
+      --client-secret=94ca4b65-2383-4899-99f8-82a2b3cda759
+      --discovery-url=http://localhost:8081/auth/realms/default
+      --upstream-url=http://${DOCKER_GATEWAY_HOST}:3000/cms/admin
+      --listen=0.0.0.0:8080
+      --openid-provider-proxy=http://keycloak:8080
+      --skip-upstream-tls-verify=true
+      --skip-openid-provider-tls-verify=true
+      --encryption-key="16_or_32_character_encrption_key"
+      --secure-cookie=false
+      --enable-logging=true
+      --enable-json-logging=true
+      --enable-default-deny=true
+      --enable-refresh-tokens=true
+      --enable-session-cookies=true
+      --resources="uri=/cms/favicon|white-listed=true"
+      --resources="uri=/cms/admin|roles=keystone:admin"
+      --resources="uri=/cms/graphql|roles=keystone:admin"
+      --redirection-url=http://localhost:8080/
+      --base-uri=/cms
+  gatekeeper_graphql:
+    image: "keycloak/keycloak-gatekeeper:latest"
+    ports:
+      - "8082:8080"
+    command: >-
+      --client-id=keystone
+      --client-secret=94ca4b65-2383-4899-99f8-82a2b3cda759
+      --discovery-url=http://localhost:8081/auth/realms/default
+      --no-redirects=true
+      --upstream-url=http://${DOCKER_GATEWAY_HOST}:3000/cms/graphql
+      --listen=0.0.0.0:8080
+      --openid-provider-proxy=http://keycloak:8080
+      --encryption-key="16_or_32_character_encrption_key"
+      --skip-upstream-tls-verify=false
+      --skip-openid-provider-tls-verify=true
+      --enable-logging=true
+      --enable-json-logging=true
+      --enable-default-deny=true
+      --enable-refresh-tokens=true
+      --enable-session-cookies=true
+      --base-uri=/cms
+      --resources="uri=/api|roles=keystone:admin"
+  keycloak:
+    image: "quay.io/keycloak/keycloak:10.0.1"
+    environment:
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      KEYCLOAK_FRONTEND_URL: http://localhost:8081/auth/
+    entrypoint: >-
+      /opt/jboss/tools/docker-entrypoint.sh
+      -b 0.0.0.0
+      -c standalone.xml
+      -Dkeycloak.import=/etc/keycloak/realms/default-realm.json
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./keycloak/realms:/etc/keycloak/realms

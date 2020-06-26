@@ -1,0 +1,11 @@
+apiVersion: v2
+name: apollo-basket
+description: Provides basket functionality to users of the store
+version: 0.0.1
+appVersion: 0.0.1
+keywords:
+  - 
+maintainers:
+  - name: Jonathan Cowling
+sources:
+  - https://github.com/cowlingj/ecommerce-backend
