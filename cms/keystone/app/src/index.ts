@@ -1,10 +1,10 @@
+import "./load-config";
 import { Keystone } from "@keystonejs/keystone";
 import { GraphQLApp } from "@keystonejs/app-graphql";
 import { AdminUIApp } from "@keystonejs/app-admin-ui";
 import { MongooseAdapter } from "@keystonejs/adapter-mongoose";
 import setupLists from "./lists";
 import onConnect from "./on-connect";
-import { config } from "dotenv";
 import session from 'express-session'
 import connectMongo from 'connect-mongo'
 import express from 'express'
@@ -14,7 +14,6 @@ import core from "express-serve-static-core"
 import { apiPath, graphiqlPath, adminPath, basePath } from "./paths"
 import { pseudoRandomBytes } from "crypto"
 
-config();
 
 const port = parseInt(process.env.PORT ?? "") ?? 80
 const host = process.env.HOST ?? "0.0.0.0"
@@ -96,13 +95,8 @@ export async function start() {
 
   const server = http.createServer(app);
 
-  // server.listen()
-
   await promisify<number, string>(server.listen.bind(server))(port, host);
 
-  // await new Promise((res) => { server.listen(port, host, () => {res()}) });
-
-  // await promisify<number, string>(server.listen)(port, host);
   console.log(`listening at http://${host}:${port}${basePath}`)
   
   await keystone.connect();

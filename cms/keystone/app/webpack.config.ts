@@ -1,17 +1,13 @@
 import path from 'path'
 import nodeExternals from 'webpack-node-externals'
 
-const {
-  NODE_ENV = 'production',
-} = process.env;
-
 export default {
   entry: {
     index: './src/index.ts',
     main: './src/main.ts'
   },
-  devtool: NODE_ENV === 'development' ? 'source-map' : undefined,
-  mode: NODE_ENV,
+  devtool: process.env.NODE_ENV === 'development' ? 'source-map' : undefined,
+  mode: 'none',
   target: 'node',
   node: false,
   output: {
@@ -32,6 +28,10 @@ export default {
   },
   resolve: {
     extensions: ['.js', '.ts'],
+  },
+  optimization: {
+    minimize: false, //process.env.NODE_ENV !== 'development'
+    nodeEnv: false
   },
   externals: nodeExternals(),
 }

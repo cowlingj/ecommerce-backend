@@ -12,8 +12,8 @@ services:
       --client-id=keystone
       --client-secret=94ca4b65-2383-4899-99f8-82a2b3cda759
       --discovery-url=http://localhost:8081/auth/realms/default
-      --redirection-url=http://localhost:8080/
-      --upstream-url=http://172.20.0.1:3000/admin
+      --redirection-url=http://localhost:8080/cms
+      --upstream-url=http://172.20.0.1:3000/cms/admin
       --listen=0.0.0.0:80
       --openid-provider-proxy=http://keycloak:8080
       --skip-upstream-tls-verify=false
@@ -37,7 +37,7 @@ services:
       --client-secret=94ca4b65-2383-4899-99f8-82a2b3cda759
       --discovery-url=http://localhost:8081/auth/realms/default
       --no-redirects=true
-      --upstream-url=http://172.20.0.1:3000/graphql
+      --upstream-url=http://172.20.0.1:3000/cms/graphql
       --listen=0.0.0.0:80
       --openid-provider-proxy=http://keycloak:8080
       --encryption-key="16_or_32_character_encrption_key"
