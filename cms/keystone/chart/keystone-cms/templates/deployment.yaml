@@ -163,6 +163,7 @@ spec:
             --enable-refresh-tokens=true
             --enable-session-cookies=true
             --secure-cookie={{ .Values.authAdmin.config.secureCookie }}
+            --base-uri="{{ .Values.basePath }}"
             {{ range .Values.authAdmin.config.resources -}}
             --resources="{{ . }}"
             {{- end }}
@@ -216,6 +217,7 @@ spec:
             --enable-default-deny="{{ .Values.authApi.config.defaultDeny }}"
             --enable-refresh-tokens=true
             --enable-session-cookies=true
+            --base-uri="{{ .Values.basePath }}"
             {{ range .Values.authApi.config.resources -}}
             --resources="{{ . }}"
             {{- end }}

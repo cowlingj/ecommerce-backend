@@ -152,6 +152,7 @@ authAdmin:
     resources:
       - "uri=/admin|roles=keystone:admin"
       - "uri=/favicon|white-listed=true"
+      - "uri=/graphql|roles=keystone:admin"
 
 authApi:
   ## authAdmin.enabled: protects admin interface with authorization code flow

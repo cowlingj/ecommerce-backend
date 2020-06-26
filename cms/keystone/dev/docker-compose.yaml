@@ -7,16 +7,15 @@ services:
   gatekeeper_admin:
     image: "keycloak/keycloak-gatekeeper:latest"
     ports:
-      - "8080:80"
+      - "8080:8080"
     command: >-
       --client-id=keystone
       --client-secret=94ca4b65-2383-4899-99f8-82a2b3cda759
       --discovery-url=http://localhost:8081/auth/realms/default
-      --redirection-url=http://localhost:8080/cms
-      --upstream-url=http://172.20.0.1:3000/cms/admin
-      --listen=0.0.0.0:80
+      --upstream-url=http://${DOCKER_GATEWAY_HOST}:3000/cms/admin
+      --listen=0.0.0.0:8080
       --openid-provider-proxy=http://keycloak:8080
-      --skip-upstream-tls-verify=false
+      --skip-upstream-tls-verify=true
       --skip-openid-provider-tls-verify=true
       --encryption-key="16_or_32_character_encrption_key"
       --secure-cookie=false
@@ -25,20 +24,22 @@ services:
       --enable-default-deny=true
       --enable-refresh-tokens=true
       --enable-session-cookies=true
-      --resources="uri=/favicon|white-listed=true"
-      --resources="uri=/admin|roles=keystone:admin"
-  
+      --resources="uri=/cms/favicon|white-listed=true"
+      --resources="uri=/cms/admin|roles=keystone:admin"
+      --resources="uri=/cms/graphql|roles=keystone:admin"
+      --redirection-url=http://localhost:8080/
+      --base-uri=/cms
   gatekeeper_graphql:
     image: "keycloak/keycloak-gatekeeper:latest"
     ports:
-      - "8082:80"
+      - "8082:8080"
     command: >-
       --client-id=keystone
       --client-secret=94ca4b65-2383-4899-99f8-82a2b3cda759
       --discovery-url=http://localhost:8081/auth/realms/default
       --no-redirects=true
-      --upstream-url=http://172.20.0.1:3000/cms/graphql
-      --listen=0.0.0.0:80
+      --upstream-url=http://${DOCKER_GATEWAY_HOST}:3000/cms/graphql
+      --listen=0.0.0.0:8080
       --openid-provider-proxy=http://keycloak:8080
       --encryption-key="16_or_32_character_encrption_key"
       --skip-upstream-tls-verify=false
@@ -47,9 +48,9 @@ services:
       --enable-json-logging=true
       --enable-default-deny=true
       --enable-refresh-tokens=true
-      --enable-session-cookies=false
+      --enable-session-cookies=true
+      --base-uri=/cms
       --resources="uri=/api|roles=keystone:admin"
-
   keycloak:
     image: "quay.io/keycloak/keycloak:10.0.1"
     environment:
