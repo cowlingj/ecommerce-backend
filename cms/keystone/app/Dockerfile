@@ -14,6 +14,8 @@ COPY --from=build /usr/lib/app/dist /usr/lib/app/dist
 COPY --from=build /usr/lib/app/package.json /usr/lib/app/package.json
 COPY --from=build /usr/lib/app/package-lock.json /usr/lib/app/package-lock.json
 
+WORKDIR /usr/lib/app
+
 RUN npm ci
 
 ENTRYPOINT [ "npm", "run", "start" ]
