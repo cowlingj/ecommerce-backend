@@ -28,7 +28,7 @@
   "homepage": "https://github.com/cowlingj/ecommerce-backend#readme",
   "dependencies": {
     "apollo-server": "^2.14.1",
-    "apollo-server-express": "^2.14.1",
+    "apollo-server-express": "^2.14.2",
     "@cowlingj/products-api": "0.0.7",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
