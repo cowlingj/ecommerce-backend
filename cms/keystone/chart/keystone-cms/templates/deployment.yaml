@@ -124,13 +124,13 @@ spec:
               readOnly: true
             {{- end }}
         {{ if .Values.authAdmin.enabled }}
-        - name: authAdmin
+        - name: auth-admin
           image: "{{ .Values.authAdmin.image.repository }}:{{ .Values.authAdmin.image.tag }}"
           imagePullPolicy: {{ .Values.authAdmin.image.pullPolicy }}
           resources: {{- toYaml .Values.authAdmin.resources | nindent 12 }}
           ports:
             - name: http-admin
-              containerPort: 82
+              containerPort: 81
           {{- if and .Values.authAdmin.livenessProbe }}
           livenessProbe: {{ tpl .Values.authAdmin.livenessProbe . | nindent 12 }}
           {{- end }}
@@ -147,11 +147,12 @@ spec:
           - >-
             /opt/keycloak-gatekeeper
             --client-id="{{ .Values.authAdmin.config.clientId }}"
-            --client-secret=$CLIENT_SECRET"
+            --client-secret="$CLIENT_SECRET"
             --discovery-url="{{ .Values.authAdmin.config.discoveryUrl }}"
             --no-redirects=false
             --upstream-url="{{ .Values.authAdmin.config.upstreamUrl }}"
-            --listen=0.0.0.0:81
+            --redirection-url="{{ .Values.authAdmin.config.redirectionUrl }}"
+            --listen="0.0.0.0:81"
             --openid-provider-proxy="{{ .Values.authAdmin.config.proxyUrl }}"
             --encryption-key="$ENCRYPTION_KEY"
             --skip-upstream-tls-verify=false
@@ -161,7 +162,8 @@ spec:
             --enable-default-deny="{{ .Values.authAdmin.config.defaultDeny }}"
             --enable-refresh-tokens=true
             --enable-session-cookies=true
-            {{ with .Values.authAdmin.config.resources -}}
+            --secure-cookie={{ .Values.authAdmin.config.secureCookie }}
+            {{ range .Values.authAdmin.config.resources -}}
             --resources="{{ . }}"
             {{- end }}
           env:
@@ -177,7 +179,7 @@ spec:
                   key: {{ .Values.authAdmin.config.encryptionKeySecretKey }}
         {{- end }}
         {{ if .Values.authApi.enabled }}
-        - name: authApi
+        - name: auth-api
           image: "{{ .Values.authApi.image.repository }}:{{ .Values.authApi.image.tag }}"
           imagePullPolicy: {{ .Values.authApi.image.pullPolicy }}
           resources: {{- toYaml .Values.authApi.resources | nindent 12 }}
@@ -193,17 +195,18 @@ spec:
           {{- if and .Values.authApi.startupProbe (ge (atoi .Capabilities.KubeVersion.Major) 1) (ge (atoi .Capabilities.KubeVersion.Minor) 16) }}
           startupProbe: {{ tpl .Values.authApi.startupProbe . | nindent 12 }}
           {{- end }}
-          entrypoint: /bin/sh
+          command: 
+          - /bin/sh
           args:
           - -c
           - >-
             /opt/keycloak-gatekeeper
             --client-id="{{ .Values.authApi.config.clientId }}"
-            --client-secret=$CLIENT_SECRET"
+            --client-secret="$CLIENT_SECRET"
             --discovery-url="{{ .Values.authApi.config.discoveryUrl }}"
             --no-redirects=true
             --upstream-url="{{ .Values.authApi.config.upstreamUrl }}"
-            --listen=0.0.0.0:82
+            --listen="0.0.0.0:82"
             --openid-provider-proxy="{{ .Values.authApi.config.proxyUrl }}"
             --encryption-key="$ENCRYPTION_KEY"
             --skip-upstream-tls-verify=false
@@ -213,7 +216,7 @@ spec:
             --enable-default-deny="{{ .Values.authApi.config.defaultDeny }}"
             --enable-refresh-tokens=true
             --enable-session-cookies=true
-            {{ with .Values.authApi.config.resources -}}
+            {{ range .Values.authApi.config.resources -}}
             --resources="{{ . }}"
             {{- end }}
           env:

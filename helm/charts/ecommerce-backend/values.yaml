@@ -77,15 +77,15 @@ nginx-ingress:
         port: 80
 
 keycloak:
-  existingSecret: null
-  basepath: auth
-  username: keycloak
-  fullname: keycloak
-  persistence:
-    dbVendor: h2
-  service:
-    httpPort: 80
-    httpsPort: 443
+  keycloak:
+    existingSecret: null
+    basepath: auth
+    username: keycloak
+    persistence:
+      dbVendor: h2
+    service:
+      httpPort: 80
+      httpsPort: 443
 
 tags:
   elasticsearch: false

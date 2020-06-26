@@ -113,7 +113,7 @@ authAdmin:
     tag: "latest"
     pullPolicy: IfNotPresent
   service:
-    port: 80
+    port: 8080
   ## authAdmin.secrets: kubernetes secrets for authAdmin
   secrets:
     ## authAdmin.secrets.clientSecret: client secret for the keystone to use for auth
@@ -149,6 +149,7 @@ authAdmin:
     ## authAdmin.config.defaultDeny: deny authorization for routes not in resources
     defaultDeny: true
     ## authAdmin.config.resources: each string is a keycloak gateway resources argument
+    secureCookie: true
     resources:
       - "uri=/admin|roles=keystone:admin"
       - "uri=/favicon|white-listed=true"
@@ -156,6 +157,12 @@ authAdmin:
 authApi:
   ## authAdmin.enabled: protects admin interface with authorization code flow
   enabled: false
+  image:
+    repository: keycloak/keycloak-gatekeeper
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  service:
+    port: 80
   ## authAdmin.secrets: kubernetes secrets for authAdmin
   secrets:
     ## authApi.secrets.clientSecret: client secret for the keystone to use for api auth
@@ -167,7 +174,7 @@ authApi:
         client_secret: ""
     ## authApi.secrets.encryptionKey: encryption key for sessions
     encryptionKey:
-      nameOverride: "keystone-cms-admin-auth-encryption-key"
+      nameOverride: "keystone-cms-api-auth-encryption-key"
       fullnameOverride: ""
       exists: false
       data:
@@ -176,7 +183,7 @@ authApi:
     ## authAdmin.config.clientSecretSecretKey: key for oauth client secret
     clientSecretSecretKey: "client_secret"
     ## authAdmin.config.encryptionKeySecretkey: key for encryption key
-    encryptionKeySecretkey: "encryption_key"
+    encryptionKeySecretKey: "encryption_key"
     ## authAdmin.config.clientId: oauth client id
     clientId: keystone
     ## authAdmin.config.discoveryUrl: openid connect discovery url (external url)
