@@ -22,6 +22,13 @@ jobs:
         with:
           entrypoint: docker
           args: build --tag "${{ env.REPOSITORY }}:latest" --file "${{ env.DOCKERFILE }}" "${{ env.BUILD_CONTEXT }}"
+      - name: DEBUG
+        uses: docker://docker:19.03.8
+        with:
+          entrypoint: docker
+          args: run --entrypoint /bin/sh "${{ env.REPOSITORY }}:latest" "-c" "ls . dist"
+      - name: FAIL
+        run: "exit 1"
       - name: get version from label
         uses: docker://docker:19.03.8
         with:
