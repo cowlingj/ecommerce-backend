@@ -145,11 +145,10 @@ authAdmin:
     ## authAdmin.config.proxyUrl: openid connect internal url
     proxyUrl: null
     ## authAdmin.config.secureCookie: whether or not to enable secure cookies (requires https)
-    secureCookie: false
+    secureCookie: true
     ## authAdmin.config.defaultDeny: deny authorization for routes not in resources
     defaultDeny: true
     ## authAdmin.config.resources: each string is a keycloak gateway resources argument
-    secureCookie: true
     resources:
       - "uri=/admin|roles=keystone:admin"
       - "uri=/favicon|white-listed=true"
