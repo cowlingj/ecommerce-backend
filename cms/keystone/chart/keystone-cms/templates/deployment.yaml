@@ -109,8 +109,8 @@ spec:
             - name: STRINGS_FILE
               value: /etc/secrets/strings/strings.json
             {{- end }}
-            {{ if .Values.secrets.users -}}
           volumeMounts:
+            {{ if .Values.secrets.users -}}
             - name: user-data-volume
               mountPath: /etc/secrets/users/
               readOnly: true
