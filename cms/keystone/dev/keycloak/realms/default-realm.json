@@ -346,18 +346,18 @@
   "users" : [ {
     "id" : "f56d918a-bc0b-4114-a862-c4bb1c98ec6c",
     "createdTimestamp" : 1591649924106,
-    "username" : "keystone-jonathan@localhost",
+    "username" : "keystone@localhost",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : true,
-    "firstName" : "Jonathan",
-    "lastName" : "Cowling",
+    "firstName" : "Keystone",
+    "lastName" : "Keystone",
     "email" : "keystone-jonathan@localhost",
     "credentials" : [ {
       "id" : "d915a659-c720-4026-9ce6-1d3b52704223",
       "type" : "password",
       "createdDate" : 1591649965247,
-      "secretData" : "{\"value\":\"BHVRGNokstWqBQg7gsa41IqT8J3giakvzcwxoBYQdzsaXtNWdwjFJ+rxjpGqknOIINtY1+2Qw34V5neK8mgXLA==\",\"salt\":\"C/aSxRjLdmCWkUHcLsA3ig==\"}",
+      "secretData": "{\"value\": \"rhKQLPFmLWAA2u19AoAe1OBHSNk5KdYyOw6UCTyc/EJqQGCupe6fw8Z0xYLzk8+2EUBO9C3EV1Acrux1XeXn6w==\", \"salt\": \"BByFNG/8eZ7TgeF1P9GIm03iXV+O0MY+8m4rt5G8X9w=\"}",
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
     } ],
     "disableableCredentialTypes" : [ ],
