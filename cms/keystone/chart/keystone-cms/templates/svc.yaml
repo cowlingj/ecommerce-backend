@@ -7,8 +7,8 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    {{ if not (or .Values.authAdmin.enabled .Values.authApi.enabled) -}}
-    - port: {{ .Values.service.port }}
+    {{ if .Values.service.unauthenticated.enabled -}}
+    - port: {{ .Values.service.unauthenticated.port }}
       targetPort: http-main
       protocol: TCP
       name: http-main
