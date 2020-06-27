@@ -6,8 +6,8 @@
   "author": "Jonathan Cowling",
   "scripts": {
     "dev": "nodemon",
-    "build": "webpack && keystone build --entry dist/index.js --out dist/assets",
-    "start": "node --unhandled-rejections=strict dist/main.js",
+    "build": "webpack",
+    "start": "keystone build --entry dist/index.js --out dist/assets && node --unhandled-rejections=strict dist/main.js",
     "debug": "node --inspect-brk=${NODE_INSPECT_PORT} --unhandled-rejections=strict dist/main.js",
     "tsc": "tsc",
     "clean": "rm -r ./dist/"
