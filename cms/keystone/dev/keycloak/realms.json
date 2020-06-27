@@ -1,4 +1,4 @@
-{
+[{
   "id" : "default",
   "realm" : "default",
   "notBefore" : 0,
@@ -346,18 +346,18 @@
   "users" : [ {
     "id" : "f56d918a-bc0b-4114-a862-c4bb1c98ec6c",
     "createdTimestamp" : 1591649924106,
-    "username" : "keystone@localhost",
+    "username" : "keystone-admin@nodomain",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : true,
     "firstName" : "Keystone",
     "lastName" : "Keystone",
-    "email" : "keystone-jonathan@localhost",
+    "email" : "keystone-admin@nodomain",
     "credentials" : [ {
       "id" : "d915a659-c720-4026-9ce6-1d3b52704223",
       "type" : "password",
       "createdDate" : 1591649965247,
-      "secretData": "{\"value\": \"rhKQLPFmLWAA2u19AoAe1OBHSNk5KdYyOw6UCTyc/EJqQGCupe6fw8Z0xYLzk8+2EUBO9C3EV1Acrux1XeXn6w==\", \"salt\": \"BByFNG/8eZ7TgeF1P9GIm03iXV+O0MY+8m4rt5G8X9w=\"}",
+      "secretData": "{\"value\": \"+3yZpclvy3OaTlhQViJSMiEYFVhQWlIooSPQOOxor/3KczZDBrWJbBcD0Pzpw/nS5Ls41d7AE5pZZPKXT5c+7Q==\", \"salt\": \"yGdTsm9KQPfg8nkffXlgbe+3J94h2hI1OajXdAnoDwc=\"}",
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
     } ],
     "disableableCredentialTypes" : [ ],
@@ -1793,4 +1793,4 @@
   },
   "keycloakVersion" : "10.0.1",
   "userManagedAccessAllowed" : false
-}
+}]

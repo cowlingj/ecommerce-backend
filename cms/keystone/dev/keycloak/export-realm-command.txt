@@ -1,6 +1,0 @@
-/opt/jboss/keycloak/bin/standalone.sh \
-  -Djboss.socket.binding.port-offset=10000 \
-  -Dkeycloak.migration.action=export \
-  -Dkeycloak.migration.provider=dir \
-  -Dkeycloak.migration.usersExportStrategy=REALM_FILE \
-  -Dkeycloak.migration.dir=/tmp/realms/
