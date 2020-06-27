@@ -20,4 +20,4 @@ RUN npm ci
 
 ENTRYPOINT [ "npm", "run", "start" ]
 
-LABEL version="0.0.8"
+LABEL version="0.0.9"
