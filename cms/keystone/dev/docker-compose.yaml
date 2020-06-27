@@ -12,7 +12,7 @@ services:
       --client-id=keystone
       --client-secret=94ca4b65-2383-4899-99f8-82a2b3cda759
       --discovery-url=http://localhost:8081/auth/realms/default
-      --upstream-url=http://${DOCKER_GATEWAY_HOST}:3000/cms/admin
+      --upstream-url=http://docker-host:3000/cms/admin
       --listen=0.0.0.0:8080
       --openid-provider-proxy=http://keycloak:8080
       --skip-upstream-tls-verify=true
@@ -29,28 +29,7 @@ services:
       --resources="uri=/cms/graphql|roles=keystone:admin"
       --redirection-url=http://localhost:8080/
       --base-uri=/cms
-  gatekeeper_graphql:
-    image: "keycloak/keycloak-gatekeeper:latest"
-    ports:
-      - "8082:8080"
-    command: >-
-      --client-id=keystone
-      --client-secret=94ca4b65-2383-4899-99f8-82a2b3cda759
-      --discovery-url=http://localhost:8081/auth/realms/default
-      --no-redirects=true
-      --upstream-url=http://${DOCKER_GATEWAY_HOST}:3000/cms/graphql
-      --listen=0.0.0.0:8080
-      --openid-provider-proxy=http://keycloak:8080
-      --encryption-key="16_or_32_character_encrption_key"
-      --skip-upstream-tls-verify=false
-      --skip-openid-provider-tls-verify=true
-      --enable-logging=true
-      --enable-json-logging=true
-      --enable-default-deny=true
-      --enable-refresh-tokens=true
-      --enable-session-cookies=true
-      --base-uri=/cms
-      --resources="uri=/api|roles=keystone:admin"
+      --openid-provider-timeout=60s
   keycloak:
     image: "quay.io/keycloak/keycloak:10.0.1"
     environment:
@@ -61,8 +40,14 @@ services:
       /opt/jboss/tools/docker-entrypoint.sh
       -b 0.0.0.0
       -c standalone.xml
-      -Dkeycloak.import=/etc/keycloak/realms/default-realm.json
+      -Dkeycloak.migration.file=/etc/keycloak/realms.json
+      -Dkeycloak.migration.strategy=OVERWRITE_EXISTING
+      -Dkeycloak.migration.action=import
+      -Dkeycloak.migration.provider=singleFile
     ports:
       - "8081:8080"
     volumes:
-      - ./keycloak/realms:/etc/keycloak/realms
+      - ./keycloak/:/etc/keycloak/
+  docker-host:
+    image: "qoomon/docker-host:2.4.2"
+    cap_add: [ 'NET_ADMIN', 'NET_RAW' ]
