@@ -19,7 +19,11 @@ service:
   nameOverride: ""
   fullnameOverride: ""
   type: ClusterIP
-  port: 80
+  unauthenticated:
+    ## service.unauthenticated.enabled: enabled unauthenticated access to the service
+    enabled: true
+    ## ## service.unauthenticated.port: port for the unauthenticated endpoint
+    port: 80
 
 resources:
   main: {}
