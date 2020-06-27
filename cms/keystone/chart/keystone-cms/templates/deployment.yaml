@@ -109,10 +109,6 @@ spec:
             - name: STRINGS_FILE
               value: /etc/secrets/strings/strings.json
             {{- end }}
-          volumeMounts:
-            - name: dist-data-volume
-              mountPath: /usr/lib/app/dist
-              readOnly: false
             {{ if .Values.secrets.users -}}
             - name: user-data-volume
               mountPath: /etc/secrets/users/
@@ -234,9 +230,6 @@ spec:
                   key: {{ .Values.authApi.config.encryptionKeySecretKey }}
         {{- end }}
       volumes:
-        - name: dist-data-volume
-          emptyDir:
-            sizeLimit: "8Mi"
         {{ if .Values.secrets.users -}}
         - name: user-data-volume
           secret:
