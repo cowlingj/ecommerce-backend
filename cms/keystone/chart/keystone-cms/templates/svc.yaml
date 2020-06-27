@@ -12,7 +12,7 @@ spec:
       targetPort: http-main
       protocol: TCP
       name: http-main
-    {{- else }}
+    {{- end }}
     {{ if .Values.authAdmin.enabled -}}
     - port: {{ .Values.authAdmin.service.port }}
       targetPort: http-admin
@@ -24,7 +24,6 @@ spec:
       targetPort: http-api
       protocol: TCP
       name: http-api
-    {{- end }}
     {{- end }}
   selector:
     app.kubernetes.io/name: {{ include "keystone-cms.name" . }}
