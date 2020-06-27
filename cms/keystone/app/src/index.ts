@@ -21,7 +21,33 @@ const protocol = process.env.PROTOCOL ?? "http"
 
 // a default mongoUri needs to be set
 // (even at build time, issue: https://github.com/keystonejs/keystone/issues/2350)
-const mongoUri = process.env.MONGO_URI ?? "mongodb://localhost:27017"
+let _mongoUri = "mongodb://localhost:27017"
+
+if (process.env.MONGO_URI) {
+  _mongoUri = process.env.MONGO_URI;
+} else if (
+  process.env.DB_USERNAME
+  && process.env.DB_PASSWORD
+  && process.env.DB_HOST
+  && process.env.DB_PORT
+  && process.env.DB_NAME
+) {
+ _mongoUri = `mongodb://${
+   process.env.DB_USERNAME
+  }:${
+    process.env.DB_PASSWORD
+  }@${
+    process.env.DB_HOST
+  }:${
+    process.env.DB_PORT
+  }/${
+    process.env.DB_NAME
+  }?${
+    process.env.DB_QUERY_STRING
+  }`;
+}
+
+const mongoUri = _mongoUri 
 
 const MongoDBStore = connectMongo(session);
 
