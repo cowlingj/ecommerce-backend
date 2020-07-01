@@ -15,4 +15,4 @@ CMD [ "/bin/bash", \
       "envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'" \
     ]
 
-LABEL version="0.0.2"
+LABEL version="0.0.3"
