@@ -6,9 +6,6 @@ const serverlessConfiguration: Serverless = {
   },
   frameworkVersion: '2',
   custom: {
-    output: {
-      file: 'build/out.json'
-    },
     webpack: {
       webpackConfig: './webpack.config.js',
       includeModules: true
@@ -16,7 +13,6 @@ const serverlessConfiguration: Serverless = {
   },
   plugins: [
     'serverless-webpack',
-    'serverless-stack-output'
   ],
   provider: {
     name: 'aws',
@@ -59,7 +55,7 @@ const serverlessConfiguration: Serverless = {
         {
           http: {
             method: 'get',
-            path: '/all',
+            path: '/',
           }
         }
       ]
