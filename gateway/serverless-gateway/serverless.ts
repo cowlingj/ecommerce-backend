@@ -2,10 +2,7 @@ import type { Serverless } from 'serverless/aws';
 
 const serverlessConfiguration: Serverless = {
   service: {
-    name: 'izettle-serverless',
-    // app and org for use with dashboard.serverless.com
-    // app: your-app-name,
-    // org: your-org-name,
+    name: 'gateway-serverless',
   },
   frameworkVersion: '2',
   custom: {
@@ -14,9 +11,7 @@ const serverlessConfiguration: Serverless = {
       includeModules: true
     }
   },
-  plugins: [
-    'serverless-webpack'
-  ],
+  plugins: ['serverless-webpack'],
   provider: {
     name: 'aws',
     runtime: 'nodejs12.x',
@@ -25,16 +20,14 @@ const serverlessConfiguration: Serverless = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      // FIXME: how can I parameterise this?
+      PRODUCTS_URI: 'https://q33la3byi8.execute-api.us-east-1.amazonaws.com/dev/',
+      EVENTS_URI: 'https://ayd2j8gf8l.execute-api.us-east-1.amazonaws.com/dev/'
     },
   },
   functions: {
-    all: {
-      handler: 'src/handler.default',
-      environment: {
-        IZETTLE_AUTH_URI: 'https://oauth.izettle.com/token',
-        IZETTLE_PRODUCTS_URI: 'https://products.izettle.com',
-        IZETTLE_API_KEY: '${ssm:/izettle_api_key~true}'
-      },
+    hello: {
+      handler: 'handler.default',
       events: [
         {
           http: {

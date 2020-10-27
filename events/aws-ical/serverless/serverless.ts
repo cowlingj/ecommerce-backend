@@ -47,14 +47,20 @@ const serverlessConfiguration: Serverless = {
   },
   functions: {
     all: {
-      handler: 'handler.all',
+      handler: 'handler.default',
       environment: {
         BUCKET: { "Ref" : "icsBucket" }
       },
       events: [
         {
           http: {
-            method: 'get',
+            method: 'GET',
+            path: '/',
+          }
+        },
+        {
+          http: {
+            method: 'POST',
             path: '/',
           }
         }
