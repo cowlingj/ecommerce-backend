@@ -1,4 +1,4 @@
-import app from './app'
+import createApp from './app'
 import serverless from 'serverless-http'
 
-export default serverless(app)
+export default serverless(createApp())

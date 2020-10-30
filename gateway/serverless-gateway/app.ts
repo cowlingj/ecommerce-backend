@@ -29,7 +29,10 @@ export default async () => {
           link: eventsLink
         })
       ],
-    })
+    }),
+    // playground: process.env.NODE_ENV === 'development' ? {
+    //   endpoint: process.env.GRAPHQL_PLAYGROUND
+    // } : false
   })
     
   server.applyMiddleware({ app, path: '/' })

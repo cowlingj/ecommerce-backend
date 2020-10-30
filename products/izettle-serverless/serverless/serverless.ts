@@ -3,16 +3,14 @@ import type { Serverless } from 'serverless/aws';
 const serverlessConfiguration: Serverless = {
   service: {
     name: 'izettle-serverless',
-    // app and org for use with dashboard.serverless.com
-    // app: your-app-name,
-    // org: your-org-name,
   },
   frameworkVersion: '2',
   custom: {
     webpack: {
       webpackConfig: './webpack.config.js',
       includeModules: true
-    }
+    },
+    stage: '${opt:stage, self:provider.stage, "dev"}'
   },
   plugins: [
     'serverless-webpack'
@@ -37,13 +35,13 @@ const serverlessConfiguration: Serverless = {
       },
       events: [
         {
-          http: {
+          httpApi: {
             method: 'GET',
             path: '/',
           }
         },
         {
-          http: {
+          httpApi: {
             method: 'POST',
             path: '/',
           }

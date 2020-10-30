@@ -9,7 +9,8 @@ const serverlessConfiguration: Serverless = {
     webpack: {
       webpackConfig: './webpack.config.js',
       includeModules: true
-    }
+    },
+    stage: '${opt:stage, self.provider.stage, "dev"}'
   },
   plugins: ['serverless-webpack'],
   provider: {
@@ -20,23 +21,23 @@ const serverlessConfiguration: Serverless = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      // FIXME: how can I parameterise this?
-      PRODUCTS_URI: 'https://q33la3byi8.execute-api.us-east-1.amazonaws.com/dev/',
-      EVENTS_URI: 'https://ayd2j8gf8l.execute-api.us-east-1.amazonaws.com/dev/'
+      PRODUCTS_URI: '${cf:izettle-serverless-${self:custom.stage}.HttpApiUrl}',
+      EVENTS_URI: '${cf:aws-ical-serverless-${self:custom.stage}.HttpApiUrl}',
+      NODE_ENV: 'development' 
     },
   },
   functions: {
-    hello: {
+    all: {
       handler: 'handler.default',
       events: [
         {
-          http: {
+          httpApi: {
             method: 'GET',
             path: '/',
           }
         },
         {
-          http: {
+          httpApi: {
             method: 'POST',
             path: '/',
           }

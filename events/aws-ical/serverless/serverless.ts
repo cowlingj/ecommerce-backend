@@ -9,7 +9,8 @@ const serverlessConfiguration: Serverless = {
     webpack: {
       webpackConfig: './webpack.config.js',
       includeModules: true
-    }
+    },
+    stage: '${opt:stage, self.provider.stage, "dev"}'
   },
   plugins: [
     'serverless-webpack',
@@ -53,13 +54,13 @@ const serverlessConfiguration: Serverless = {
       },
       events: [
         {
-          http: {
+          httpApi: {
             method: 'GET',
             path: '/',
           }
         },
         {
-          http: {
+          httpApi: {
             method: 'POST',
             path: '/',
           }
