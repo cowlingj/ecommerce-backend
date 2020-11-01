@@ -1,223 +1,50 @@
-# TODO: can I make things private using security groups or ACLs
-
 service:
-  name: ecommerce-vpc
+  name: ecommerce-backend-shared
 
 custom:
-  natAmiId: '' # TODO: amzn-ami-vpc-nat
-  sshKeyPairName: ''
+  stage: ${opt:stage, self:provider.stage, "dev"}
+  gatewayFunctionService: gateway-serverless
+  gatewayFunctionName: all
+  gatewayFunctionArn: 
+    !Join 
+      - ''
+      - - 'arn:aws:lambda:'
+        - !Ref AWS::Region
+        - ':'
+        - !Ref AWS::AccountId
+        - :function:${self:custom.gatewayFunctionService}-${self:custom.stage}-${self:custom.gatewayFunctionName}
 
 provider:
   name: 'aws'
 
 resources:
-  Parameters:
-
-    UsePrivateSubnets:
-      Description: Create private subnets
-      Default: false
-      Type: String
-      AllowedValues: [true, false]
-
-    UseNatInstance:
-      Description: Create NAT Instance
-      Default: false
-      Type: String
-      AllowedValues: [true, false]
-
-
-  Conditions:
-    UsePrivateSubnets: !Equals [true, !Ref UseNatInstance]
-    UseNatInstance: !And 
-      - !Equals [true, !Ref UsePrivateSubnets] 
-      - !Equals [true, !Ref UseNatInstance]
-
   Resources:
-    VPC:
-      Type: AWS::EC2::VPC
-      Properties:
-        CidrBlock: '10.192.0.0/16'
-        EnableDnsSupport: true
-        EnableDnsHostnames: true
-
-    InternetGateway:
-      Type: AWS::EC2::InternetGateway
-      Properties: {}
-
-    InternetGatewayAttachment:
-      Type: AWS::EC2::VPCGatewayAttachment
-      Properties:
-        InternetGatewayId: !Ref InternetGateway
-        VpcId: !Ref VPC
-
-    PublicSubnet1:
-      Type: AWS::EC2::Subnet
-      Properties:
-        VpcId: !Ref VPC
-        AvailabilityZone: !Select [ 0, !GetAZs '' ]
-        CidrBlock: '10.192.1.0/24'
-        MapPublicIpOnLaunch: true
-
-    PublicSubnet2:
-      Type: AWS::EC2::Subnet
-      Properties:
-        VpcId: !Ref VPC
-        AvailabilityZone: !Select [ 1, !GetAZs  '' ]
-        CidrBlock: '10.192.2.0/24'
-        MapPublicIpOnLaunch: true
-
-    PublicRouteTable:
-      Type: AWS::EC2::RouteTable
-      Properties:
-        VpcId: !Ref VPC
-
-    DefaultPublicRoute:
-      Type: AWS::EC2::Route
-      DependsOn: InternetGatewayAttachment
-      Properties:
-        RouteTableId: !Ref PublicRouteTable
-        DestinationCidrBlock: 0.0.0.0/0
-        GatewayId: !Ref InternetGateway
-
-    PublicSubnet1RouteTableAssociation:
-      Type: AWS::EC2::SubnetRouteTableAssociation
-      Properties:
-        RouteTableId: !Ref PublicRouteTable
-        SubnetId: !Ref PublicSubnet1
-
-    PublicSubnet2RouteTableAssociation:
-      Type: AWS::EC2::SubnetRouteTableAssociation
-      Properties:
-        RouteTableId: !Ref PublicRouteTable
-        SubnetId: !Ref PublicSubnet2
-
-    PrivateSubnet1:
-      Condition: UsePrivateSubnets
-      Type: AWS::EC2::Subnet
-      Properties:
-        VpcId: !Ref VPC
-        AvailabilityZone: !Select [ 0, !GetAZs  '' ]
-        CidrBlock: '10.192.3.0/24'
-        MapPublicIpOnLaunch: false
-
-    PrivateSubnet2:
-      Condition: UsePrivateSubnets
-      Type: AWS::EC2::Subnet
-      Properties:
-        VpcId: !Ref VPC
-        AvailabilityZone: !Select [ 1, !GetAZs  '' ]
-        CidrBlock: '10.192.4.0/24'
-        MapPublicIpOnLaunch: false
-
-    PrivateRouteTable1:
-      Condition: UsePrivateSubnets
-      Type: AWS::EC2::RouteTable
-      Properties:
-        VpcId: !Ref VPC
-
-    PrivateRouteTable2:
-      Condition: UsePrivateSubnets
-      Type: AWS::EC2::RouteTable
-      Properties:
-        VpcId: !Ref VPC
-
-    NatInstanceSercurityGroup:
-      Type: AWS::EC2::SecurityGroup
-      Condition: UseNatInstance
-      Properties:
-        VpcId: !Ref VPC
-        GroupDescription: Access to the nat instnace
-        SecurityGroupIngress:
-          # http & https trafic
-          - CidrIp: 10.0.0.128/25
-            FromPort: 80
-            ToPort: 80
-            IpProtocol: tcp
-          - CidrIp: 10.0.0.128/25
-            FromPort: 443
-            ToPort: 443
-            IpProtocol: tcp
-          #ssh access
-          - CidrIp: 0.0.0.0/0
-            FromPort: 22
-            ToPort: 22
-            IpProtocol: tcp
-          # routing
-          - CidrIp: 10.0.0.128/25
-            IpProtocol: icmp
-            FromPort: -1
-            ToPort: -1
-
-    NatInstance1:
-      Type: AWS::EC2::Instance
-      Condition: UseNatInstance
-      Properties:
-        InstanceType: t2.micro
-        ImageId: ${self:custom.natAmiId}
-        SourceDestCheck: false
-        KeyName: ${self:custom.sshKeyPairName}
-        NetworkInterfaces:
-          - SubnetId: !Ref PublicSubnet1
-            GroupSet:
-            - !Ref NatInstanceSercurityGroup
-            AssociatePublicIpAddress: true
-            DeviceIndex: 0
-
-    NatInstance2:
-      Type: AWS::EC2::Instance
-      Condition: UseNatInstance
-      Properties:
-        InstanceType: t2.micro
-        ImageId: ${self:custom.natAmiId} 
-        SourceDestCheck: false
-        KeyName: ${self:custom.sshKeyPairName}
-        NetworkInterfaces:
-          - SubnetId: !Ref PublicSubnet2
-            GroupSet:
-            - !Ref NatInstanceSercurityGroup
-            AssociatePublicIpAddress: true
-            DeviceIndex: 0
-
-    DefaultPrivateRoute1:
-      Condition: UseNatInstance
-      Type: AWS::EC2::Route
-      Properties:
-        RouteTableId: !Ref PrivateRouteTable1
-        DestinationCidrBlock: 0.0.0.0/0
-        InstanceId: !Ref NatInstance1
-
-    DefaultPrivateRoute2:
-      Condition: UseNatInstance
-      Type: AWS::EC2::Route
-      Properties:
-        RouteTableId: !Ref PrivateRouteTable2
-        DestinationCidrBlock: 0.0.0.0/0
-        InstanceId: !Ref NatInstance2
-
-    PrivateSubnet1RouteTableAssociation:
-      Condition: UsePrivateSubnets
-      Type: AWS::EC2::SubnetRouteTableAssociation
-      Properties:
-        RouteTableId: !Ref PrivateRouteTable1
-        SubnetId: !Ref PrivateSubnet1
-
-    PrivateSubnet2RouteTableAssociation:
-      Condition: UsePrivateSubnets
-      Type: AWS::EC2::SubnetRouteTableAssociation
-      Properties:
-        RouteTableId: !Ref PrivateRouteTable2
-        SubnetId: !Ref PrivateSubnet2
+    RestAPI:
+      Type: AWS::ApiGateway::RestApi
+      Properties: 
+        Description: Private API for internal services
+        FailOnWarnings: true
+        MinimumCompressionSize: 1024
+        Name: private-api
+        Policy: 
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: execute-api:Invoke
+              Resource: "execute-api:/${self:custom.stage}/*"
+              Condition:
+                StringEquals:
+                  "lambda:FunctionArn": ${self:custom.gatewayFunctionArn}         
 
   Outputs:
-    VPC:
-      Description: A reference to the created VPC
-      Value: !Ref VPC
+    ApiGatewayRestApiId:
+      Value: !Ref RestAPI
+      Export:
+        Name: gw-restApiId
 
-    PublicSubnets:
-      Description: A list of the public subnets
-      Value: !Join [ ",", [ !Ref PublicSubnet1, !Ref PublicSubnet2 ]]
-
-    PrivateSubnets:
-      Condition: UsePrivateSubnets
-      Description: A list of the private subnets
-      Value: !Join [ ",", [ !Ref PrivateSubnet1, !Ref PrivateSubnet2 ]]
+    ApiGatewayRestApiRootResourceId:
+      Value: !GetAtt RestAPI.RootResourceId
+      Export:
+        Name: gw-rootResourceId

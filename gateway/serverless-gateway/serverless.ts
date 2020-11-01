@@ -21,8 +21,8 @@ const serverlessConfiguration: Serverless = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      PRODUCTS_URI: '${cf:izettle-serverless-${self:custom.stage}.HttpApiUrl}',
-      EVENTS_URI: '${cf:aws-ical-serverless-${self:custom.stage}.HttpApiUrl}',
+      PRODUCTS_URI: '${cf:izettle-serverless-${self:custom.stage}.ServiceEndpoint}/products',
+      EVENTS_URI: '${cf:aws-ical-serverless-${self:custom.stage}.ServiceEndpoint}/events',
       NODE_ENV: 'development' 
     },
   },

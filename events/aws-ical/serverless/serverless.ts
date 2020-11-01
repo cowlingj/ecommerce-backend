@@ -19,7 +19,8 @@ const serverlessConfiguration: Serverless = {
     name: 'aws',
     runtime: 'nodejs12.x',
     apiGateway: {
-      minimumCompressionSize: 1024,
+      restApiId: '${cf:ecommerce-backend-shared-${self:custom.stage}.ApiGatewayRestApiId}',
+      restApiRootResourceId: '${cf:ecommerce-backend-shared-${self:custom.stage}.ApiGatewayRestApiRootResourceId}'
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
@@ -54,15 +55,15 @@ const serverlessConfiguration: Serverless = {
       },
       events: [
         {
-          httpApi: {
+          http: {
             method: 'GET',
-            path: '/',
+            path: '/events',
           }
         },
         {
-          httpApi: {
+          http: {
             method: 'POST',
-            path: '/',
+            path: '/events',
           }
         }
       ]
