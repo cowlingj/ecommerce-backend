@@ -11,6 +11,7 @@
   "dependencies": {
     "apollo-link-http": "^1.5.17",
     "apollo-server-express": "^2.18.2",
+    "aws4": "^1.11.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.4.0",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
+    "@types/aws4": "^1.5.1",
     "@types/node": "^10.12.18",
     "@types/serverless": "^1.72.5",
     "fork-ts-checker-webpack-plugin": "^3.0.1",
