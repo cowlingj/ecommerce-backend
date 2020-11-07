@@ -39,12 +39,18 @@ const serverlessConfiguration: Serverless = {
           http: {
             method: 'GET',
             path: '/products',
+            authorizer: {
+              type: 'aws_iam'
+            },
           }
         },
         {
           http: {
             method: 'POST',
             path: '/products',
+            authorizer: {
+              type: 'aws_iam'
+            }
           }
         }
       ]

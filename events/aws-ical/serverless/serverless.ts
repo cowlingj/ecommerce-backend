@@ -58,12 +58,18 @@ const serverlessConfiguration: Serverless = {
           http: {
             method: 'GET',
             path: '/events',
+            authorizer: {
+              type: 'aws_iam'
+            }
           }
         },
         {
           http: {
             method: 'POST',
             path: '/events',
+            authorizer: {
+              type: 'aws_iam'
+            }
           }
         }
       ]

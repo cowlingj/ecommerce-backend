@@ -30,13 +30,36 @@ resources:
           Version: "2012-10-17"
           Statement:
             - Effect: Allow
-              Principal:
-                Service: "lambda.amazonaws.com"
+              Principal: 
+                AWS: !GetAtt IAMRole.Arn
               Action: execute-api:Invoke
               Resource: "execute-api:/${self:custom.stage}/*"
-              Condition:
-                StringEquals:
-                  "lambda:FunctionArn": ${self:custom.gatewayFunctionArn}
+    
+    IAMRole:
+      Type: AWS::IAM::Role
+      Properties: 
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                - lambda.amazonaws.com
+              Action:
+                - 'sts:AssumeRole'
+        Policies: # FIXME
+          - PolicyName: logs-and-log-groups
+            PolicyDocument:
+              Statement:
+                - "Effect": "Allow"
+                  "Action":
+                    - "logs:CreateLogStream"
+                    - "logs:CreateLogGroup"
+                  "Resource": "arn:aws:logs:*:*:log-group:log-group:/aws/lambda/${self:custom.gatewayFunctionService}-${self:custom.stage}*:*"
+                - "Effect": "Allow"
+                  "Action": 
+                    - "logs:PutLogEvents"
+                  "Resource": "arn:aws:logs:*:*:log-group:log-group:/aws/lambda/${self:custom.gatewayFunctionService}-${self:custom.stage}*:*:*"
 
   Outputs:
     ApiGatewayRestApiId:
@@ -48,3 +71,8 @@ resources:
       Value: !GetAtt RestAPI.RootResourceId
       Export:
         Name: gw-rootResourceId
+
+    ApiGatewayInvokerLambdaRole:
+      Value: !GetAtt IAMRole.Arn
+      Export:
+        Name: gw-invokerLambdaRole

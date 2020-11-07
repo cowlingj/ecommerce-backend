@@ -19,6 +19,7 @@ const serverlessConfiguration: Serverless = {
     apiGateway: {
       minimumCompressionSize: 1024,
     },
+    role: '${cf:ecommerce-backend-shared-${self:custom.stage}.ApiGatewayInvokerLambdaRole}',
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       PRODUCTS_URI: '${cf:izettle-serverless-${self:custom.stage}.ServiceEndpoint}/products',

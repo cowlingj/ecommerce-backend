@@ -2,50 +2,52 @@ import 'source-map-support/register';
 import express from 'express';
 import { ApolloServer, makeRemoteExecutableSchema, introspectSchema, mergeSchemas } from 'apollo-server-express';
 import { HttpLink } from 'apollo-link-http';
-import fetch, { RequestInit } from 'node-fetch'
 import { sign } from 'aws4'
 import { URL } from 'url';
+import fetch from 'node-fetch';
 
 export default async () => {
   const app = express();
 
-  const productsUri = new URL(process.env.PRODUCTS_URI)
-
-
-  const productsFetchOptions: RequestInit = sign({
-    method: 'POST',
-    service: null,
-    region: process.env.AWS_REGION,
-    hostname: productsUri.host,
-    pathname: productsUri.pathname,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-
   const productsLink = new HttpLink({
-    uri: productsUri.href,
-    fetch: fetch,
-    headers: productsFetchOptions.headers,
-  })
-
-  const eventsUri = new URL(process.env.EVENTS_URI)
-
-  const eventsFetchOptions = sign({
-    method: 'POST',
-    service: null,
-    region: process.env.AWS_REGION,
-    hostname: eventsUri.host,
-    pathname: eventsUri.pathname,
-    headers: {
-      'Content-Type': 'application/json'
+    uri: process.env.PRODUCTS_URI,
+    fetch: (url, opts) => {
+      const targetUrl = new URL(url)
+      console.log(opts)
+      const signedOpts = sign({
+        method: opts.method,
+        service: 'execute-api',
+        region: process.env.AWS_REGION,
+        hostname: targetUrl.host,
+        path: targetUrl.pathname,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: opts.body
+      })
+      console.log(signedOpts)
+      return fetch(url, Object.assign({}, opts, { headers: signedOpts.headers }))
     }
   })
 
   const eventsLink = new HttpLink({
-    uri: eventsUri.href,
-    fetch: fetch,
-    headers: eventsFetchOptions.headers
+    uri: process.env.EVENTS_URI,
+    fetch: (url, opts) => {
+      const targetUrl = new URL(url)
+      console.log(opts)
+      const { headers } = sign({
+        method: opts.method,
+        service: 'execute-api',
+        region: process.env.AWS_REGION,
+        hostname: targetUrl.host,
+        path: targetUrl.pathname,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: opts.body
+      })
+      return fetch(url, Object.assign({}, opts, { headers }))
+    }
   })
 
   const server = new ApolloServer({
