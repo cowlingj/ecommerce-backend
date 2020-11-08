@@ -13,8 +13,7 @@ export default async () => {
     uri: process.env.PRODUCTS_URI,
     fetch: (url, opts) => {
       const targetUrl = new URL(url)
-      console.log(opts)
-      const signedOpts = sign({
+      const { headers } = sign({
         method: opts.method,
         service: 'execute-api',
         region: process.env.AWS_REGION,
@@ -25,8 +24,7 @@ export default async () => {
         },
         body: opts.body
       })
-      console.log(signedOpts)
-      return fetch(url, Object.assign({}, opts, { headers: signedOpts.headers }))
+      return fetch(url, Object.assign({}, opts, { headers }))
     }
   })
 
@@ -34,7 +32,6 @@ export default async () => {
     uri: process.env.EVENTS_URI,
     fetch: (url, opts) => {
       const targetUrl = new URL(url)
-      console.log(opts)
       const { headers } = sign({
         method: opts.method,
         service: 'execute-api',
@@ -63,11 +60,11 @@ export default async () => {
         })
       ],
     }),
-    // playground: process.env.NODE_ENV === 'development' ? {
-    //   endpoint: process.env.GRAPHQL_PLAYGROUND
-    // } : false
+    playground: process.env['NODE_ENV'] === 'development' ? {
+      endpoint: process.env.GRAPHQL_PLAYGROUND
+    } : false
   })
-    
+
   server.applyMiddleware({ app, path: '/' })
   
   return app

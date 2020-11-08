@@ -10,7 +10,11 @@ const serverlessConfiguration: Serverless = {
       webpackConfig: './webpack.config.js',
       includeModules: true
     },
-    stage: '${opt:stage, self.provider.stage, "dev"}'
+    stage: '${opt:stage, self.provider.stage, "dev"}',
+    nodeEnv: {
+      dev: 'development',
+      prod: 'production'
+    },
   },
   plugins: ['serverless-webpack'],
   provider: {
@@ -24,7 +28,8 @@ const serverlessConfiguration: Serverless = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       PRODUCTS_URI: '${cf:izettle-serverless-${self:custom.stage}.ServiceEndpoint}/products',
       EVENTS_URI: '${cf:aws-ical-serverless-${self:custom.stage}.ServiceEndpoint}/events',
-      NODE_ENV: 'development' 
+      NODE_ENV: '${self:custom.nodeEnv.${self:custom.stage}}',
+      GRAPHQL_PLAYGROUND: '/'
     },
   },
   functions: {
