@@ -47,19 +47,34 @@ resources:
                 - lambda.amazonaws.com
               Action:
                 - 'sts:AssumeRole'
-        Policies: # FIXME
+        Policies:
           - PolicyName: logs-and-log-groups
             PolicyDocument:
+              Version: "2012-10-17"
               Statement:
-                - "Effect": "Allow"
-                  "Action":
+                - Effect: "Allow"
+                  Action:
                     - "logs:CreateLogStream"
                     - "logs:CreateLogGroup"
-                  "Resource": "arn:aws:logs:*:*:log-group:log-group:/aws/lambda/${self:custom.gatewayFunctionService}-${self:custom.stage}*:*"
-                - "Effect": "Allow"
-                  "Action": 
+                  Resource:
+                    !Join 
+                      - ''
+                      - - 'arn:aws:logs:'
+                        - !Ref AWS::Region
+                        - ':'
+                        - !Ref AWS::AccountId
+                        - ':log-group:/aws/lambda/${self:custom.gatewayFunctionService}-${self:custom.stage}*:*'
+                - Effect: "Allow"
+                  Action: 
                     - "logs:PutLogEvents"
-                  "Resource": "arn:aws:logs:*:*:log-group:log-group:/aws/lambda/${self:custom.gatewayFunctionService}-${self:custom.stage}*:*:*"
+                  Resource:
+                    !Join 
+                      - ''
+                      - - 'arn:aws:logs:'
+                        - !Ref AWS::Region
+                        - ':'
+                        - !Ref AWS::AccountId
+                        - ':log-group:/aws/lambda/${self:custom.gatewayFunctionService}-${self:custom.stage}*:*:*' 
 
   Outputs:
     ApiGatewayRestApiId:
