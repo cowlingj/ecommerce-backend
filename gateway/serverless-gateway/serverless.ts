@@ -23,6 +23,9 @@ const serverlessConfiguration: Serverless = {
     apiGateway: {
       minimumCompressionSize: 1024,
     },
+    httpApi: {
+      cors: true
+    },
     role: '${cf:ecommerce-backend-shared-${self:custom.stage}.ApiGatewayInvokerLambdaRole}',
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
@@ -38,13 +41,7 @@ const serverlessConfiguration: Serverless = {
       events: [
         {
           httpApi: {
-            method: 'GET',
-            path: '/',
-          }
-        },
-        {
-          httpApi: {
-            method: 'POST',
+            method: '*',
             path: '/',
           }
         }
