@@ -5,44 +5,59 @@ import { PromiseResolvedResult } from './promise.allsettled.types';
 import { ApolloServer, gql } from 'apollo-server-express';
 import express from 'express'
 
+let cache = {
+  expiresAt: Date.now() / 1000,
+  events: null
+}
+
 export default () => {
 
-  const s3 = new S3()
-  const icsPromise = s3
-    .listObjectsV2({
-      Bucket: process.env.BUCKET
-    })
-    .promise()
-    .then(res => 
-      allSettled(
-        res.Contents?.map(
-          s3Obj => s3.getObject({
-            Bucket: process.env.BUCKET,
-            Key: s3Obj.Key
-          }).promise()
+const s3 = new S3()
+async function getEvents() {
+  if (!cache.events || cache.expiresAt < Date.now() / 1000) {
+    cache = {
+      events: s3
+      .listObjectsV2({
+        Bucket: process.env.BUCKET
+      })
+      .promise()
+      .then(res => 
+        allSettled(
+          res.Contents?.map(
+            s3Obj => s3.getObject({
+              Bucket: process.env.BUCKET,
+              Key: s3Obj.Key
+            }).promise()
+          )
         )
       )
-    )
-    .then(res => res
-      .filter((p) => p.status === 'fulfilled')
-      .map(
-        (p) => (
-          parseICS((p as PromiseResolvedResult<S3.GetObjectOutput>).value.Body?.toString())
-        )
-      )
-      .map(c => Object.values(c))
-      .flat()
-      .filter((comp): comp is VEvent => comp.type === 'VEVENT')
-      .map(({ uid, description, location, summary, start, end, url }) => ({
-        id: uid ?? '',
-        name: summary,
-        description,
-        location,
-        start: start.toISOString(),
-        end: end.toISOString(),
-        url
-      }))
-    )
+      .then(res => res
+        .filter((p) => p.status === 'fulfilled')
+        .map((p) => parseICS(
+          (p as PromiseResolvedResult<S3.GetObjectOutput>).value.Body?.toString()
+        ))
+        .map(c => Object.values(c))
+        .flat()
+        .filter((comp): comp is VEvent => comp.type === 'VEVENT')
+        .map((vevent) => {
+          console.log(JSON.stringify(vevent))
+          return {
+            id: vevent.uid ?? '',
+            title: vevent.summary,
+            description: vevent.description,
+            location: vevent.location,
+            start: vevent.start.toISOString(),
+            end: vevent.end.toISOString(),
+            url: vevent.url
+          }
+        })
+      ),
+      expiresAt: Date.now() / 1000 + parseInt(process.env.CACHE_TTL)
+    } 
+  }
+
+  return cache.events
+}
 
   const app = express()
 
@@ -71,9 +86,9 @@ export default () => {
   `,
     resolvers: {
       Query: {
-        events: async () => icsPromise,
+        events: async () => getEvents(),
         event: async (_parent, { id }: { id: string }) => (
-          (await icsPromise).find(({ id: itemId }) => itemId === id)
+          (await getEvents()).find(({ id: itemId }) => itemId === id)
         )
       }
     }

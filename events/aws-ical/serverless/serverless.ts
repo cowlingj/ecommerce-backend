@@ -51,7 +51,8 @@ const serverlessConfiguration: Serverless = {
     all: {
       handler: 'handler.default',
       environment: {
-        BUCKET: { "Ref" : "icsBucket" }
+        BUCKET: { "Ref" : "icsBucket" },
+        CACHE_TTL: '3600'
       },
       events: [
         {
