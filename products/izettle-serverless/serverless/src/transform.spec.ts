@@ -12,7 +12,7 @@ describe("transform function", () => {
         variants: [
           {
             price: {
-              amount: 0,
+              amount: 1000,
               currencyId: 'gbp'
             }
           },
@@ -29,7 +29,7 @@ describe("transform function", () => {
       name: "name",
       imageUrl: "imageUrl",
       price: {
-        value: 0,
+        value: 10,
         currency: 'gbp'
       }
     })

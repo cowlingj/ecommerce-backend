@@ -13,12 +13,16 @@ export default function (izettleProduct: IzettleProduct): Product | null {
     return null
   }
 
+  const value = izettleProduct.variants[0].price.currencyId === 'GBP'
+    ? izettleProduct.variants[0].price.amount / 100
+    : izettleProduct.variants[0].price.amount 
+
   return {
     id: izettleProduct.uuid,
     name: izettleProduct.name,
     imageUrl: imageUrl,
     price: {
-      value: izettleProduct.variants[0].price.amount,
+      value,
       currency: izettleProduct.variants[0].price.currencyId
     }
   }
